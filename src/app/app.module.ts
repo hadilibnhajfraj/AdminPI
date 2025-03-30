@@ -13,6 +13,8 @@ import { AppComponent } from './app.component';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 
+import { VideoStreamComponent } from './video-stream/video-stream.component';
+
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -26,7 +28,8 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
   ],
   declarations: [
     AppComponent,
-    AdminLayoutComponent
+    AdminLayoutComponent,
+    VideoStreamComponent
 
   ],
   providers: [],
