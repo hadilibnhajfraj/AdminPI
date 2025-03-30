@@ -1,0 +1,38 @@
+<div class="form-container">
+    <h2>Créer un Tournoi</h2>
+  
+    <!-- Message de confirmation ou d'erreur -->
+    <div *ngIf="message" [ngClass]="{'success': !isError, 'error': isError}" class="popup">
+      {{ message }}
+    </div>
+  
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="nom">Nom du tournoi</label>
+        <input type="text" id="nom" [(ngModel)]="tournoi.nom" name="nom" required />
+      </div>
+  
+      <div class="form-group">
+        <label for="nbEquipe">Nombre d'équipes</label>
+        <input type="number" id="nbEquipe" [(ngModel)]="tournoi.nbEquipe" name="nbEquipe" required />
+      </div>
+  
+      <div class="form-group">
+        <label for="frais">Frais d'inscription</label>
+        <input type="number" id="frais" [(ngModel)]="tournoi.frais" name="frais" required />
+      </div>
+  
+      <div class="form-group">
+        <label for="dateDebut">Date de début</label>
+        <input type="date" id="dateDebut" [(ngModel)]="tournoi.dateDebut" name="dateDebut" required />
+      </div>
+  
+      <div class="form-group">
+        <label for="dateFin">Date de fin</label>
+        <input type="date" id="dateFin" [(ngModel)]="tournoi.dateFin" name="dateFin" required />
+      </div>
+  
+      <button type="submit" class="btn">Créer</button>
+    </form>
+  </div>
+  
