@@ -1,12 +1,7 @@
 <div class="form-container">
-  <h2>Créer un Tournoi</h2>
+  <h2>Modifier le Tournoi</h2>
 
-  <!-- Message de confirmation ou d'erreur -->
-  <div *ngIf="message" [ngClass]="{'success': !isError, 'error': isError}" class="popup">
-    {{ message }}
-  </div>
-
-  <form (ngSubmit)="onSubmit()">
+  <form (ngSubmit)="updateTournoi()">
     <div class="form-group">
       <label for="nom">Nom du tournoi</label>
       <input type="text" id="nom" [(ngModel)]="tournoi.nom" name="nom" required />
@@ -24,7 +19,7 @@
 
     <div class="form-group">
       <label for="dateDebut">Date de début</label>
-      <input type="date" id="dateDebut" [(ngModel)]="tournoi.dateDebut" name="dateDebut"
+      <input type="date" id="dateDebut" [(ngModel)]="tournoi.dateDebut" name="dateDebut" 
         (change)="validateDates()" [min]="today" required />
       <p *ngIf="dateDebutInvalide" class="error-msg">
         La date de début doit être aujourd'hui ou ultérieure.
@@ -33,13 +28,14 @@
 
     <div class="form-group">
       <label for="dateFin">Date de fin</label>
-      <input type="date" id="dateFin" [(ngModel)]="tournoi.dateFin" name="dateFin"
+      <input type="date" id="dateFin" [(ngModel)]="tournoi.dateFin" name="dateFin" 
         (change)="validateDates()" [min]="tournoi.dateDebut" required />
       <p *ngIf="dateFinInvalide" class="error-msg">
         La date de fin doit être après la date de début.
       </p>
     </div>
 
-    <button type="submit" class="btn" [disabled]="!isValid">Créer</button>
+    <button type="submit" class="btn" [disabled]="!isModified() || !isValid">Enregistrer</button>
+    <button type="button" class="btn btn-secondary" (click)="goBack()">Retour</button>
   </form>
 </div>

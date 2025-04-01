@@ -1,0 +1,34 @@
+<div class="form-container">
+  <h2>Liste des Tournois</h2>
+
+  <!-- Message de confirmation ou d'erreur -->
+  <div *ngIf="message" [ngClass]="{'success': !isError, 'error': isError}" class="popup">
+    {{ message }}
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Nombre d'Équipes</th>
+        <th>Frais (€)</th>
+        <th>Date Début</th>
+        <th>Date Fin</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tournoi of tournois">
+        <td>{{ tournoi.nom }}</td>
+        <td>{{ tournoi.nbEquipe }}</td>
+        <td>{{ tournoi.frais | currency:'EUR' }}</td>
+        <td>{{ tournoi.dateDebut | date:'dd/MM/yyyy' }}</td>
+        <td>{{ tournoi.dateFin | date:'dd/MM/yyyy' }}</td>
+        <td>
+          <button class="btn btn-warning" (click)="editTournoi(tournoi)">Modifier</button>
+          <button class="btn btn-danger" (click)="deleteTournoi(tournoi.idTournoi)">Supprimer</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

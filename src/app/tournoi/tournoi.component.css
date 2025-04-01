@@ -1,0 +1,96 @@
+/* Conteneur du formulaire */
+.form-container {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Boutons */
+.btn {
+    width: 100%;
+    padding: 10px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn:hover {
+    background: #218838;
+}
+
+/* Bouton désactivé */
+.btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+/* Bouton de retour */
+.btn-return {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn-return:hover {
+    background: #c82333;
+}
+
+/* Styles pour la popup */
+.popup {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    color: white;
+    z-index: 1000;
+}
+
+.success {
+    background-color: green;
+}
+
+.error {
+    background-color: red;
+}
+.error-msg {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  
