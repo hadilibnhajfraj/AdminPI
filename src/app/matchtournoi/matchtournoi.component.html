@@ -1,0 +1,31 @@
+<div class="container">
+    <h2>Liste des matchs par tournoi</h2>
+  
+    <!-- Affichage des matchs -->
+    <table *ngIf="matchs.length > 0" class="match-table">
+      <thead>
+        <tr>
+          <th>Nom du Match</th>
+          <th>Tour</th>
+          <th>Équipe 1</th>
+          <th>Équipe 2</th>
+          <th>Date</th>
+          <th>Heure</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let match of matchs">
+          <td>{{ match.nom }}</td>
+          <td>{{ match.tour }}</td>
+          <td>{{ match.equipes1[0]?.nom }}</td>
+          <td>{{ match.equipes1[1]?.nom }}</td>
+          <td>{{ match.dateMatch }}</td>
+          <td>{{ match.heureMatch }}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Message si aucun match n'est trouvé -->
+    <p *ngIf="matchs.length === 0 && selectedTournoiId">Aucun match trouvé pour ce tournoi.</p>
+  </div>
+  

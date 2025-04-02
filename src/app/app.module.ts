@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { TournoiComponent } from './tournoi/tournoi.component';
+import { MatchtournoiComponent } from './matchtournoi/matchtournoi.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { TournoiComponent } from './tournoi/tournoi.component';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    TournoiComponent
+    TournoiComponent,
+    MatchtournoiComponent
 
   ],
   providers: [],

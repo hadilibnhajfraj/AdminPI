@@ -31,4 +31,16 @@ export class TournoiService {
     return this.http.put<Tournoi>(`${this.apiUrl}/updateTournoi/${id}`, tournoi);
   }
   
+  genererMatchs(tournoiId: number): Observable<string> {
+    return this.http.put<string>(`${this.apiUrl}/genererMatchs/${tournoiId}`, {});
+  }
+
+  getMatchsParTournoi(idTournoi: number): Observable<any[]> {
+    return this.http.get<any[]>(`http://localhost:8082/tournois/${idTournoi}/matchs`);
+  }
+  
+  
+  tournoiADejaDesMatchs(idTournoi: number): Observable<boolean> {
+    return this.http.get<boolean>(`${this.apiUrl}/${idTournoi}/hasMatchs`);
+  }
 }

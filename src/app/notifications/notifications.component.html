@@ -1,0 +1,45 @@
+<div class="form-container">
+    <h2>Liste des Tournois</h2>
+  
+    <!-- Message de confirmation ou d'erreur -->
+    <div *ngIf="message" [ngClass]="{'success': !isError, 'error': isError}" class="popup">
+      {{ message }}
+    </div>
+  
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Nombre d'Équipes</th>
+          <th>Nombre d'Équipes Restantes</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let tournoi of tournois">
+          <td>{{ tournoi.nom }}</td>
+          <td>{{ tournoi.nbEquipe }}</td>
+          <td>{{ tournoi.nbEquipeRestant }}</td>
+          <td>
+            <!-- Bouton pour afficher les détails du tournoi -->
+            <button class="btn btn-info" (click)="afficherDetails(tournoi)">Afficher Détails</button>
+  
+            <!-- Bouton pour générer le planning, activé uniquement si nbEquipeRestant == 0 -->
+            <button 
+              *ngIf="tournoi.nbEquipeRestant === 0" 
+              class="btn btn-success" 
+              (click)="genererPlanning(tournoi)">
+              Générer Planning
+            </button>
+            <button 
+    *ngIf="tournoi.hasMatchs" 
+    class="btn btn-warning" 
+    [routerLink]="['/tournoi', tournoi.idTournoi, 'matchs']">
+    Voir les matchs
+  </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

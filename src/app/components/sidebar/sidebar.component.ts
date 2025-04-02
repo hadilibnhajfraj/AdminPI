@@ -10,7 +10,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/dashboard', title: 'Dashboard',  icon: 'design_app', class: '' },
     { path: '/icons', title: 'Creation Tournoi',  icon:'education_atom', class: '' },
     { path: '/maps', title: 'Tous les tournois',  icon:'location_map-big', class: '' },
-    { path: '/notifications', title: 'Notifications',  icon:'ui-1_bell-53', class: '' },
+    { path: '/notifications', title: 'Suivi tournois',  icon:'ui-1_bell-53', class: '' },
 
     { path: '/user-profile', title: 'User Profile',  icon:'users_single-02', class: '' },
     { path: '/table-list', title: 'Table List',  icon:'design_bullet-list-67', class: '' },

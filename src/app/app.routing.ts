@@ -6,11 +6,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { TournoiComponent } from './tournoi/tournoi.component';
 import { MapsComponent } from './maps/maps.component';
+import { MatchtournoiComponent } from './matchtournoi/matchtournoi.component';
 
 const routes: Routes =[
  
   { path: 'tournoi/:id', component: TournoiComponent }, // Route pour afficher le tournoi 
   //{ path: '**', redirectTo: 'maps', pathMatch: 'full' },
+  { path: 'tournoi/:id/matchs', component: MatchtournoiComponent },
   {
     path: '',
     redirectTo: 'dashboard',

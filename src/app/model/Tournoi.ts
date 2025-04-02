@@ -6,5 +6,6 @@ export interface Tournoi {
     frais: number;
     dateDebut: string;
     dateFin: string;
+    hasMatchs?: boolean;
   }
   
