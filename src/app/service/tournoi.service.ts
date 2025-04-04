@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Tournoi } from '../model/Tournoi';
+import { Equipe } from '../model/Equipe';
 
 @Injectable({
   providedIn: 'root',
@@ -43,4 +44,23 @@ export class TournoiService {
   tournoiADejaDesMatchs(idTournoi: number): Observable<boolean> {
     return this.http.get<boolean>(`${this.apiUrl}/${idTournoi}/hasMatchs`);
   }
+
+  getEquipesParTournoi(tournoiId: number): Observable<Equipe[]> {
+    return this.http.get<Equipe[]>(`${this.apiUrl}/getEquipesParTournoi/${tournoiId}`);
+  }
+  
+  affecterEquipesATournoi(tournoiId: number, equipeIds: number[]): Observable<Tournoi> {
+    return this.http.put<Tournoi>(`${this.apiUrl}/affecterEquipes/${tournoiId}`, equipeIds);
+  }
+
+ 
+  desaffecterEquipeDuTournoi(tournoiId: number, equipeId: number): Observable<string> {
+    return this.http.put<string>(`${this.apiUrl}/desaffecterEquipe/${tournoiId}/${equipeId}`, {});
+  }
+
+  getEquipesNonInscrites(tournoiId: number): Observable<Equipe[]> {
+    return this.http.get<Equipe[]>(`${this.apiUrl}/${tournoiId}/equipesNonInscrites`);
+  }
+  
+  
 }

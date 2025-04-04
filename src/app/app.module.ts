@@ -14,6 +14,7 @@ import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { TournoiComponent } from './tournoi/tournoi.component';
 import { MatchtournoiComponent } from './matchtournoi/matchtournoi.component';
+import { EquipetournoiComponent } from './equipetournoi/equipetournoi.component';
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import { MatchtournoiComponent } from './matchtournoi/matchtournoi.component';
     AppComponent,
     AdminLayoutComponent,
     TournoiComponent,
-    MatchtournoiComponent
+    MatchtournoiComponent,
+    EquipetournoiComponent
 
   ],
   providers: [],

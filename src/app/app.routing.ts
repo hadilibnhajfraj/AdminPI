@@ -7,12 +7,15 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { TournoiComponent } from './tournoi/tournoi.component';
 import { MapsComponent } from './maps/maps.component';
 import { MatchtournoiComponent } from './matchtournoi/matchtournoi.component';
+import { EquipetournoiComponent } from './equipetournoi/equipetournoi.component';
 
 const routes: Routes =[
  
   { path: 'tournoi/:id', component: TournoiComponent }, // Route pour afficher le tournoi 
   //{ path: '**', redirectTo: 'maps', pathMatch: 'full' },
   { path: 'tournoi/:id/matchs', component: MatchtournoiComponent },
+  { path: 'tournoi/:idTournoi/equipes', component: EquipetournoiComponent },
+
   {
     path: '',
     redirectTo: 'dashboard',

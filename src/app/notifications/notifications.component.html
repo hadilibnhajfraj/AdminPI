@@ -23,6 +23,10 @@
           <td>
             <!-- Bouton pour afficher les détails du tournoi -->
             <button class="btn btn-info" (click)="afficherDetails(tournoi)">Afficher Détails</button>
+
+            <button class="btn btn-primary" [routerLink]="['/tournoi', tournoi.idTournoi, 'equipes']">
+              Voir les équipes
+            </button>
   
             <!-- Bouton pour générer le planning, activé uniquement si nbEquipeRestant == 0 -->
             <button 
