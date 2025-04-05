@@ -1,31 +1,74 @@
 <div class="container">
-    <h2>Liste des matchs par tournoi</h2>
-  
-    <!-- Affichage des matchs -->
-    <table *ngIf="matchs.length > 0" class="match-table">
+  <h2>Liste des matchs par tournoi</h2>
+
+  <!-- Groupement par tour -->
+  <div *ngFor="let tour of groupesParTour | keyvalue">
+    <h4 class="mt-4">Tour {{ tour.key }}</h4>
+    <table class="table table-bordered">
       <thead>
         <tr>
           <th>Nom du Match</th>
-          <th>Tour</th>
-          <th>Équipe 1</th>
-          <th>Équipe 2</th>
+          <th>Match (Score)</th>
           <th>Date</th>
           <th>Heure</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let match of matchs">
+        <tr *ngFor="let match of tour.value">
           <td>{{ match.nom }}</td>
-          <td>{{ match.tour }}</td>
-          <td>{{ match.equipes1[0]?.nom }}</td>
-          <td>{{ match.equipes1[1]?.nom }}</td>
+          <td>
+            {{ match.equipes1[0]?.nom }} /
+            {{ match.scoreEquipe1 ?? 0 }} - {{ match.scoreEquipe2 ?? 0 }} /
+            {{ match.equipes1[1]?.nom }}
+          </td>
           <td>{{ match.dateMatch }}</td>
           <td>{{ match.heureMatch }}</td>
+          <td>
+            <button (click)="ouvrirPopup(match)" class="btn btn-warning">
+              Mettre à jour le score
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
-  
-    <!-- Message si aucun match n'est trouvé -->
-    <p *ngIf="matchs.length === 0 && selectedTournoiId">Aucun match trouvé pour ce tournoi.</p>
   </div>
-  
+
+  <p *ngIf="matchs.length === 0 && selectedTournoiId">
+    Aucun match trouvé pour ce tournoi.
+  </p>
+
+  <!-- Bouton génération du tour suivant -->
+  <div class="text-center mt-4" *ngIf="tourSuivantVisible">
+    <button class="btn btn-primary" (click)="genererTourSuivant()">
+      Générer le tour suivant
+    </button>
+  </div>
+
+  <!-- Pop-up mise à jour des scores -->
+  <div *ngIf="popupVisible" class="modal">
+    <div class="modal-content">
+      <h3>Mise à jour des scores</h3>
+      <p>{{ matchSelectionne?.nom }} - Tour {{ matchSelectionne?.tour }}</p>
+
+      <div class="form-group">
+        <label>
+          Score Équipe 1 ({{ matchSelectionne?.equipes1[0]?.nom || 'Équipe H' }}):
+        </label>
+        <input type="number" [(ngModel)]="scoreEquipe1" class="form-control" />
+      </div>
+
+      <div class="form-group">
+        <label>
+          Score Équipe 2 ({{ matchSelectionne?.equipes1[1]?.nom || 'Équipe A' }}):
+        </label>
+        <input type="number" [(ngModel)]="scoreEquipe2" class="form-control" />
+      </div>
+
+      <div class="modal-buttons">
+        <button (click)="validerMiseAJour()" class="btn btn-success">Valider</button>
+        <button (click)="fermerPopup()" class="btn btn-secondary">Annuler</button>
+      </div>
+    </div>
+  </div>
+</div>

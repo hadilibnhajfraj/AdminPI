@@ -62,5 +62,17 @@ export class TournoiService {
     return this.http.get<Equipe[]>(`${this.apiUrl}/${tournoiId}/equipesNonInscrites`);
   }
   
+  mettreAJourScores(matchId: number, scoreEquipe1: number, scoreEquipe2: number): Observable<string> {
+    return this.http.put<string>(
+      `${this.apiUrl}/mettreAJourScores/${matchId}?scoreEquipe1=${scoreEquipe1}&scoreEquipe2=${scoreEquipe2}`,
+      {}
+    );
+  }
+  
+
+  
+  genererTourSuivant(tournoiId: number): Observable<string> {
+    return this.http.put<string>(`${this.apiUrl}/genererTourSuivant/${tournoiId}`, {});
+  }
   
 }
