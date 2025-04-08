@@ -1,26 +1,31 @@
-<div class="publication-form">
-  <h2>Ajouter une publication</h2>
+<div class="publication-card">
+  <h2>Créer une publication</h2>
 
   <div *ngIf="successMessage" class="alert alert-success">
     {{ successMessage }}
   </div>
-
   <div *ngIf="errorMessage" class="alert alert-danger">
     {{ errorMessage }}
   </div>
 
-  <form (ngSubmit)="addPublication()">
+  <form (ngSubmit)="addPublication()" enctype="multipart/form-data">
+    <textarea
+      placeholder="Exprimez-vous..."
+      [(ngModel)]="contenu"
+      name="contenu"
+      class="textarea"
+      required
+    ></textarea>
 
-
-    <div class="form-group">
-      <label for="contenu">Contenu</label>
-      <textarea id="contenu" [(ngModel)]="contenu" name="contenu" class="form-control" required></textarea>
+    <div class="file-upload">
+      <label for="file">
+        <span>📎 Ajouter un fichier</span>
+      </label>
+      <input type="file" id="file" (change)="onFileSelected($event)" />
     </div>
-    <div class="form-group">
-      <label for="file">Fichier (optionnel)</label>
-      <input type="file" id="file" (change)="onFileSelected($event)" class="form-control" />
-    </div>
 
-    <button type="submit" class="btn btn-primary" [disabled]="!contenu">Ajouter</button>
+    <button type="submit" [disabled]="!contenu" class="btn-post">
+      Publier
+    </button>
   </form>
 </div>
