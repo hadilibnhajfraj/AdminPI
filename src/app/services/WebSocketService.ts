@@ -8,11 +8,19 @@ export class WebSocketService {
   private socket$: WebSocketSubject<any>;
 
   constructor() {
-    this.socket$ = new WebSocketSubject("ws://localhost:8082/stream");
+    this.socket$ = new WebSocketSubject("ws://localhost:8082/ws"); // URL de connexion WebSocket
   }
 
-  sendMessage(message: any) {
-    this.socket$.next(message);
+  sendMessage(message: Blob | object) {
+    if (message instanceof Blob) {
+      const reader = new FileReader();
+      reader.readAsArrayBuffer(message);
+      reader.onloadend = () => {
+        this.socket$.next(reader.result as ArrayBuffer);
+      };
+    } else {
+      this.socket$.next(JSON.stringify(message));
+    }
   }
 
   getMessages() {

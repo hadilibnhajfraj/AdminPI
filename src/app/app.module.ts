@@ -1,6 +1,7 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -14,6 +15,8 @@ import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 
 import { VideoStreamComponent } from './video-stream/video-stream.component';
+import { LoginComponent } from './login/login.component';
+import { PublicationComponent } from './publication/publication.component';
 
 @NgModule({
   imports: [
@@ -29,7 +32,10 @@ import { VideoStreamComponent } from './video-stream/video-stream.component';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    VideoStreamComponent
+    VideoStreamComponent,
+    LoginComponent,
+    PublicationComponent
+
 
   ],
   providers: [],

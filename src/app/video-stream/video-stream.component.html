@@ -1,2 +1,16 @@
-<video #videoElement autoplay></video>
-<button (click)="startStreaming()">Démarrer le Live</button>
+<div class="video-container">
+  <video #videoElement autoplay></video>
+  <!-- Vidéo en direct -->
+
+  <div class="comment-section" #commentSection>
+    <div *ngFor="let comment of comments" class="comment">
+      {{ comment }}
+      <!-- Affichage des commentaires en temps réel -->
+    </div>
+  </div>
+
+  <div class="comment-input">
+    <input [(ngModel)]="newComment" placeholder="Écrire un commentaire..." />
+    <button (click)="sendComment(newComment)">Envoyer</button>
+  </div>
+</div>

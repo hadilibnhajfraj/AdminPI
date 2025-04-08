@@ -1,0 +1,41 @@
+.video-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+video {
+  width: 80%;
+  max-width: 640px;
+  margin-bottom: 20px;
+}
+
+.comment-section {
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 10px;
+  width: 80%;
+  margin-bottom: 20px;
+}
+
+.comment {
+  padding: 5px;
+  margin-bottom: 10px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+.comment-input {
+  display: flex;
+  margin-top: 20px;
+}
+
+.comment-input input {
+  flex-grow: 1;
+  padding: 10px;
+}
+
+.comment-input button {
+  padding: 10px;
+  margin-left: 10px;
+}

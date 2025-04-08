@@ -9,6 +9,8 @@ import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { VideoStreamComponent } from '../../video-stream/video-stream.component';
+import { LoginComponent } from '../..//login/login.component';
+import { PublicationComponent } from '../../publication/publication.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -19,5 +21,8 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'maps',           component: MapsComponent },
     { path: 'notifications',  component: NotificationsComponent },
     { path: 'upgrade',        component: UpgradeComponent },
-    {path:'video',component:VideoStreamComponent}
+    {path:'video',component:VideoStreamComponent},
+    {path:'login',component:LoginComponent},
+    { path:'publication',component:PublicationComponent },
+    { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
 ];
