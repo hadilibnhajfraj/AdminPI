@@ -66,5 +66,12 @@ export class PublicationService {
 
     return this.http.put(`${this.apiUrl}/updatePublication/${id}`, formData, { headers });
   }
+  deletePublicationFile(id: number) {
+    const token = localStorage.getItem('token');  // Récupère le token JWT stocké dans le localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`  // Ajoute l'Authorization header avec le token
+    });
+    return this.http.delete(`http://localhost:8082/publications/delete/${id}`, { headers });
+  }
 
 }

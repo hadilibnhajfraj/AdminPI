@@ -43,12 +43,35 @@ export class UserPubComponent implements OnInit {
   onEdit(publication: any) {
     this.router.navigate(['/updatePub', publication.id]);
   }
+  fetchPublications(): void {
+    this.publicationService.getMyPublications().subscribe({
+      next: (data) => {
+        this.publications = data;
+       // this.paginatedPublications(); // Si tu as une méthode de pagination
+      },
+      error: (error) => {
+        console.error('Erreur lors du chargement des publications :', error);
+        this.errorMessage = 'Erreur lors du chargement des publications.';
+      }
+    });
+  }
 
-  onDelete(publication: any) {
-    if (confirm('Supprimer cette publication ?')) {
-      // Appelle le service de suppression
+  onDelete(publication: any): void {
+    const id = publication.id;
+    if (confirm('Êtes-vous sûr de vouloir supprimer le média de cette publication ?')) {
+      this.publicationService.deletePublicationFile(id).subscribe({
+        next: () => {
+          this.successMessage = 'Média supprimé avec succès.';
+          this.fetchPublications(); // Recharge les données
+        },
+        error: (error) => {
+          console.error('Erreur lors de la suppression du média :', error);
+          this.errorMessage = 'Erreur lors de la suppression du média.';
+        }
+      });
     }
   }
+
 
   loadPublications(): void {
     this.publicationService.getMyPublications().subscribe({
