@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PublicationService } from '../services/publication.service';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'user-pub',
@@ -11,11 +12,42 @@ export class UserPubComponent implements OnInit {
   publications: any[] = [];  // Stocke les publications de l'utilisateur
   errorMessage: string = '';  // Stocke le message d'erreur
   successMessage: string = '';  // Stocke le message de succès
+  page = 1; // Page actuelle
+  pageSize = 5; // Nombre d'éléments par page
 
-  constructor(private publicationService: PublicationService) {}
+  get paginatedPublications() {
+    const startIndex = (this.page - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    return this.publications.slice(startIndex, endIndex);
+  }
+
+  setPage(page: number) {
+    this.page = page;
+  }
+  constructor(private publicationService: PublicationService,private router: Router) {}
 
   ngOnInit(): void {
     this.loadPublications();  // Charge les publications lors de l'initialisation du composant
+  }
+  isImage(url: string): boolean {
+    return /\.(jpg|jpeg|png|gif|webp)$/i.test(url);
+  }
+
+  isVideo(url: string): boolean {
+    return /\.(mp4|webm|ogg)$/i.test(url);
+  }
+  onAdd() {
+    this.router.navigate(['/publication']);
+  }
+
+  onEdit(publication: any) {
+    // Remplis un formulaire pour modifier la publication
+  }
+
+  onDelete(publication: any) {
+    if (confirm('Supprimer cette publication ?')) {
+      // Appelle le service de suppression
+    }
   }
 
   loadPublications(): void {

@@ -1,6 +1,7 @@
 // publication.component.ts
 import { Component, OnInit } from '@angular/core';
 import { PublicationService } from '../services/publication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-publication',
@@ -17,7 +18,7 @@ export class PublicationComponent implements OnInit {
   createdPublication: any;
   publications: any[] = [];
 
-  constructor(private publicationService: PublicationService) {}
+  constructor(private publicationService: PublicationService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadPublications();
@@ -50,6 +51,7 @@ export class PublicationComponent implements OnInit {
         this.isLive = false;
         this.file = null;
         this.errorMessage = '';
+        this.router.navigate(['/AllPub']);
       },
       error: (err) => {
         console.error("Erreur lors de l’ajout de la publication:", err);

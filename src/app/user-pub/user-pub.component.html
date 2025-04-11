@@ -1,17 +1,88 @@
+<!-- Alerte d'erreur -->
 <div *ngIf="errorMessage" class="alert alert-danger">
   {{ errorMessage }}
 </div>
 
-<div *ngIf="publications.length > 0">
-  <div *ngFor="let publication of publications" class="card">
-    <div class="card-body">
-      <p>{{ publication.contenu }}</p>
-      <img *ngIf="publication.urlMedia" [src]="'http://localhost:8082/' + publication.urlMedia" class="media" />
-      <p class="date">🕒 {{ publication.datePublication }}</p>
-    </div>
-  </div>
+<!-- Tableau des publications -->
+<div *ngIf="paginatedPublications.length > 0" class="table-responsive mt-4 shadow-sm rounded-3 border">
+  <table class="table table-bordered table-hover align-middle text-center mb-0">
+    <thead class="table-primary text-dark">
+      <tr class="align-middle">
+        <th style="width: 30%">📄 Contenu</th>
+        <th style="width: 25%">🖼️ Média</th>
+        <th style="width: 25%">📅 Date de publication</th>
+        <th style="width: 20%">⚙️ Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let publication of paginatedPublications" class="table-light">
+        <td class="text-start px-3 py-2">
+          {{ publication.contenu }}
+        </td>
+
+        <td class="px-2 py-2">
+          <!-- Si c'est une image -->
+          <img
+            *ngIf="isImage(publication.urlMedia)"
+            [src]="'http://localhost:8082/' + publication.urlMedia"
+            alt="Media"
+            class="img-thumbnail shadow-sm"
+            style="max-width: 120px; max-height: 120px; object-fit: cover;"
+          />
+
+          <!-- Si c'est une vidéo -->
+          <video
+            *ngIf="isVideo(publication.urlMedia)"
+            [src]="'http://localhost:8082/' + publication.urlMedia"
+            controls
+            class="shadow-sm rounded"
+            style="max-width: 120px; max-height: 120px; object-fit: cover;"
+          ></video>
+        </td>
+
+        <td class="px-2 py-2">
+          🕒 {{ publication.datePublication | date: 'short' }}
+        </td>
+
+        <td class="px-2 py-2">
+          <!-- Actions -->
+          <button class="btn btn-success btn-sm me-1" (click)="onAdd()">
+            <i class="bi bi-plus-circle"></i>
+          </button>
+
+          <button class="btn btn-warning btn-sm me-1" (click)="onEdit(publication)">
+            <i class="bi bi-pencil-square"></i>
+          </button>
+
+          <button class="btn btn-danger btn-sm" (click)="onDelete(publication)">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
-<div *ngIf="publications.length === 0 && !errorMessage">
-  <p>Aucune publication à afficher.</p>
+<!-- Message si aucune publication -->
+<div *ngIf="paginatedPublications.length === 0 && !errorMessage" class="text-center mt-4">
+  <p class="text-muted">Aucune publication à afficher.</p>
+</div>
+
+<!-- Pagination -->
+<div class="pagination d-flex justify-content-center mt-4">
+  <button
+    class="btn btn-secondary btn-sm"
+    (click)="setPage(page - 1)"
+    [disabled]="page <= 1">
+    Précédent
+  </button>
+
+  <span class="mx-2">Page {{ page }}</span>
+
+  <button
+    class="btn btn-secondary btn-sm"
+    (click)="setPage(page + 1)"
+    [disabled]="page * pageSize >= publications.length">
+    Suivant
+  </button>
 </div>
