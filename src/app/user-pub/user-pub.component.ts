@@ -41,7 +41,7 @@ export class UserPubComponent implements OnInit {
   }
 
   onEdit(publication: any) {
-    // Remplis un formulaire pour modifier la publication
+    this.router.navigate(['/updatePub', publication.id]);
   }
 
   onDelete(publication: any) {

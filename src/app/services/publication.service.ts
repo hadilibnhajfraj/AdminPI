@@ -40,5 +40,31 @@ export class PublicationService {
 
     return this.http.get<any[]>(`${this.apiUrl}/mine`, { headers });  // Requête GET pour récupérer les publications de l'utilisateur connecté
   }
+  // Récupérer une publication par son ID
+  getPublicationById(id: string): Observable<any> {
+    const token = localStorage.getItem('token');  // Récupère le token JWT stocké dans le localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`  // Ajoute l'Authorization header avec le token
+    });
+    return this.http.get(`${this.apiUrl}/getPublication/${id}`, { headers });
+  }
+  updatePublication(id: string, publication: any, file: File | null): Observable<any> {
+    const formData = new FormData();
+
+    // Ajouter la publication sous forme de JSON
+    formData.append('publication', JSON.stringify(publication));
+
+    // Ajouter le fichier si présent
+    if (file) {
+      formData.append('file', file, file.name);
+    }
+
+    const token = localStorage.getItem('token');  // Récupère le token JWT stocké dans le localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`  // Ajoute l'Authorization header avec le token
+    });
+
+    return this.http.put(`${this.apiUrl}/updatePublication/${id}`, formData, { headers });
+  }
 
 }

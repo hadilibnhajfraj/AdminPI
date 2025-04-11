@@ -1,0 +1,59 @@
+<div class="container mt-5">
+  <h3>Mettre à jour la publication</h3>
+
+  <!-- Affichage des messages de succès ou d'erreur -->
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+  </div>
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <form (ngSubmit)="updatePublication()">
+    <div class="mb-3">
+      <label for="contenu" class="form-label">Contenu</label>
+      <textarea
+        id="contenu"
+        class="form-control"
+        [(ngModel)]="contenu"
+        name="contenu"
+        required
+      ></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="datePublication" class="form-label">Date de publication</label>
+      <input
+        type="date"
+        id="datePublication"
+        class="form-control"
+        [(ngModel)]="datePublication"
+        name="datePublication"
+        required
+      />
+    </div>
+
+    <div class="mb-3 form-check">
+      <input
+        type="checkbox"
+        id="isLive"
+        class="form-check-input"
+        [(ngModel)]="isLive"
+        name="isLive"
+      />
+      <label class="form-check-label" for="isLive">Publier en direct</label>
+    </div>
+
+    <div class="mb-3">
+      <label for="file" class="form-label">Sélectionner un fichier</label>
+      <input
+        type="file"
+        id="file"
+        class="form-control"
+        (change)="onFileSelected($event)"
+      />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Mettre à jour</button>
+  </form>
+</div>
