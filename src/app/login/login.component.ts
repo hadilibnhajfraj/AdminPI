@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
       .subscribe({
         next: (res: any) => {
           this.authService.saveToken(res.token);
-          this.router.navigate(['/publication']);
+          this.router.navigate(['/AllPub']);
         },
         error: () => this.errorMessage = 'Login failed. Please check your credentials.'
       });

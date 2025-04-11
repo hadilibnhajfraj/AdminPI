@@ -1,0 +1,17 @@
+<div *ngIf="errorMessage" class="alert alert-danger">
+  {{ errorMessage }}
+</div>
+
+<div *ngIf="publications.length > 0">
+  <div *ngFor="let publication of publications" class="card">
+    <div class="card-body">
+      <p>{{ publication.contenu }}</p>
+      <img *ngIf="publication.urlMedia" [src]="'http://localhost:8082/' + publication.urlMedia" class="media" />
+      <p class="date">🕒 {{ publication.datePublication }}</p>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="publications.length === 0 && !errorMessage">
+  <p>Aucune publication à afficher.</p>
+</div>

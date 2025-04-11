@@ -11,6 +11,7 @@ import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { VideoStreamComponent } from '../../video-stream/video-stream.component';
 import { LoginComponent } from '../..//login/login.component';
 import { PublicationComponent } from '../../publication/publication.component';
+import { UserPubComponent } from '../../user-pub/user-pub.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -23,6 +24,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'upgrade',        component: UpgradeComponent },
     {path:'video',component:VideoStreamComponent},
     {path:'login',component:LoginComponent},
+    {path:'AllPub',component:UserPubComponent},
     { path:'publication',component:PublicationComponent },
     { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
 ];

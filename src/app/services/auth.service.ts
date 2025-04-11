@@ -1,4 +1,5 @@
-import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -20,7 +21,6 @@ export class AuthService {
   getToken(): string | null {
     return localStorage.getItem('token');  // Changez 'jwt' en 'token'
   }
-
 
   logout() {
     localStorage.removeItem('jwt');

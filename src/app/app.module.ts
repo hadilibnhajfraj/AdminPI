@@ -17,6 +17,7 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { VideoStreamComponent } from './video-stream/video-stream.component';
 import { LoginComponent } from './login/login.component';
 import { PublicationComponent } from './publication/publication.component';
+import { UserPubComponent } from './user-pub/user-pub.component';
 
 @NgModule({
   imports: [
@@ -34,7 +35,8 @@ import { PublicationComponent } from './publication/publication.component';
     AdminLayoutComponent,
     VideoStreamComponent,
     LoginComponent,
-    PublicationComponent
+    PublicationComponent,
+    UserPubComponent
 
 
   ],
