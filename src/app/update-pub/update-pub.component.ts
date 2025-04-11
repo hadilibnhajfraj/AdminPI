@@ -16,31 +16,27 @@ export class UpdatePubComponent implements OnInit {
   public successMessage: string;
   public errorMessage: string;
   public file: File | null = null;
-  public publication: any; // Pour stocker la publication récupérée
+  public publication: any;
 
   constructor(
     private route: ActivatedRoute,
     private publicationService: PublicationService,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    // Récupérer l'ID de la publication depuis l'URL
     this.id = this.route.snapshot.paramMap.get('id') || '';
-
-    // Appel à la méthode du service pour récupérer la publication
     this.getPublicationById(this.id);
   }
 
   getPublicationById(id: string): void {
     this.publicationService.getPublicationById(id).subscribe(
       (response) => {
-        // Assurez-vous que la réponse contient la publication avec tous ses champs
         this.publication = response;
         this.contenu = this.publication.contenu;
         this.datePublication = this.publication.datePublication;
         this.isLive = this.publication.isLive;
-       this.file=this.publication.isLive;
       },
       (error) => {
         console.error('Erreur lors du chargement de la publication:', error);
@@ -49,7 +45,6 @@ export class UpdatePubComponent implements OnInit {
     );
   }
 
-  // Méthode de mise à jour
   updatePublication(): void {
     const publication = {
       contenu: this.contenu,
@@ -60,6 +55,9 @@ export class UpdatePubComponent implements OnInit {
     this.publicationService.updatePublication(this.id, publication, this.file).subscribe(
       (response) => {
         this.successMessage = 'Publication mise à jour avec succès';
+        setTimeout(() => {
+          this.router.navigate(['/AllPub']);
+        }, 1500);
       },
       (error) => {
         console.error('Erreur lors de la mise à jour de la publication:', error);
