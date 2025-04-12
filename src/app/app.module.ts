@@ -20,6 +20,7 @@ import { PublicationComponent } from './publication/publication.component';
 import { UserPubComponent } from './user-pub/user-pub.component';
 import { UpdatePubComponent } from './update-pub/update-pub.component';
 
+
 @NgModule({
   imports: [
     BrowserAnimationsModule,

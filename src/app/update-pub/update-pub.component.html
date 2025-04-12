@@ -48,13 +48,13 @@
     <!-- Prévisualisation du fichier actuel -->
     <div *ngIf="publication?.urlMedia" class="mb-3">
       <div *ngIf="publication.typeMedia.startsWith('image')">
-        <img [src]="'http://localhost:8080/' + publication.urlMedia" alt="Image" class="img-fluid" style="max-height: 300px;" />
+        <img [src]="'http://localhost:8082/' + publication.urlMedia" alt="Image" class="img-fluid" style="max-height: 300px;" />
       </div>
       <div *ngIf="publication.typeMedia.startsWith('video')">
-        <video [src]="'http://localhost:8080/' + publication.urlMedia" controls class="mb-3" style="max-width: 100%; max-height: 300px;"></video>
+        <video [src]="'http://localhost:8082/' + publication.urlMedia" controls class="mb-3" style="max-width: 100%; max-height: 300px;"></video>
       </div>
       <div *ngIf="!publication.typeMedia.startsWith('image') && !publication.typeMedia.startsWith('video')">
-        <a [href]="'http://localhost:8080/' + publication.urlMedia" target="_blank">Voir le fichier</a>
+        <a [href]="'http://localhost:8082/' + publication.urlMedia" target="_blank">Voir le fichier</a>
       </div>
     </div>
 
