@@ -13,6 +13,17 @@ export class NotificationsComponent implements OnInit {
   tournois: Tournoi[] = [];
   message: string = '';
   isError: boolean = false;
+  enChargement: boolean = false;
+  popupVisible: boolean = false;
+  popupMessage: string = '';
+  rounds: any[][] = [];
+nomTournoi: string = '';
+popupBracketVisible: boolean = false;
+tournoiSelectionne!: Tournoi;
+
+fermerPopupBracket(): void {
+  this.popupBracketVisible = false;
+}
 
   constructor(
     private tournoiService: TournoiService, 
@@ -24,13 +35,10 @@ export class NotificationsComponent implements OnInit {
     this.getTournois();
   }
 
-  // Charger la liste des tournois et vérifier s'ils ont des matchs
   getTournois(): void {
     this.tournoiService.getAllTournois().subscribe(
       (data) => {
         this.tournois = data;
-
-        // Vérifier si chaque tournoi a des matchs
         this.tournois.forEach(tournoi => {
           this.tournoiService.tournoiADejaDesMatchs(tournoi.idTournoi).subscribe(hasMatchs => {
             tournoi.hasMatchs = hasMatchs;
@@ -44,36 +52,68 @@ export class NotificationsComponent implements OnInit {
     );
   }
 
-  // Afficher les détails du tournoi
   afficherDetails(tournoi: Tournoi): void {
     alert(`Détails du tournoi:\nNom: ${tournoi.nom}\nNombre d'équipes: ${tournoi.nbEquipe}\nFrais: ${tournoi.frais}\nDate de début: ${tournoi.dateDebut}\nDate de fin: ${tournoi.dateFin}`);
   }
 
-  // Générer le planning du tournoi
   genererPlanning(tournoi: Tournoi): void {
-    if (tournoi.nbEquipeRestant === 0) {
+    if (tournoi.nbEquipeRestant === 0 && !tournoi.hasMatchs) {
+      this.popupVisible = true;
+      this.popupMessage = "Tirage au sort en cours...";
+      this.enChargement = true;
+
       this.tournoiService.genererMatchs(tournoi.idTournoi).subscribe(
         () => {
-          this.toastr.success('Planning généré avec succès!');
+          setTimeout(() => {
+            this.popupMessage = "Tirage au sort terminé !";
+            setTimeout(() => {
+              this.enChargement = false;
+              this.popupVisible = false;
+              this.router.navigate(['/tournoi', tournoi.idTournoi, 'matchs']);
+            }, 1500);
+          }, 3000); // Durée de l'animation initiale
         },
         (error) => {
+          this.enChargement = false;
+          this.popupVisible = false;
           console.error('Erreur lors de la génération des matchs', error);
           this.toastr.error('Une erreur est survenue lors de la génération des matchs.');
         }
       );
     } else {
-      this.toastr.warning('Il reste des équipes à affecter. Impossible de générer le planning.');
+      this.toastr.warning('Il reste des équipes à affecter ou les matchs existent déjà. Impossible de générer le planning.');
     }
   }
 
-  // Afficher les matchs du tournoi
   afficherMatchs(tournoi: Tournoi): void {
     this.router.navigate(['/matchtournoi', tournoi.idTournoi]);
   }
 
-  // Afficher les messages de succès ou d'erreur
   showMessage(msg: string, isError: boolean): void {
     this.message = msg;
     this.isError = isError;
   }
+
+
+  
+  afficherBracket(tournoi: Tournoi) {
+    console.log('Tournoi sélectionné ID:', tournoi.idTournoi); // ← important
+    this.nomTournoi = tournoi.nom;
+    this.tournoiSelectionne = tournoi;
+  
+    this.tournoiService.getMatchsParTournoi(tournoi.idTournoi).subscribe({
+      next: (matchs) => {
+        console.log('Matchs récupérés pour bracket:', matchs); // ← important
+        this.rounds = [matchs]; // Temporaire si tu ne veux pas organiser par rounds
+        this.popupBracketVisible = true;
+      },
+      error: (err) => {
+        console.error('Erreur lors du chargement des matchs du tournoi :', err);
+        this.popupMessage = 'Erreur lors du chargement des matchs.';
+        this.popupVisible = true;
+      }
+    });
+  }
+  
+  
 }

@@ -16,6 +16,7 @@ import { TournoiComponent } from './tournoi/tournoi.component';
 import { MatchtournoiComponent } from './matchtournoi/matchtournoi.component';
 import { EquipetournoiComponent } from './equipetournoi/equipetournoi.component';
 
+
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -32,7 +33,8 @@ import { EquipetournoiComponent } from './equipetournoi/equipetournoi.component'
     AdminLayoutComponent,
     TournoiComponent,
     MatchtournoiComponent,
-    EquipetournoiComponent
+    EquipetournoiComponent,
+   
 
   ],
   providers: [],

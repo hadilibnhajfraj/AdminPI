@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TournoiService } from '../service/tournoi.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-matchtournoi',
@@ -21,9 +22,14 @@ export class MatchtournoiComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private tournoiService: TournoiService
+    private tournoiService: TournoiService,
+    private location: Location
   ) {}
 
+
+  goBack(): void {
+    this.location.back();  // Retourne à la page précédente
+  }
   ngOnInit(): void {
     this.selectedTournoiId = +this.route.snapshot.paramMap.get('id')!;
     this.getMatchsParTournoi();
