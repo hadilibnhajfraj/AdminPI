@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Liste des Joueurs</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fafafa;
+      margin: 0;
+      padding: 30px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background-color: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: #d32f2f;
+      text-align: center;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      text-align: center;
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #d32f2f;
+      color: white;
+    }
+
+    .status-yes {
+      color: green;
+      font-weight: bold;
+    }
+
+    .status-no {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Liste des Joueurs</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Nom du Joueur</th>
+          <th>Rôle</th>
+          <th>Disponible</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ahmed Ben Ali</td>
+          <td>Gardien</td>
+          <td class="status-yes">✅ Oui</td>
+        </tr>
+        <tr>
+          <td>Yassine Khemiri</td>
+          <td>Défenseur</td>
+          <td class="status-no">❌ Non</td>
+        </tr>
+        <tr>
+          <td>Omar Trabelsi</td>
+          <td>Attaquant</td>
+          <td class="status-yes">✅ Oui</td>
+        </tr>
+        <tr>
+          <td>Mehdi Ferjani</td>
+          <td>Milieu</td>
+          <td class="status-no">❌ Non</td>
+        </tr>
+        <tr>
+          <td>Sami Ayari</td>
+          <td>Défenseur</td>
+          <td class="status-yes">✅ Oui</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</body>
+</html>
