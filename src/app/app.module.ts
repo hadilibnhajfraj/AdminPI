@@ -15,6 +15,7 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 
 
 
+
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -24,8 +25,13 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
     RouterModule,
     AppRoutingModule,
     NgbModule,
-    ToastrModule.forRoot()
+   
+
+    ToastrModule.forRoot(),
+
+
   ],
+
   declarations: [
     AppComponent,
     AdminLayoutComponent,

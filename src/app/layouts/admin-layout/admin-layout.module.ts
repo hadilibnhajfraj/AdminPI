@@ -39,6 +39,8 @@ import { CreeCompteComponent } from '../../cree-compte/cree-compte.component';
     FormsModule,
     ChartsModule,
     NgbModule,
+     //
+     ReactiveFormsModule,
     ToastrModule.forRoot()
   ],
   declarations: [

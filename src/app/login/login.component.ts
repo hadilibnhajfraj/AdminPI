@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +9,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  loginForm: FormGroup;
+  errorMessage: string = '';
 
-  ngOnInit(): void {
+  constructor(private fb: FormBuilder, private router: Router) {
+    this.loginForm = this.fb.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required]
+    });
   }
 
+  ngOnInit(): void {}
+
+  onLogin(): void {
+    const { username, password } = this.loginForm.value;
+
+    if (username === 'admin' && password === 'admin') {
+      this.router.navigate(['/user-profile']);
+    } else {
+      this.errorMessage = 'Nom d\'utilisateur ou mot de passe incorrect';
+    }
+  }
 }
