@@ -1,74 +1,84 @@
-import {
-  Component,
-  OnInit,
-  ElementRef,
-  ViewChild,
-  AfterViewInit,
-} from "@angular/core";
-import { WebSocketService } from "../services/WebSocketService";
+import { Component, ElementRef, ViewChild, AfterViewInit, OnInit } from '@angular/core';
+import { WebSocketService } from '../services/WebSocketService';
+
 
 @Component({
-  selector: "app-video-stream",
-  templateUrl: "./video-stream.component.html",
-  styleUrls: ["./video-stream.component.css"],
+  selector: 'app-video-stream',
+  templateUrl: './video-stream.component.html',
+  styleUrls: ['./video-stream.component.css'],
 })
 export class VideoStreamComponent implements OnInit, AfterViewInit {
   @ViewChild("videoElement") videoElement!: ElementRef;
-  @ViewChild("remoteVideo") remoteVideo!: ElementRef; // Vidéo reçue depuis WebSocket
-  @ViewChild("commentSection") commentSection!: ElementRef; // Section des commentaires
-  private mediaStream!: MediaStream;
+  @ViewChild("commentSection") commentSection!: ElementRef;
 
-  comments: string[] = []; // Tableau pour stocker les commentaires
-  newComment: string = ""; // Nouveau commentaire à envoyer
-
+  comments: string[] = [];
+  newComment = "";
+  isPresse = true; // à remplacer par une vraie vérification plus tard
+  isLive = false;
+  message: string = '';
+  localStream: MediaStream | null = null;
+  peerConnection!: RTCPeerConnection;
+  isBroadcaster = false;
+  isViewer = false;
   constructor(private wsService: WebSocketService) {}
 
   ngOnInit() {
-    this.startStreaming();
+    this.wsService.getMessages().subscribe((msg: any) => {
+      const data = typeof msg === "string" ? JSON.parse(msg) : msg;
 
-    // Écouter les commentaires reçus en temps réel via WebSocket
-    this.wsService.getMessages().subscribe((message) => {
-      if (message.type === "comment") {
-        this.addComment(message.data);
+      if (data.type === "comment") {
+        this.addComment(data.data);
+      } else if (data.type === "liveStarted") {
+        alert("🔴 Nouveau live lancé !");
+        this.startWebRTC();
       }
     });
   }
 
   ngAfterViewInit() {
-    // Après initialisation, commencez à diffuser la vidéo et gérer l'affichage des commentaires
-    this.startStreaming();
+    // Optionnel : démarrer automatiquement si presse
   }
 
-  // Diffusion du flux vidéo
-  async startStreaming() {
+  async startLiveStream() {
     try {
-      this.mediaStream = await navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: true,
-      });
-      this.videoElement.nativeElement.srcObject = this.mediaStream;
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+      this.videoElement.nativeElement.srcObject = stream;
 
-      // Vous pouvez envoyer le flux vidéo aux autres utilisateurs via WebSocket ici.
-    } catch (error) {
-      console.error("Erreur lors de l'accès à la caméra :", error);
-      alert("Permission refusée ! Vérifiez vos paramètres de confidentialité.");
+      this.wsService.startLive().subscribe({
+        next: (res) => {
+          this.isLive = true;
+          this.wsService.sendMessage({ type: 'liveStarted' });
+        },
+        error: () => {
+          alert("⛔ Seuls les utilisateurs avec le rôle Presse peuvent démarrer un live.");
+        }
+      });
+    } catch (err) {
+      console.error("Erreur lors du démarrage du live", err);
     }
   }
 
-  // Ajouter un commentaire à l'interface
+  stopLiveStream() {
+    this.isLive = false;
+    this.videoElement.nativeElement.srcObject.getTracks().forEach((track: any) => track.stop());
+    alert("⏹️ Live arrêté.");
+  }
+
   addComment(comment: string) {
     this.comments.push(comment);
     setTimeout(() => {
-      const commentSection = this.commentSection.nativeElement;
-      commentSection.scrollTop = commentSection.scrollHeight; // Faire défiler la section des commentaires vers le bas
+      this.commentSection.nativeElement.scrollTop = this.commentSection.nativeElement.scrollHeight;
     }, 0);
   }
 
-  // Envoyer un commentaire
   sendComment(comment: string) {
     if (comment.trim()) {
       this.wsService.sendMessage({ type: "comment", data: comment });
-      this.newComment = ""; // Réinitialiser le champ de commentaire après envoi
+      this.newComment = "";
     }
+  }
+
+  startWebRTC() {
+    // Signaling et WebRTC ici
   }
 }

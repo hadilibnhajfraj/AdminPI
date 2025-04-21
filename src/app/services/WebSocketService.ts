@@ -1,27 +1,27 @@
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
 import { WebSocketSubject } from "rxjs/webSocket";
 
-@Injectable({
-  providedIn: "root",
-})
+@Injectable({ providedIn: "root" })
 export class WebSocketService {
-  private socket$: WebSocketSubject<any>;
+  private socket$: WebSocketSubject<any> = new WebSocketSubject("ws://localhost:8082/ws");
+  private apiUrl = 'http://localhost:8082/publications';
+  constructor(private http: HttpClient) {}
 
-  constructor() {
-    this.socket$ = new WebSocketSubject("ws://localhost:8082/ws"); // URL de connexion WebSocket
+  startLive(): Observable<any> {
+    const token = localStorage.getItem('token');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.post(`${this.apiUrl}/start-live`, {}, { headers });
+  }
+  sendMessage(message: any) {
+    this.socket$.next(message); // ne pas le stringifier ici !
   }
 
-  sendMessage(message: Blob | object) {
-    if (message instanceof Blob) {
-      const reader = new FileReader();
-      reader.readAsArrayBuffer(message);
-      reader.onloadend = () => {
-        this.socket$.next(reader.result as ArrayBuffer);
-      };
-    } else {
-      this.socket$.next(JSON.stringify(message));
-    }
-  }
 
   getMessages() {
     return this.socket$;
