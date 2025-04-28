@@ -1,169 +1,54 @@
-<p>ajouter-equipe works!</p>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>Inscription d'équipe - Sport League</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f9f9f9;
-      margin: 0;
-    }
-
-    .header {
-      background-color: #d32f2f;
-      color: white;
-      padding: 20px;
-      font-size: 22px;
-      text-align: center;
-      font-weight: bold;
-    }
-
-    .container {
-      max-width: 800px;
-      margin: 40px auto;
-      background-color: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .info-box {
-      background-color: #f5f5f5;
-      padding: 15px;
-      border-left: 5px solid #d32f2f;
-      margin-bottom: 25px;
-      border-radius: 6px;
-      color: #333;
-    }
-
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 5px;
-      color: #333;
-    }
-
-    input[type="text"], input[type="number"], input[type="file"] {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-
-    .advanced {
-      margin: 10px 0;
-      color: #2e7d32;
-      cursor: pointer;
-      font-size: 14px;
-    }
-
-    .buttons {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-      margin-top: 20px;
-    }
-
-    .btn {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 14px;
-    }
-
-    .btn-cancel {
-      background-color: #eee;
-      color: #444;
-    }
-
-    .btn-submit {
-      background-color: #d32f2f;
-      color: white;
-    }
-
-    .btn-submit:hover {
-      background-color: #b71c1c;
-    }
-
-    .btn-doc {
-      float: right;
-      background-color: #d32f2f;
-      color: white;
-      padding: 8px 12px;
-      border-radius: 5px;
-      text-decoration: none;
-      font-size: 14px;
-    }
-
-    .btn-doc:hover {
-      background-color: #b71c1c;
-    }
-  </style>
-</head>
-<body>
-
-  <div class="header">
-    Paramètres d'inscription
-  </div>
-
-  <div class="container">
-    <a class="btn-doc" href="#">📄 lien d'equipe</a>
-
-    <h2>Ajouter une equipe</h2>
-    <p><em>Ligue – Nouvelle saison</em></p>
-
-    <div class="info-box">
-      Veuillez remplir les informations de l’équipe. Les champs requis sont marqués d’un astérisque (*).
+<!-- FIN FRM -->
+<div class="container mt-5 d-flex justify-content-center">
+  <div class="card col-md-6 p-4">
+    <div class="card-header text-center">
+      <h4 class="title">Ajouter une Équipe</h4>
     </div>
 
-    <!-- Important: enctype pour upload fichier -->
-    <form method="post" action="/equipe/ajouter" enctype="multipart/form-data">
-      <div class="form-group">
-        <label for="nom">Nom de l'équipe *</label>
-        <input type="text" id="nom" name="nom" required>
-      </div>
+    <div class="form-container mt-3">
+      <form [formGroup]="equipeForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="nom">Nom de l'équipe</label>
+          <input id="nom" formControlName="nom" class="form-control" />
+        </div>
 
-      <div class="form-group">
-        <label for="logo">Logo de l'équipe 📄</label>
-        <input type="file" id="logo" name="logo" accept="image/*">
-      </div>
+        <div class="mb-3">
+          <label for="adresse">Adresse</label>
+          <input id="adresse" formControlName="adresse" class="form-control" />
+        </div>
 
-      <div class="form-group">
-        <label for="adresse">Adresse de l'équipe *</label>
-        <input type="text" id="adresse" name="adresse" required>
-      </div>
+        <div class="mb-3">
+          <label for="nb_joueur">Nombre de joueurs</label>
+          <input type="number" id="nb_joueur" formControlName="nb_joueur" class="form-control" />
+        </div>
 
-      <div class="form-group">
-        <label for="nb_joueur">Nombre de joueurs *</label>
-        <input type="number" id="nb_joueur" name="nb_joueur" required min="1">
-      </div>
+        <div class="mb-3">
+          <label for="max_teams">Nombre max d’équipes</label>
+          <input type="number" id="max_teams" formControlName="max_teams" class="form-control" />
+        </div>
 
-      <div class="form-group">
-        <label for="max-teams">Nombre maximum d'équipes</label>
-        <input type="number" id="max-teams" name="max-teams" value="8">
-      </div>
+        <div class="mb-3">
+          <label for="price">Prix</label>
+          <input type="number" id="price" formControlName="price" class="form-control" />
+        </div>
 
-      <div class="form-group">
-        <label for="price">Prix par équipe</label>
-        <input type="text" id="price" name="price" value="1199">
-      </div>
-      <div class="advanced"><a href="/afficher-equipe">Choisir les équipes adverses</a></div>
-      <div class="advanced"><a href="/afficher-joueur">Choisir les joueurs</a></div>
-      
-      <div class="buttons">
-        <button type="reset" class="btn btn-cancel">✖ Annuler</button>
-        <button type="submit" class="btn btn-submit">✔ Soumettre</button>
-      </div>
-    </form>
+        <div class="mb-3">
+          <label for="logo">Logo</label>
+          <input type="file" (change)="onFileSelected($event)" />
+        </div>
+
+        <!-- ✅ Boutons -->
+        <div class="d-flex justify-content-between">
+          <button class="btn btn-primary" type="submit" [disabled]="equipeForm.invalid">
+            ✅ Ajouter l’équipe
+          </button>
+
+          <!-- 🔙 Bouton Annuler -->
+          <button type="button" class="btn btn-secondary" (click)="annuler()">
+            ❌ Annuler
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
-
-</body>
-</html>
+</div>

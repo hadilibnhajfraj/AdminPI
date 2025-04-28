@@ -24,8 +24,8 @@ export class LoginComponent implements OnInit {
   onLogin(): void {
     const { username, password } = this.loginForm.value;
 
-    if (username === 'admin' && password === 'admin') {
-      this.router.navigate(['/user-profile']);
+    if (username === 'meriem.bsm.fb@gmail.com' && password === 'admin') {
+      this.router.navigate(['/inscription']);
     } else {
       this.errorMessage = 'Nom d\'utilisateur ou mot de passe incorrect';
     }

@@ -16,7 +16,7 @@
     }
 
     .table-container {
-      max-width: 800px;
+      max-width: 900px;
       margin: 0 auto;
       background-color: white;
       padding: 20px;
@@ -52,6 +52,24 @@
       color: red;
     }
 
+    .action-button {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 5px;
+    }
+
+    .edit-button {
+      background-color: #1976d2;
+      color: white;
+    }
+
+    .delete-button {
+      background-color: #d32f2f;
+      color: white;
+    }
+
     @media (max-width: 600px) {
       table, thead, tbody, th, td, tr {
         display: block;
@@ -83,6 +101,7 @@
       td:nth-of-type(1):before { content: "Nom de l'équipe"; }
       td:nth-of-type(2):before { content: "Gouvernorat"; }
       td:nth-of-type(3):before { content: "Disponibilité"; }
+      td:nth-of-type(4):before { content: "Actions"; }
     }
   </style>
 </head>
@@ -95,36 +114,23 @@
         <tr>
           <th>Nom de l'équipe</th>
           <th>Gouvernorat</th>
-          <th>Disponibilité</th>
+          <!-- <th>Disponibilité</th> -->
+          <th>Actions</th>
         </tr>
       </thead>
+
       <tbody>
-        <tr>
-          <td>Espérance Sportive de Tunis</td>
-          <td>Tunis</td>
-          <td class="available">Disponible</td>
+        <tr *ngFor="let equipe of equipes">
+          <td>{{ equipe.nom }}</td>
+          <td>{{ equipe.adresse}}</td>
+          <!-- <td [class]="getDisponibiliteClasse(equipe.disponible)">
+            {{ getDisponibiliteLabel(equipe.disponible) }}
+          </td> -->
+          <td>
+            <button class="action-button edit-button" (click)="modifyEquipe(equipe.idEquipe)">✏️ Modifier</button>
+          <button class="action-button delete-button" (click)="supprimerEquipe(equipe.idEquipe)">🗑️ Supprimer</button>
+        </td>
         </tr>
-        <tr>
-          <td>Club Africain</td>
-          <td>Tunis</td>
-          <td class="unavailable">Indisponible</td>
-        </tr>
-        <tr>
-          <td>Étoile Sportive du Sahel</td>
-          <td>Sousse</td>
-          <td class="available">Disponible</td>
-        </tr>
-        <tr>
-          <td>Club Sportif Sfaxien</td>
-          <td>Sfax</td>
-          <td class="unavailable">Indisponible</td>
-        </tr>
-        <tr>
-          <td>Union Sportive Monastirienne</td>
-          <td>Monastir</td>
-          <td class="available">Disponible</td>
-        </tr>
-        <!-- Ajoutez d'autres équipes ici -->
       </tbody>
     </table>
   </div>

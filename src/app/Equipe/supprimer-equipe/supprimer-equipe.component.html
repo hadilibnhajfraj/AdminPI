@@ -1,1 +1,39 @@
-<p>supprimer-equipe works!</p>
+
+
+
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="card col-md-6 p-4">
+      <div class="card-header text-center">
+        <h4 class="title">Supprimer une Équipe</h4>
+      </div>
+  
+      <div *ngIf="isLoading">Chargement des informations de l’équipe...</div>
+  
+      <div *ngIf="!isLoading && !isDeleted">
+        <p>Vous êtes sur le point de <strong>supprimer</strong> l’équipe suivante :</p>
+  
+        <ul class="list-group mb-3">
+          <li class="list-group-item"><strong>Nom :</strong> {{ equipe.nom }}</li>
+          <li class="list-group-item"><strong>Adresse :</strong> {{ equipe.adresse }}</li>
+          <li class="list-group-item"><strong>Nombre de joueurs :</strong> {{ equipe.nb_joueur }}</li>
+          <li class="list-group-item"><strong>Prix :</strong> {{ equipe.price }} DT</li>
+        </ul>
+  
+        <div class="info-box warning">
+          ⚠️ Cette action est irréversible. Confirmez-vous la suppression ?
+        </div>
+  
+        <div class="buttons">
+          <button class="btn btn-cancel" routerLink="/equipetournoi">✖ Annuler</button>
+          <button class="btn btn-danger" (click)="onDelete()">🗑 Supprimer</button>
+        </div>
+      </div>
+  
+      <div *ngIf="isDeleted" class="alert alert-success text-center mt-3">
+        ✅ Équipe supprimée avec succès !
+      </div>
+    </div>
+  </div>
+
+
+  

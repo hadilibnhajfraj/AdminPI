@@ -1,1 +1,86 @@
-<p>modifier-equipe works!</p>
+
+
+<div class="container mt-5 d-flex justify-content-center">
+  <div class="card col-md-6 p-4">
+    <div class="card-header text-center">
+      <h4 class="title">Modifier une Équipe</h4>
+
+
+
+
+
+<div class="header">
+    Modifier une équipe
+  </div>
+  
+  <div class="container">
+    <a class="btn-doc" href="afficher-equipe()">📄 Voir les détails de l'équipe</a>
+  
+    <h2>Modifier une équipe</h2>
+    <p><em>Mise à jour des informations de l’équipe</em></p>
+  
+    <div class="info-box">
+      Merci de modifier les champs souhaités. Les champs requis sont marqués d’un astérisque (*).
+    </div>
+  
+    <form [formGroup]="equipeForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="nom">Nom de l'équipe *</label>
+        <input type="text" id="nom" formControlName="nom" />
+        <div *ngIf="equipeForm.get('nom')?.touched && equipeForm.get('nom')?.invalid" class="error">Champ requis</div>
+      </div>
+  
+      <div class="form-group">
+        <label for="logo">Changer le logo de l'équipe 📄</label>
+        <input type="file" id="logo" (change)="onFileSelected($event)" accept="image/*">
+      </div>
+  
+      <div class="form-group">
+        <label for="adresse">Adresse de l'équipe *</label>
+        <input type="text" id="adresse" formControlName="adresse" />
+        <div *ngIf="equipeForm.get('adresse')?.touched && equipeForm.get('adresse')?.invalid" class="error">Champ requis</div>
+      </div>
+  
+      <div class="form-group">
+        <label for="nb_joueur">Nombre de joueurs *</label>
+        <input type="number" id="nb_joueur" formControlName="nb_joueur" min="1" />
+        <div *ngIf="equipeForm.get('nb_joueur')?.touched && equipeForm.get('nb_joueur')?.invalid" class="error">
+          Doit être supérieur à 0
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="max-teams">Nombre maximum d'équipes</label>
+        <input type="number" id="max-teams" formControlName="max_teams">
+      </div>
+  
+      <div class="form-group">
+        <label for="price">Prix par équipe</label>
+        <input type="text" id="price" formControlName="price">
+      </div>
+  
+      <div class="advanced">
+        <a class="btn-doc" href="afficher-joueur()">📄 Voir les joueurs de cette équipe</a>
+
+      </div>
+  
+      
+        <!-- ✅ Boutons -->
+        <div class="d-flex justify-content-between">
+          <button class="btn btn-primary" type="submit" [disabled]="equipeForm.invalid">
+            ✅ Modifier l’équipe
+          </button>
+
+          <!-- 🔙 Bouton Annuler -->
+          <button type="button" class="btn btn-secondary" (click)="annuler()">
+            ❌ Annuler
+          </button>
+        </div>
+
+    </form>
+  </div>
+
+</div>
+</div>
+</div>
+  

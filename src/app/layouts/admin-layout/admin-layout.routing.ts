@@ -11,13 +11,19 @@ import { UpgradeComponent } from '../../upgrade/upgrade.component';
 //Joueur
 import { AjouterJoueurComponent } from '../../Joueur/ajouter-joueur/ajouter-joueur.component';
 import { AfficherJoueurComponent } from '../../Joueur/afficher-joueur/afficher-joueur.component';
+import { ModifierJoueurComponent } from '../../Joueur/modifier-joueur/modifier-joueur.component';
+import { SupprimerJoueurComponent } from '../../Joueur/supprimer-joueur/supprimer-joueur.component';
 //Equipe
 import { AjouterEquipeComponent } from '../../Equipe/ajouter-equipe/ajouter-equipe.component';
 import { AfficherEquipeComponent } from '../../Equipe/afficher-equipe/afficher-equipe.component';
+import { ModifierEquipeComponent } from '../../Equipe/modifier-equipe/modifier-equipe.component';
+import { SupprimerEquipeComponent } from '../../Equipe/supprimer-equipe/supprimer-equipe.component';
 //inscription
 import { LoginComponent } from '../../login/login.component';
 import { InscriptionComponent } from '../../inscription/inscription.component';
 import { CreeCompteComponent } from '../../cree-compte/cree-compte.component';
+
+
 
 export const AdminLayoutRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
@@ -32,9 +38,13 @@ export const AdminLayoutRoutes: Routes = [
   //Joueur
   { path: 'ajouter-joueur', component: AjouterJoueurComponent },
   { path: 'afficher-joueur', component: AfficherJoueurComponent },
+  { path: 'modifier-joueur/:id', component: ModifierJoueurComponent },
+  { path: 'supprimer-joueur/:id', component: SupprimerJoueurComponent },
   //Equipe
   { path: 'ajouter-equipe', component: AjouterEquipeComponent },
   { path: 'afficher-equipe', component: AfficherEquipeComponent },
+    { path: 'modifier-equipe/:id', component: ModifierEquipeComponent },
+  { path: 'supprimer-equipe/:id', component: SupprimerEquipeComponent },
   //inscription
   { path: 'login', component: LoginComponent },
   { path: 'cree-compte', component: CreeCompteComponent },

@@ -1,1 +1,15 @@
-<p>supprimer-joueur works!</p>
+<div class="container mt-5">
+  <div *ngIf="isLoading">Chargement...</div>
+
+  <div *ngIf="!isLoading && !isDeleted">
+    <h3>Supprimer le joueur</h3>
+    <p>Voulez-vous vraiment supprimer <strong>{{ joueur?.user?.nom }} {{ joueur?.user?.prenom }}</strong> ?</p>
+    <button class="btn btn-danger" (click)="supprimerJoueur()">Supprimer</button>
+    <button class="btn btn-secondary" (click)="router.navigate(['/afficher-joueur'])">Annuler</button>
+  </div>
+
+  <div *ngIf="isDeleted" class="alert alert-success">
+    Joueur supprimé avec succès. Redirection...
+
+  </div>
+</div>

@@ -7,6 +7,10 @@ export class Equipe {
   adresse!: string;
   nb_joueur!: number;
 
+
+  max_teams?: number;
+  price?: number;
+  
   // Relations
   users?: string[]; // Liste des utilisateurs associés à l'équipe
   matchsEquipe1?: string[]; // Liste des matchs où l'équipe est Equipe1

@@ -1,113 +1,154 @@
-<div class="panel-header panel-header-sm"></div>
-<div class="main-content">
-  <div class="row">
-    <div class="col-md-8">
-      <div class="card">
-        <div class="card-header">
-          <h5 class="title">Fiche Joueur</h5>
+<div class="container mt-5 d-flex justify-content-center">
+  <div class="card col-md-8 p-4 shadow-lg rounded">
+    <div class="card-header text-center bg-primary text-white">
+      <h4 class="title">Ajouter un Joueur</h4>
+    </div>
+
+    <div class="form-container mt-3">
+      <form [formGroup]="joueurForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="prenom">Prénom</label>
+            <input id="prenom" formControlName="prenom" class="form-control" placeholder="Prénom du joueur" />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="nom">Nom</label>
+            <input id="nom" formControlName="nom" class="form-control" placeholder="Nom du joueur" />
+          </div>
         </div>
-        <div class="card-body">
-          <form>
-            <div class="row">
-              <div class="col-md-6 pr-1">
-                <div class="form-group">
-                  <label>Prénom</label>
-                  <input type="text" class="form-control" placeholder="Prénom" value="">
-                </div>
-              </div>
-              <div class="col-md-6 pl-1">
-                <div class="form-group">
-                  <label>Nom</label>
-                  <input type="text" class="form-control" placeholder="Nom" value="">
-                </div>
-              </div>
-            </div>
 
-            <div class="row">
-              <div class="col-md-6 pr-1">
-                <div class="form-group">
-                  <label>Email</label>
-                  <input type="email" class="form-control" placeholder="Email" value="">
-                </div>
-              </div>
-              <div class="col-md-6 pl-1">
-                <div class="form-group">
-                  <label>Date de Naissance</label>
-                  <input type="date" class="form-control" value="">
-                </div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-md-6 pr-1">
-                <div class="form-group">
-                  <label>Taille (cm)</label>
-                  <input type="number" class="form-control" placeholder="ex: 180" value="">
-                </div>
-              </div>
-              <div class="col-md-6 pl-1">
-                <div class="form-group">
-                  <label>Poids (kg)</label>
-                  <input type="number" class="form-control" placeholder="ex: 75" value="">
-                </div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label>Adresse</label>
-                  <input type="text" class="form-control" placeholder="Adresse complète" value="">
-                </div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-md-4 pr-1">
-                <div class="form-group">
-                  <label>Ville</label>
-                  <input type="text" class="form-control" placeholder="Ville" value="">
-                </div>
-              </div>
-              <div class="col-md-4 px-1">
-                <div class="form-group">
-                  <label>Pays</label>
-                  <input type="text" class="form-control" placeholder="Pays" value="">
-                </div>
-              </div>
-              <div class="col-md-4 pl-1">
-                <div class="form-group">
-                  <label>Code Postal</label>
-                  <input type="number" class="form-control" placeholder="Code Postal">
-                </div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label>À propos du joueur</label>
-                  <textarea rows="4" cols="80" class="form-control" placeholder="Parle-nous un peu du joueur..."></textarea>
-                </div>
-              </div>
-            </div>
-
-            <!-- Boutons Ajouter, Supprimer, Modifier -->
-            <div class="row mt-3">
-              <div class="col-md-4">
-                <button type="button" class="btn btn-success btn-block">Ajouter</button>
-              </div>
-              <div class="col-md-4">
-                <button type="button" class="btn btn-danger btn-block">Supprimer</button>
-              </div>
-              <div class="col-md-4">
-                <button type="button" class="btn btn-warning btn-block">Modifier </button>
-              </div>
-            </div>
-
-          </form>
+        <div class="mb-3">
+          <label for="poste">Poste</label>
+          <input id="poste" formControlName="poste" class="form-control" placeholder="Attaqand, Défenceur.." />
         </div>
-      </div>
+        
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="email">Email</label>
+            <input id="email" type="email" formControlName="email" class="form-control" placeholder="ex: joueur@email.com" />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="date_naissance">Date de Naissance</label>
+            <input id="date_naissance" type="date" formControlName="date_naissance" class="form-control" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="taille">Taille (cm)</label>
+            <input id="taille" type="number" formControlName="taille" class="form-control" placeholder="ex: 180" />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="poids">Poids (kg)</label>
+            <input id="poids" type="number" formControlName="poids" class="form-control" placeholder="ex: 75" />
+          </div>
+        </div>
+      
+        
+        <div class="mb-3">
+          <label for="adresse">Adresse</label>
+          <input id="adresse" formControlName="adresse" class="form-control" placeholder="Adresse complète" />
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label for="ville">Ville</label>
+            <input id="ville" formControlName="ville" class="form-control" placeholder="ex: Paris" />
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label for="pays">Pays</label>
+            <input id="pays" formControlName="pays" class="form-control" placeholder="ex: France" />
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label for="code_postal">Code Postal</label>
+            <input id="code_postal" type="number" formControlName="code_postal" class="form-control" placeholder="75000" />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="description">À propos du joueur</label>
+          <textarea id="description" formControlName="description" class="form-control" rows="4" placeholder="Parle-nous un peu du joueur..."></textarea>
+        </div>
+
+        <div class="d-flex justify-content-between">
+          <button class="btn btn-success" type="submit" [disabled]="joueurForm.invalid">✅ Ajouter</button>
+          <button type="button" class="btn btn-secondary" (click)="annuler()">❌ Annuler</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
+
+<style>
+  .card {
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-header {
+    border-bottom: none;
+    padding: 1rem 0;
+  }
+
+  .title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  label {
+    font-weight: 500;
+    color: #333;
+  }
+
+  input,
+  textarea {
+    transition: border 0.3s ease;
+  }
+
+  input:focus,
+  textarea:focus {
+    border-color: #007bff;
+    box-shadow: none;
+  }
+
+  .btn {
+    min-width: 120px;
+  }
+
+  .btn-success {
+    font-weight: bold;
+    background-color: #28a745;
+    border: none;
+  }
+
+  .btn-success:hover {
+    background-color: #218838;
+  }
+
+  .btn-secondary {
+    font-weight: bold;
+  }
+
+  @media (max-width: 768px) {
+    .card {
+      width: 100%;
+    }
+
+    .btn {
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+
+    .d-flex.justify-content-between {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+</style>

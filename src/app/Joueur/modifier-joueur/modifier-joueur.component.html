@@ -1,1 +1,85 @@
-<p>modifier-joueur works!</p>
+<div class="container mt-5 d-flex justify-content-center">
+  <div class="card col-md-6 p-4 shadow-lg rounded">
+    <div class="card-header text-center bg-warning text-white">
+      <h4 class="title">Modifier un Joueur</h4>
+    </div>
+
+    <div class="form-container mt-3">
+      <form [formGroup]="joueurForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          
+        
+          <div class="col-md-6 mb-3">
+            <label for="nom">Nom *</label>
+            <input id="nom" type="text" formControlName="nom" class="form-control" placeholder="Nom…" />
+            <div *ngIf="joueurForm.get('nom')?.touched && joueurForm.get('nom')?.invalid" class="text-danger">
+              Nom
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="prenom">Prenom *</label>
+            <input id="prenom" type="text" formControlName="prenom" class="form-control" placeholder="Prenom…" />
+            <div *ngIf="joueurForm.get('prenom')?.touched && joueurForm.get('prenom')?.invalid" class="text-danger">
+              Prenom
+            </div>
+          </div>
+
+
+        <div class=" mb-3">
+          <label for="taille">Taille (cm) *</label>
+          <input id="taille" type="number" formControlName="taille" class="form-control" placeholder="ex: 180" />
+          <div *ngIf="joueurForm.get('taille')?.touched && joueurForm.get('taille')?.invalid" class="text-danger">
+            Taille requise et ≥ 0
+          </div>
+        </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="poids">Poids (kg) *</label>
+            <input id="poids" type="number" formControlName="poids" class="form-control" placeholder="ex: 75" />
+            <div *ngIf="joueurForm.get('poids')?.touched && joueurForm.get('poids')?.invalid" class="text-danger">
+              Poids requis et ≥ 0
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="piedFort">Pied fort *</label>
+          <input id="piedFort" type="text" formControlName="piedFort" class="form-control" placeholder="Droit / Gauche" />
+          <div *ngIf="joueurForm.get('piedFort')?.touched && joueurForm.get('piedFort')?.invalid" class="text-danger">
+            Pied fort requis
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="poste">Poste *</label>
+          <input id="poste" type="text" formControlName="poste" class="form-control" placeholder="Attaquant, Défenseur…" />
+          <div *ngIf="joueurForm.get('poste')?.touched && joueurForm.get('poste')?.invalid" class="text-danger">
+            Poste requis
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="description">Description *</label>
+          <textarea id="description" formControlName="description" class="form-control" rows="4"
+                    placeholder="Parle-nous un peu du joueur…"></textarea>
+          <div *ngIf="joueurForm.get('description')?.touched && joueurForm.get('description')?.invalid" class="text-danger">
+            Description requise
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between">
+          <button type="button" class="btn btn-secondary" (click)="annuler()">❌ Annuler</button>
+          <button type="submit" class="btn btn-primary" [disabled]="joueurForm.invalid">✔ Enregistrer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<style>
+  .card { border: none; border-radius: 1rem; }
+  .card-header { border-bottom: none; }
+  .title { font-size: 1.4rem; margin: 0; }
+  .form-control.ng-invalid.ng-touched { border-color: #dc3545; }
+</style>
