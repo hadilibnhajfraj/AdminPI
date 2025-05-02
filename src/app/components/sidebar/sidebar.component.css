@@ -1,0 +1,29 @@
+li.nav-item.active a {
+  color: #000000 !important;
+}
+
+li.nav-item {
+  color: #000000 !important;
+}
+.sidebar .nav li.active > a i,
+.sidebar .nav li.active-pro > a i,
+.off-canvas-sidebar .nav li.active > a i,
+.off-canvas-sidebar .nav li.active-pro > a i {
+  color: #000000 !important;
+}
+
+:hover .sidebar .nav li.active-pro > a,
+:focus .sidebar .nav li.active-pro > a,
+:hover .off-canvas-sidebar .nav li.active-pro > a,
+:focus .off-canvas-sidebar .nav li.active-pro > a {
+  background-color: #fff;
+  box-shadow: 0 1px 15px 1px #2727271a;
+  color: #000000;
+}
+
+:hover .sidebar .nav li.active-pro > a i,
+:focus .sidebar .nav li.active-pro > a i,
+:hover .off-canvas-sidebar .nav li.active-pro > a i,
+:focus .off-canvas-sidebar .nav li.active-pro > a i {
+  color: #000000;
+}
