@@ -87,6 +87,7 @@ export class EquipetournoiComponent implements OnInit {
           console.log(response);  // Log de la réponse
           this.getEquipes();  // Rafraîchir la liste des équipes
           this.closeConfirmationDialog();  // Fermer le pop-up après confirmation
+          
         },
         (error) => {
           console.error('Erreur lors de la désaffectation de l\'équipe', error);
@@ -104,18 +105,19 @@ export class EquipetournoiComponent implements OnInit {
   }
 
   addEquipeToTournoi(equipe: Equipe): void {
-    // Appel à la méthode affecterEquipesATournoi avec un tableau contenant l'ID de l'équipe
     this.tournoiService.affecterEquipesATournoi(this.tournoiId, [equipe.idEquipe]).subscribe(
       (response) => {
         console.log(response);  // Log de la réponse
-        this.getEquipes();  // Rafraîchir la liste des équipes
-        this.closeAddEquipeDialog();  // Fermer le pop-up d'ajout d'équipe après l'ajout
+        this.getEquipes();  // Rafraîchir la liste des équipes inscrites
+        this.getEquipesNonInscrites();  // Rafraîchir la liste des équipes restantes
+        this.closeAddEquipeDialog();  // Fermer le pop-up après ajout
       },
       (error) => {
         console.error('Erreur lors de l\'ajout de l\'équipe', error);
       }
     );
   }
+  
 
   goBack(): void {
     this.location.back();  // Revenir à la page précédente

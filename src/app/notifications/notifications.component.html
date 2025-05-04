@@ -75,7 +75,7 @@
           </button>
 
           <!-- Bouton pour générer le planning, activé uniquement si nbEquipeRestant == 0 -->
-          <button *ngIf="tournoi.nbEquipeRestant === 0" class="btn btn-success"
+          <button *ngIf="tournoi.nbEquipeRestant === 0" class="btn btn-generate"
             (click)="genererPlanning(tournoi)">
             Générer Planning
           </button>

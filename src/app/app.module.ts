@@ -15,6 +15,7 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { TournoiComponent } from './tournoi/tournoi.component';
 import { MatchtournoiComponent } from './matchtournoi/matchtournoi.component';
 import { EquipetournoiComponent } from './equipetournoi/equipetournoi.component';
+import { DispoTerrainComponent } from './dispo-terrain/dispo-terrain.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { EquipetournoiComponent } from './equipetournoi/equipetournoi.component'
     TournoiComponent,
     MatchtournoiComponent,
     EquipetournoiComponent,
+    DispoTerrainComponent,
    
 
   ],
