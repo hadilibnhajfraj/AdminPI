@@ -19,6 +19,7 @@ import { LoginComponent } from './login/login.component';
 import { PublicationComponent } from './publication/publication.component';
 import { UserPubComponent } from './user-pub/user-pub.component';
 import { UpdatePubComponent } from './update-pub/update-pub.component';
+import { SpectateurComponent } from './spectateur/spectateur.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { UpdatePubComponent } from './update-pub/update-pub.component';
     LoginComponent,
     PublicationComponent,
     UserPubComponent,
-    UpdatePubComponent
+    UpdatePubComponent,
+    SpectateurComponent
 
 
   ],

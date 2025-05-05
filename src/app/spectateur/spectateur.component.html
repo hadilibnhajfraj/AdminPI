@@ -1,0 +1,7 @@
+<div *ngIf="isLive; else noLive">
+  <video #spectatorVideo autoplay playsinline controls></video>
+</div>
+
+<ng-template #noLive>
+  <p>🔕 Aucun live en cours pour l'instant...</p>
+</ng-template>

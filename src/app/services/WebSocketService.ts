@@ -1,29 +1,31 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { WebSocketSubject } from "rxjs/webSocket";
+// src/app/services/web-socket.service.ts
+import { Injectable } from '@angular/core';
+import { WebSocketSubject, webSocket } from 'rxjs/webSocket';
+import { Observable, Subject } from 'rxjs';
 
-@Injectable({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 export class WebSocketService {
-  private socket$: WebSocketSubject<any> = new WebSocketSubject("ws://localhost:8082/ws");
-  private apiUrl = 'http://localhost:8082/publications';
-  constructor(private http: HttpClient) {}
+  private socket$: WebSocketSubject<any>;
+  private messagesSubject$ = new Subject<any>();
+  public messages$ = this.messagesSubject$.asObservable();
 
-  startLive(): Observable<any> {
-    const token = localStorage.getItem('token');
+  constructor() {
+    this.socket$ = webSocket('ws://localhost:8082/ws');
 
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
+    this.socket$.subscribe({
+      next: (msg) => this.messagesSubject$.next(msg),
+      error: (err) => console.error('WebSocket error:', err),
+      complete: () => console.warn('WebSocket connection closed.')
     });
-
-    return this.http.post(`${this.apiUrl}/start-live`, {}, { headers });
   }
+
   sendMessage(message: any) {
-    this.socket$.next(message); // ne pas le stringifier ici !
+    if (this.socket$) {
+      this.socket$.next(message);
+    }
   }
 
-
-  getMessages() {
-    return this.socket$;
+  getMessages(): Observable<any> {
+    return this.messages$;
   }
 }

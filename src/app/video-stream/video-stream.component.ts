@@ -1,84 +1,64 @@
-import { Component, ElementRef, ViewChild, AfterViewInit, OnInit } from '@angular/core';
+// src/app/video-stream/video-stream.component.ts
+import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { WebSocketService } from '../services/WebSocketService';
-
 
 @Component({
   selector: 'app-video-stream',
   templateUrl: './video-stream.component.html',
-  styleUrls: ['./video-stream.component.css'],
+  styleUrls: ['./video-stream.component.css']
 })
-export class VideoStreamComponent implements OnInit, AfterViewInit {
-  @ViewChild("videoElement") videoElement!: ElementRef;
-  @ViewChild("commentSection") commentSection!: ElementRef;
+export class VideoStreamComponent implements OnInit {
+  @ViewChild('videoElement') videoElement!: ElementRef<HTMLVideoElement>;
 
-  comments: string[] = [];
-  newComment = "";
-  isPresse = true; // à remplacer par une vraie vérification plus tard
-  isLive = false;
-  message: string = '';
-  localStream: MediaStream | null = null;
   peerConnection!: RTCPeerConnection;
-  isBroadcaster = false;
-  isViewer = false;
+  localStream!: MediaStream;
+  isLive = false;
+
   constructor(private wsService: WebSocketService) {}
 
-  ngOnInit() {
-    this.wsService.getMessages().subscribe((msg: any) => {
-      const data = typeof msg === "string" ? JSON.parse(msg) : msg;
-
-      if (data.type === "comment") {
-        this.addComment(data.data);
-      } else if (data.type === "liveStarted") {
-        alert("🔴 Nouveau live lancé !");
-        this.startWebRTC();
+  async ngOnInit() {
+    this.wsService.getMessages().subscribe((msg) => {
+      if (msg.type === 'answer') {
+        this.peerConnection.setRemoteDescription(new RTCSessionDescription(msg.data));
+      } else if (msg.type === 'ice-candidate') {
+        if (this.peerConnection) {
+          this.peerConnection.addIceCandidate(new RTCIceCandidate(msg.data));
+        }
       }
     });
   }
 
-  ngAfterViewInit() {
-    // Optionnel : démarrer automatiquement si presse
-  }
-
   async startLiveStream() {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-      this.videoElement.nativeElement.srcObject = stream;
+    this.localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+    this.videoElement.nativeElement.srcObject = this.localStream;
 
-      this.wsService.startLive().subscribe({
-        next: (res) => {
-          this.isLive = true;
-          this.wsService.sendMessage({ type: 'liveStarted' });
-        },
-        error: () => {
-          alert("⛔ Seuls les utilisateurs avec le rôle Presse peuvent démarrer un live.");
-        }
-      });
-    } catch (err) {
-      console.error("Erreur lors du démarrage du live", err);
-    }
+    this.peerConnection = new RTCPeerConnection();
+
+    this.localStream.getTracks().forEach(track => {
+      this.peerConnection.addTrack(track, this.localStream);
+    });
+
+    this.peerConnection.onicecandidate = (event) => {
+      if (event.candidate) {
+        this.wsService.sendMessage({ type: 'ice-candidate', data: event.candidate });
+      }
+    };
+
+    const offer = await this.peerConnection.createOffer();
+    await this.peerConnection.setLocalDescription(offer);
+
+    this.wsService.sendMessage({ type: 'offer', data: offer });
+
+    this.isLive = true;
   }
 
   stopLiveStream() {
     this.isLive = false;
-    this.videoElement.nativeElement.srcObject.getTracks().forEach((track: any) => track.stop());
-    alert("⏹️ Live arrêté.");
-  }
-
-  addComment(comment: string) {
-    this.comments.push(comment);
-    setTimeout(() => {
-      this.commentSection.nativeElement.scrollTop = this.commentSection.nativeElement.scrollHeight;
-    }, 0);
-  }
-
-  sendComment(comment: string) {
-    if (comment.trim()) {
-      this.wsService.sendMessage({ type: "comment", data: comment });
-      this.newComment = "";
+    if (this.localStream) {
+      this.localStream.getTracks().forEach(track => track.stop());
     }
-  }
-
-  startWebRTC() {
-    // Signaling et WebRTC ici
+    if (this.peerConnection) {
+      this.peerConnection.close();
+    }
   }
 }

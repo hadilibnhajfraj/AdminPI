@@ -13,6 +13,8 @@ import { LoginComponent } from '../..//login/login.component';
 import { PublicationComponent } from '../../publication/publication.component';
 import { UserPubComponent } from '../../user-pub/user-pub.component';
 import { UpdatePubComponent } from '../../update-pub/update-pub.component';
+import { SpectateurComponent } from '../../spectateur/spectateur.component';
+import { RoleGuard } from '../../services/role.guard';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -23,7 +25,19 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'maps',           component: MapsComponent },
     { path: 'notifications',  component: NotificationsComponent },
     { path: 'upgrade',        component: UpgradeComponent },
-    {path:'video',component:VideoStreamComponent},
+    {
+      path: 'video',
+      component: VideoStreamComponent,
+      canActivate: [RoleGuard],
+      data: { expectedRole: 'Presse' }
+    },
+
+    {
+      path: 'spectateur',
+      component: SpectateurComponent,
+      canActivate: [RoleGuard],
+      data: { expectedRole: 'Spectateur' }
+    },
     {path:'login',component:LoginComponent},
     {path:'AllPub',component:UserPubComponent},
     {path:'updatePub/:id',component:UpdatePubComponent},
