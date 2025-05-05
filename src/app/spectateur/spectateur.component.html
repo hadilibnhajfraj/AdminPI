@@ -1,5 +1,18 @@
+<!-- src/app/spectateur/spectateur.component.html -->
 <div *ngIf="isLive; else noLive">
   <video #spectatorVideo autoplay playsinline controls></video>
+
+  <div class="comments-container">
+    <h4>💬 Commentaires</h4>
+    <div *ngFor="let c of comments">
+      <p>{{ c }}</p>
+    </div>
+
+    <div class="comment-input">
+      <input [(ngModel)]="newComment" placeholder="Écrire un commentaire..." />
+      <button (click)="sendComment()">Envoyer</button>
+    </div>
+  </div>
 </div>
 
 <ng-template #noLive>

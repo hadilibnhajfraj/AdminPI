@@ -2,6 +2,7 @@
 import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { WebSocketService } from '../services/WebSocketService';
 
+
 @Component({
   selector: 'app-video-stream',
   templateUrl: './video-stream.component.html',
@@ -13,6 +14,7 @@ export class VideoStreamComponent implements OnInit {
   peerConnection!: RTCPeerConnection;
   localStream!: MediaStream;
   isLive = false;
+  comments: string[] = [];
 
   constructor(private wsService: WebSocketService) {}
 
@@ -24,6 +26,8 @@ export class VideoStreamComponent implements OnInit {
         if (this.peerConnection) {
           this.peerConnection.addIceCandidate(new RTCIceCandidate(msg.data));
         }
+      } else if (msg.type === 'comment') {
+        this.comments.push(msg.data);
       }
     });
   }

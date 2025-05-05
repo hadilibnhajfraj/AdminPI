@@ -1,17 +1,22 @@
-import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+// src/app/spectateur/spectateur.component.ts
+import { Component, ElementRef, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { WebSocketService } from '../services/WebSocketService';
+
 
 @Component({
   selector: 'app-spectateur',
   templateUrl: './spectateur.component.html',
   styleUrls: ['./spectateur.component.css']
 })
-export class SpectateurComponent implements AfterViewInit {
+export class SpectateurComponent implements OnInit, AfterViewInit {
   @ViewChild('spectatorVideo') spectatorVideo!: ElementRef<HTMLVideoElement>;
 
   peerConnection!: RTCPeerConnection;
   isLive = false;
-  private isVideoReady = false;
+  isVideoReady = false;
+
+  comments: string[] = [];
+  newComment: string = '';
 
   constructor(private wsService: WebSocketService) {}
 
@@ -27,6 +32,8 @@ export class SpectateurComponent implements AfterViewInit {
         if (this.peerConnection) {
           this.peerConnection.addIceCandidate(new RTCIceCandidate(msg.data));
         }
+      } else if (msg.type === 'comment') {
+        this.comments.push(msg.data);
       }
     });
   }
@@ -35,12 +42,13 @@ export class SpectateurComponent implements AfterViewInit {
     this.peerConnection = new RTCPeerConnection();
 
     this.peerConnection.ontrack = (event) => {
+      const stream = event.streams[0];
       if (this.isVideoReady) {
-        this.spectatorVideo.nativeElement.srcObject = event.streams[0];
+        this.spectatorVideo.nativeElement.srcObject = stream;
       } else {
         const interval = setInterval(() => {
           if (this.isVideoReady) {
-            this.spectatorVideo.nativeElement.srcObject = event.streams[0];
+            this.spectatorVideo.nativeElement.srcObject = stream;
             clearInterval(interval);
           }
         }, 100);
@@ -59,5 +67,12 @@ export class SpectateurComponent implements AfterViewInit {
 
     this.wsService.sendMessage({ type: 'answer', data: answer });
     this.isLive = true;
+  }
+
+  sendComment() {
+    if (this.newComment.trim()) {
+      this.wsService.sendMessage({ type: 'comment', data: this.newComment });
+      this.newComment = '';
+    }
   }
 }
