@@ -15,6 +15,8 @@ export class SpectateurComponent implements OnInit, AfterViewInit {
 
   comments: string[] = [];
   newComment: string = '';
+  userId: any;
+  publicationId: any;
 
   constructor(private wsService: WebSocketService) {}
 
@@ -69,8 +71,15 @@ export class SpectateurComponent implements OnInit, AfterViewInit {
 
   sendComment() {
     if (this.newComment.trim()) {
-      this.wsService.sendMessage({ type: 'comment', data: this.newComment });
+      // Envoie du commentaire avec l'ID utilisateur et ID publication
+      this.wsService.sendMessage({
+        type: 'comment',
+        data: this.newComment,
+        userId: this.userId,  // L'ID de l'utilisateur, à définir selon votre logique
+        publicationId: this.publicationId  // L'ID de la publication associée
+      });
       this.newComment = '';
     }
   }
+
 }
