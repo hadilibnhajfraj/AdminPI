@@ -15,16 +15,28 @@ export class VideoStreamComponent implements OnInit {
   localStream!: MediaStream;
   isLive = false;
   comments: string[] = [];
-
+  pendingCandidates: RTCIceCandidate[] = [];
   constructor(private wsService: WebSocketService) {}
 
   async ngOnInit() {
-    this.wsService.getMessages().subscribe((msg) => {
+    this.wsService.getMessages().subscribe(async (msg) => {
       if (msg.type === 'answer') {
-        this.peerConnection.setRemoteDescription(new RTCSessionDescription(msg.data));
+        await this.peerConnection.setRemoteDescription(new RTCSessionDescription(msg.data));
+
+        // Ajout des candidats en attente après avoir défini la remoteDescription
+        this.pendingCandidates.forEach(candidate => {
+          this.peerConnection.addIceCandidate(candidate);
+        });
+        this.pendingCandidates = [];
       } else if (msg.type === 'ice-candidate') {
-        if (this.peerConnection) {
-          this.peerConnection.addIceCandidate(new RTCIceCandidate(msg.data));
+        const candidate = new RTCIceCandidate(msg.data);
+
+        // Si remoteDescription est déjà définie
+        if (this.peerConnection?.remoteDescription) {
+          await this.peerConnection.addIceCandidate(candidate);
+        } else {
+          // Sinon, on stocke temporairement le candidat
+          this.pendingCandidates.push(candidate);
         }
       } else if (msg.type === 'comment') {
         this.comments.push(msg.data);

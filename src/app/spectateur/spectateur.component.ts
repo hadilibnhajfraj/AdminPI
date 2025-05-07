@@ -1,7 +1,5 @@
-// src/app/spectateur/spectateur.component.ts
 import { Component, ElementRef, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { WebSocketService } from '../services/WebSocketService';
-
 
 @Component({
   selector: 'app-spectateur',
@@ -9,7 +7,7 @@ import { WebSocketService } from '../services/WebSocketService';
   styleUrls: ['./spectateur.component.css']
 })
 export class SpectateurComponent implements OnInit, AfterViewInit {
-  @ViewChild('spectatorVideo') spectatorVideo!: ElementRef<HTMLVideoElement>;
+  @ViewChild('spectatorVideo', { static: false }) spectatorVideo!: ElementRef<HTMLVideoElement>;
 
   peerConnection!: RTCPeerConnection;
   isLive = false;
@@ -43,16 +41,16 @@ export class SpectateurComponent implements OnInit, AfterViewInit {
 
     this.peerConnection.ontrack = (event) => {
       const stream = event.streams[0];
-      if (this.isVideoReady) {
-        this.spectatorVideo.nativeElement.srcObject = stream;
-      } else {
-        const interval = setInterval(() => {
-          if (this.isVideoReady) {
-            this.spectatorVideo.nativeElement.srcObject = stream;
-            clearInterval(interval);
-          }
-        }, 100);
-      }
+
+      const waitForVideo = () => {
+        if (this.spectatorVideo && this.spectatorVideo.nativeElement) {
+          this.spectatorVideo.nativeElement.srcObject = stream;
+        } else {
+          setTimeout(waitForVideo, 100);
+        }
+      };
+
+      waitForVideo();
     };
 
     this.peerConnection.onicecandidate = (event) => {
