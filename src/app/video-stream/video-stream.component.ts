@@ -1,6 +1,7 @@
 // src/app/video-stream/video-stream.component.ts
 import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { WebSocketService } from '../services/WebSocketService';
+import { PublicationService } from '../services/publication.service';
 
 
 @Component({
@@ -16,7 +17,8 @@ export class VideoStreamComponent implements OnInit {
   isLive = false;
   comments: string[] = [];
   pendingCandidates: RTCIceCandidate[] = [];
-  constructor(private wsService: WebSocketService) {}
+  publication: any = {};
+  constructor(private wsService: WebSocketService,private publicationService: PublicationService) {}
 
   async ngOnInit() {
     this.wsService.getMessages().subscribe(async (msg) => {
@@ -45,27 +47,60 @@ export class VideoStreamComponent implements OnInit {
   }
 
   async startLiveStream() {
-    this.localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-    this.videoElement.nativeElement.srcObject = this.localStream;
+    try {
+      // Demander l'accès aux flux audio et vidéo
+      this.localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
 
-    this.peerConnection = new RTCPeerConnection();
+      // Afficher le flux local dans l'élément vidéo
+      this.videoElement.nativeElement.srcObject = this.localStream;
 
-    this.localStream.getTracks().forEach(track => {
-      this.peerConnection.addTrack(track, this.localStream);
-    });
+      // Initialiser la connexion peer-to-peer
+      this.peerConnection = new RTCPeerConnection();
 
-    this.peerConnection.onicecandidate = (event) => {
-      if (event.candidate) {
-        this.wsService.sendMessage({ type: 'ice-candidate', data: event.candidate });
-      }
-    };
+      // Ajouter les pistes locales (audio/vidéo)
+      this.localStream.getTracks().forEach(track => {
+        this.peerConnection.addTrack(track, this.localStream);
+      });
 
-    const offer = await this.peerConnection.createOffer();
-    await this.peerConnection.setLocalDescription(offer);
+      // Gérer les événements ICE candidates
+      this.peerConnection.onicecandidate = (event) => {
+        if (event.candidate) {
+          this.wsService.sendMessage({ type: 'ice-candidate', data: event.candidate });
+        }
+      };
 
-    this.wsService.sendMessage({ type: 'offer', data: offer });
+      // Créer une offre et définir la description locale
+      const offer = await this.peerConnection.createOffer();
+      await this.peerConnection.setLocalDescription(offer);
 
-    this.isLive = true;
+      // Envoyer l'offre au serveur via WebSocket
+      this.wsService.sendMessage({ type: 'offer', data: offer });
+
+      // Mise à jour de l'état du live
+      this.isLive = true;
+
+      // Créer la publication pour démarrer le live
+      this.publication.isLive = true; // Cette ligne ne devrait pas poser de problème maintenant
+      this.publication.contenu = 'Live en cours...';  // Vous pouvez ajuster ce contenu selon vos besoins
+
+      console.log('isLive avant envoi à l\'API:', this.publication.isLive);
+
+      // Exemple de fichier (vous pouvez ajuster selon votre besoin)
+      const file = new File([], 'example.jpg');  // Fichier fictif, ajustez en fonction de votre logique
+
+      // Appel au service pour ajouter la publication
+      this.publicationService.addPublication(this.publication, file).subscribe(
+        response => {
+          console.log('Publication ajoutée:', response);
+        },
+        error => {
+          console.error('Erreur lors de l\'ajout de la publication:', error);
+        }
+      );
+
+    } catch (error) {
+      console.error('Erreur lors du démarrage du live:', error);
+    }
   }
 
   stopLiveStream() {
