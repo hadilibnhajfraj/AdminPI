@@ -17,13 +17,13 @@ export class NotificationsComponent implements OnInit {
   popupVisible: boolean = false;
   popupMessage: string = '';
   rounds: any[][] = [];
-nomTournoi: string = '';
-popupBracketVisible: boolean = false;
-tournoiSelectionne!: Tournoi;
+  nomTournoi: string = '';
+  popupBracketVisible: boolean = false;
+  tournoiSelectionne!: Tournoi;
 
-fermerPopupBracket(): void {
-  this.popupBracketVisible = false;
-}
+  fermerPopupBracket(): void {
+    this.popupBracketVisible = false;
+  }
 
   constructor(
     private tournoiService: TournoiService, 
@@ -69,6 +69,7 @@ fermerPopupBracket(): void {
             setTimeout(() => {
               this.enChargement = false;
               this.popupVisible = false;
+              // Redirection vers le composant des matchs
               this.router.navigate(['/tournoi', tournoi.idTournoi, 'matchs']);
             }, 1500);
           }, 3000); // Durée de l'animation initiale
@@ -94,16 +95,14 @@ fermerPopupBracket(): void {
     this.isError = isError;
   }
 
-
-  
   afficherBracket(tournoi: Tournoi) {
-    console.log('Tournoi sélectionné ID:', tournoi.idTournoi); // ← important
+    console.log('Tournoi sélectionné ID:', tournoi.idTournoi);
     this.nomTournoi = tournoi.nom;
     this.tournoiSelectionne = tournoi;
   
     this.tournoiService.getMatchsParTournoi(tournoi.idTournoi).subscribe({
       next: (matchs) => {
-        console.log('Matchs récupérés pour bracket:', matchs); // ← important
+        console.log('Matchs récupérés pour bracket:', matchs);
         this.rounds = [matchs]; // Temporaire si tu ne veux pas organiser par rounds
         this.popupBracketVisible = true;
       },
@@ -114,6 +113,34 @@ fermerPopupBracket(): void {
       }
     });
   }
+
+  genererChampionnat(tournoi: Tournoi): void {
+    const confirmation = confirm("Souhaitez-vous générer un planning de championnat (format toutes rencontres) ?");
   
+    if (confirmation) {
+      this.popupVisible = true;
+      this.popupMessage = "Génération du championnat en cours...";
+      this.enChargement = true;
   
+      this.tournoiService.genererChampionnat(tournoi.idTournoi, true).subscribe(
+        (response) => {
+          setTimeout(() => {
+            this.popupMessage = "Planning championnat généré avec succès !";
+            setTimeout(() => {
+              this.popupVisible = false;
+              this.enChargement = false;
+              // Redirection vers le composant du championnat
+              this.router.navigate(['/tournoi', tournoi.idTournoi, 'championnat']);
+            }, 1500);
+          }, 3000); // Simulation de chargement
+        },
+        (error) => {
+          this.enChargement = false;
+          this.popupVisible = false;
+          console.error('Erreur génération championnat', error);
+          this.toastr.error('Une erreur est survenue lors de la génération du planning de championnat.');
+        }
+      );
+    }
+  }
 }

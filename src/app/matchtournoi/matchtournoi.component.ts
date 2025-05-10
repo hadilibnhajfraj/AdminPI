@@ -18,8 +18,9 @@ export class MatchtournoiComponent implements OnInit {
   popupTerrainVisible = false;
   matchSelectionne: any = null;
 
-  scoreEquipe1: number = 0;
-  scoreEquipe2: number = 0;
+  scoreEquipe1?: number;
+  scoreEquipe2?: number;
+  
 
   terrains: any[] = [];
   disponibilites: { [terrainId: number]: string[] } = {};

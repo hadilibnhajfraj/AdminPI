@@ -74,5 +74,20 @@ export class TournoiService {
   genererTourSuivant(tournoiId: number): Observable<string> {
     return this.http.put<string>(`${this.apiUrl}/genererTourSuivant/${tournoiId}`, {});
   }
+
+  // Générer le planning d’un championnat
+genererChampionnat(tournoiId: number, allerRetour: boolean): Observable<any> {
+  return this.http.put<any>(
+    `${this.apiUrl}/genererChampionnat/${tournoiId}?allerRetour=${allerRetour}`,
+    {}
+  );
+}
+
+
+// Récupérer le classement d’un tournoi
+getClassement(tournoiId: number): Observable<any[]> {
+  return this.http.get<any[]>(`${this.apiUrl}/${tournoiId}/classement`);
+}
+
   
 }

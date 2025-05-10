@@ -79,10 +79,22 @@
             (click)="genererPlanning(tournoi)">
             Générer Planning
           </button>
+<!-- Bouton pour générer le planning de championnat (affiché uniquement si aucune équipe restante) -->
+<button *ngIf="tournoi.nbEquipeRestant === 0 && !tournoi.hasMatchs" class="btn btn-success"
+  (click)="genererChampionnat(tournoi)">
+  Générer Planning Championnat
+</button>
+
+
           <button *ngIf="tournoi.hasMatchs" class="btn btn-warning"
             [routerLink]="['/tournoi', tournoi.idTournoi, 'matchs']">
             Voir les matchs
           </button>
+          <!-- Bouton pour voir les matchs de championnat -->
+<button *ngIf="tournoi.hasMatchs" class="btn btn-dark"
+[routerLink]="['/tournoi', tournoi.idTournoi, 'championnat']">
+Voir match championnat
+</button>
         </td>
       </tr>
     </tbody>

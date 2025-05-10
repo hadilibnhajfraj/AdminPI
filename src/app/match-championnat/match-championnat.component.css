@@ -1,0 +1,23 @@
+.calendrier-container {
+    background-color: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 10px;
+  }
+  
+  .jour-section {
+    border-left: 4px solid #007bff;
+    padding-left: 1rem;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+  }
+  
+  .jour-titre {
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: #007bff;
+  }
+  
+  .calendrier-table {
+    margin-top: 0.5rem;
+  }
+  

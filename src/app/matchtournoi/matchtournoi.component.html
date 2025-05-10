@@ -19,8 +19,9 @@
           <td>{{ match.nom }}</td>
           <td>
             {{ match.equipes1[0]?.nom || 'Équipe 1' }} /
-            {{ match.scoreEquipe1 ?? 0 }} - {{ match.scoreEquipe2 ?? 0 }} /
+            {{ match.scoreEquipe1 != null ? match.scoreEquipe1 : '-' }} - {{ match.scoreEquipe2 != null ? match.scoreEquipe2 : '-' }} /
             {{ match.equipes1[1]?.nom || 'Équipe 2' }}
+            
           </td>
           <td>{{ match.dateMatch || '-' }}</td>
           <td>{{ match.heureMatch || '-' }}</td>

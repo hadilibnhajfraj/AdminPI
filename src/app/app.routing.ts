@@ -9,6 +9,8 @@ import { MapsComponent } from './maps/maps.component';
 import { MatchtournoiComponent } from './matchtournoi/matchtournoi.component';
 import { EquipetournoiComponent } from './equipetournoi/equipetournoi.component';
 import { DispoTerrainComponent } from './dispo-terrain/dispo-terrain.component';
+import { MatchChampionnatComponent } from './match-championnat/match-championnat.component';
+
 
 const routes: Routes =[
  
@@ -17,6 +19,8 @@ const routes: Routes =[
   { path: 'tournoi/:id/matchs', component: MatchtournoiComponent },
   { path: 'tournoi/:idTournoi/equipes', component: EquipetournoiComponent },
   { path: 'dispo-terrain/:id', component: DispoTerrainComponent },
+  { path: 'tournoi/:id/championnat', component: MatchChampionnatComponent },
+
 
   {
     path: '',
