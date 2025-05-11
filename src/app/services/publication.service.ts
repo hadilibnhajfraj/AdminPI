@@ -73,5 +73,4 @@ export class PublicationService {
     });
     return this.http.delete(`http://localhost:8082/publications/delete/${id}`, { headers });
   }
-
 }
