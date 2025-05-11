@@ -1,0 +1,86 @@
+<div class="card">
+    <div class="card-header">
+      <h5>{{ selectedId ? 'Modifier la disponibilité' : 'Ajouter une Disponibilité' }}</h5>
+    </div>
+    <div class="card-body">
+      <form>
+        <div class="form-group">
+          <label>Date</label>
+          <input type="date" class="form-control" [(ngModel)]="dispo.date" name="date">
+        </div>
+  
+        <div class="form-group">
+          <label>Jour</label>
+          <select class="form-control" [(ngModel)]="dispo.jour" name="jour">
+            <option *ngFor="let j of jours" [value]="j">{{ j }}</option>
+          </select>
+        </div>
+  
+        <div class="form-group">
+          <label>Heure Début</label>
+          <input type="time" class="form-control" [(ngModel)]="dispo.heureDebut" name="heureDebut">
+        </div>
+  
+        <div class="form-group">
+          <label>Heure Fin</label>
+          <input type="time" class="form-control" [(ngModel)]="dispo.heureFin" name="heureFin">
+        </div>
+  
+        <div class="form-group">
+          <label>Terrain</label>
+          <select class="form-control" [(ngModel)]="dispo.terrain.id" name="terrainId">
+            <option *ngFor="let t of terrains" [value]="t.id">{{ t.nom }}</option>
+          </select>
+        </div>
+  
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="dispo.disponible" name="disponible">
+          <label class="form-check-label">Disponible</label>
+        </div>
+  
+        <div class="mt-3">
+          <button class="btn btn-primary" (click)="selectedId ? updateDisponibilite() : addDisponibilite()" type="button">
+            {{ selectedId ? 'Mettre à jour' : 'Ajouter' }}
+          </button>
+          <button *ngIf="selectedId" class="btn btn-secondary ml-2" (click)="resetForm()" type="button">Annuler</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Grille de liste des disponibilités -->
+  <div class="card mt-4">
+    <div class="card-header">
+      <h5>Liste des Disponibilités</h5>
+    </div>
+    <div class="card-body">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Jour</th>
+            <th>Heure Début</th>
+            <th>Heure Fin</th>
+            <th>Terrain</th>
+            <th>Disponible</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let d of disponibilites">
+              <td>{{ d.date }}</td>
+              <td>{{ d.jour }}</td>
+              <td>{{ d.heureDebut }}</td>
+              <td>{{ d.heureFin }}</td>
+              <td>{{ getNomTerrain(d.terrainId) }}</td>
+              <td>{{ d.disponible ? 'Oui' : 'Non' }}</td>
+              <td>
+                <button class="btn btn-warning btn-sm mr-2" (click)="selectDisponibilite(d)">Modifier</button>
+                <button class="btn btn-danger btn-sm" (click)="deleteDisponibilite(d.id!)">Supprimer</button>
+              </td>
+            </tr>
+          </tbody>
+      </table>
+    </div>
+  </div>
+  
