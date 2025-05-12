@@ -1,13 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Commentaire } from '../Interface/Commentaire';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PublicationService {
   private apiUrl = 'http://localhost:8082/publications';
-
+  private baseUrl = 'http://localhost:8082/commentaires';
   constructor(private http: HttpClient) {}
 
   addPublication(publication: any, file: File): Observable<any> {
@@ -39,6 +40,15 @@ export class PublicationService {
     });
 
     return this.http.get<any[]>(`${this.apiUrl}/mine`, { headers });  // Requête GET pour récupérer les publications de l'utilisateur connecté
+  }
+
+  getMyPublicationsSpectatuer(): Observable<any[]> {
+    const token = localStorage.getItem('token');  // Récupère le token JWT stocké dans le localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`  // Ajoute l'Authorization header avec le token
+    });
+
+    return this.http.get<any[]>(`${this.apiUrl}/minepub`, { headers });  // Requête GET pour récupérer les publications de l'utilisateur connecté
   }
   // Récupérer une publication par son ID
   getPublicationById(id: string): Observable<any> {
@@ -73,4 +83,36 @@ export class PublicationService {
     });
     return this.http.delete(`http://localhost:8082/publications/delete/${id}`, { headers });
   }
+updateComment(commentId: number, commentaire: any): Observable<any> {
+    const token = localStorage.getItem('token');  // Récupère le token JWT stocké dans le localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`  // Ajoute l'Authorization header avec le token
+    });
+  return this.http.put(`${this.baseUrl}/${commentId}`,  commentaire,{ headers });
+}
+
+deleteComment(commentId: number): Observable<any> {
+    const token = localStorage.getItem('token');  // Récupère le token JWT stocké dans le localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`  // Ajoute l'Authorization header avec le token
+    });
+  return this.http.delete(`${this.baseUrl}/${commentId}`, { headers });
+}
+ajouterCommentaire(payload: { userId: string, data: string, publicationId: number }) {
+  return this.http.post('http://localhost:8082/commentaires/add', payload);
+}
+updateCommentaire(commentId: number, payload: any) {
+  return this.http.put(`http://localhost:8082/commentaires/${commentId}`, payload);
+}
+
+supprimerCommentaire(commentId: number) {
+  return this.http.delete(`http://localhost:8082/commentaires/${commentId}`);
+}
+  addCommentaire(publicationId: number, commentaire: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/${publicationId}/commentaire`, commentaire);
+  }
+  getCommentaires(publicationId: number) {
+  return this.http.get<Commentaire[]>(`http://localhost:8082/publications/publications/${publicationId}/commentaires`);
+}
+
 }

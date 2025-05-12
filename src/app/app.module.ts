@@ -20,6 +20,7 @@ import { PublicationComponent } from './publication/publication.component';
 import { UserPubComponent } from './user-pub/user-pub.component';
 import { UpdatePubComponent } from './update-pub/update-pub.component';
 import { SpectateurComponent } from './spectateur/spectateur.component';
+import { AllspectateurComponent } from './allspectateur/allspectateur.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { SpectateurComponent } from './spectateur/spectateur.component';
     PublicationComponent,
     UserPubComponent,
     UpdatePubComponent,
-    SpectateurComponent
+    SpectateurComponent,
+    AllspectateurComponent
 
 
   ],

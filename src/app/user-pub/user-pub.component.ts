@@ -89,4 +89,7 @@ export class UserPubComponent implements OnInit {
       },
     });
   }
+  onAddLive(){
+    this.router.navigate(["/video"]);
+  }
 }
