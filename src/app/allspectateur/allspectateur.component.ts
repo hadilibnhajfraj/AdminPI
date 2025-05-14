@@ -86,55 +86,32 @@ loadPublications(): void {
     }
   }
 
-  addComment(publicationId: number) {
-    const commentaire = this.comments[publicationId];
-    if (!commentaire || !commentaire.trim()) {
-      this.errorMessage = "Veuillez entrer un commentaire.";
-      return;
-    }
-
-    const payload = {
-      userId: this.userId,
-      data: commentaire,
-      publicationId: publicationId,
-    };
-
-    // Ajouter le commentaire en local temporairement
-    const publication = this.publications.find(pub => pub.id === publicationId);
-    const tempId = Date.now();
-
-    if (publication) {
-      if (!publication.commentaires) {
-        publication.commentaires = [];
-      }
-
-      publication.commentaires.push({
-        id: tempId,
-        data: commentaire,
-        createdAt: new Date().toISOString(),
-        user: { id: this.userId }
-      });
-    }
-
-    this.comments[publicationId] = '';
-    this.errorMessage = '';
-
-    this.publicationService.ajouterCommentaire(payload).subscribe({
-      next: (newCommentaire: Commentaire) => {
-        if (publication) {
-          const index = publication.commentaires.findIndex(c => c.id === tempId);
-          if (index !== -1) {
-            publication.commentaires[index] = newCommentaire;
-          } else {
-            publication.commentaires.push(newCommentaire);
-          }
-        }
-      },
-      error: () => {
-        this.errorMessage = "Erreur lors de l'ajout du commentaire.";
-      }
-    });
+addComment(publicationId: number) {
+  const commentaire = this.comments[publicationId];
+  if (!commentaire || !commentaire.trim()) {
+    this.errorMessage = "Veuillez entrer un commentaire.";
+    return;
   }
+
+  const payload = {
+    userId: this.userId,
+    data: commentaire,
+    publicationId: publicationId,
+  };
+
+  this.comments[publicationId] = '';
+  this.errorMessage = '';
+
+  this.publicationService.ajouterCommentaire(payload).subscribe({
+    next: () => {
+      this.loadPublications(); // ✅ recharge tout après ajout
+    },
+    error: () => {
+      this.errorMessage = "Erreur lors de l'ajout du commentaire.";
+    }
+  });
+}
+
 
   toggleReactions(publicationId: number): void {
     this.reactionVisibleId = this.reactionVisibleId === publicationId ? null : publicationId;
