@@ -87,7 +87,22 @@
                         class="form-control mb-2"
                         rows="2"></textarea>
 
-              <small class="text-muted"> · {{ commentaire.createdAt | date:'short' }}</small>
+              <small class="text-muted"> · {{ commentaire.dateCommentaire | date:'short' }}</small>
+<div class="d-flex align-items-center mt-1">
+  <span class="me-2" (click)="toggleCommentReactions(commentaire.id)" style="cursor: pointer;">
+    {{ commentaire.reaction || '😊 Réagir' }}
+  </span>
+
+  <!-- Menu de réactions -->
+  <div *ngIf="commentReactionsVisibleId === commentaire.id"
+       class="reaction-menu d-flex gap-2 p-1 bg-white rounded shadow"
+       style="z-index: 10;">
+    <span class="emoji" (click)="selectCommentReaction(publication.id, commentaire.id, '❤️')">❤️</span>
+    <span class="emoji" (click)="selectCommentReaction(publication.id, commentaire.id, '😂')">😂</span>
+    <span class="emoji" (click)="selectCommentReaction(publication.id, commentaire.id, '😢')">😢</span>
+    <span class="emoji" (click)="selectCommentReaction(publication.id, commentaire.id, '😡')">😡</span>
+  </div>
+</div>
 
               <!-- Actions (si utilisateur connecté est l’auteur du commentaire) -->
 
@@ -100,7 +115,7 @@
                         (click)="deleteComment(publication.id, commentaire.id)">
                   Supprimer
                 </button>
-            
+
             </div>
 
           </div>

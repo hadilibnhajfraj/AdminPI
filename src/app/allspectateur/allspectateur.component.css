@@ -24,3 +24,8 @@
 .reaction-menu .emoji:hover {
   transform: scale(1.3);
 }
+.reaction-menu span.emoji {
+  cursor: pointer;
+  font-size: 1.5rem;
+  padding: 4px;
+}

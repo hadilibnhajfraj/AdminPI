@@ -19,6 +19,7 @@ export class AllspectateurComponent implements OnInit {
   selectedReactions: { [key: number]: string } = {};
   editingCommentId: number | null = null;
   editingCommentText: string = '';
+commentReactionsVisibleId: number | null = null;
 
   constructor(
     private publicationService: PublicationService,
@@ -193,4 +194,20 @@ updateComment(publicationId: number, commentId: number) {
       });
     }
   }
+  toggleCommentReactions(commentId: number): void {
+  this.commentReactionsVisibleId = this.commentReactionsVisibleId === commentId ? null : commentId;
+}
+
+selectCommentReaction(publicationId: number, commentaireId: number, reaction: string): void {
+  this.publicationService.updateReactionCommentaire(commentaireId, reaction).subscribe({
+    next: () => {
+      const pub = this.publications.find(p => p.id === publicationId);
+      const comment = pub?.commentaires.find((c: any) => c.id === commentaireId);
+      if (comment) comment.reaction = reaction;
+      this.commentReactionsVisibleId = null;
+    },
+    error: () => this.errorMessage = "Erreur lors de l'ajout de la réaction."
+  });
+}
+
 }

@@ -118,5 +118,12 @@ supprimerCommentaire(commentId: number) {
     });
   return this.http.get<Commentaire[]>(`http://localhost:8082/publications/${publicationId}/commentaires`, { headers });
 }
+updateReactionCommentaire(commentaireId: number, reaction: string) {
+     const token = localStorage.getItem('token');  // Récupère le token JWT stocké dans le localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`  // Ajoute l'Authorization header avec le token
+    });
+  return this.http.put(`http://localhost:8082/commentaires/${commentaireId}/reaction/increment`, { reaction }, { headers });
+}
 
 }
