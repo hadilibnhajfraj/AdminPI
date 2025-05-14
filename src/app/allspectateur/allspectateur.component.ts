@@ -145,36 +145,25 @@ loadPublications(): void {
     // API call to react could be placed here
   }
 
-  editComment(publicationId: number, commentaire: any): void {
-    this.editingCommentId = commentaire.id;
-    this.editingCommentText = commentaire.data;
-  }
+editComment(publicationId: number, commentaire: any) {
+  this.editingCommentId = commentaire.id;
+  this.editingCommentText = commentaire.texte;
+}
 
-  cancelEdit(): void {
+ cancelEdit() {
+  this.editingCommentId = null;
+  this.editingCommentText = '';
+}
+
+  updateComment(publicationId: number, commentId: number) {
+  const payload = { texte: this.editingCommentText };
+  this.publicationService.updateCommentaire(commentId, payload).subscribe(() => {
+    // Optionnel : rafraîchir les commentaires ou mettre à jour localement
     this.editingCommentId = null;
     this.editingCommentText = '';
-  }
 
-  updateComment(publicationId: number, commentaireId: number): void {
-    const payload = { data: this.editingCommentText };
-
-    this.publicationService.updateCommentaire(commentaireId, payload).subscribe({
-      next: () => {
-        const publication = this.publications.find(pub => pub.id === publicationId);
-        if (publication) {
-          const comment = publication.commentaires.find((c: any) => c.id === commentaireId);
-          if (comment) {
-            comment.data = this.editingCommentText;
-          }
-        }
-        this.cancelEdit();
-        this.errorMessage = '';
-      },
-      error: () => {
-        this.errorMessage = "Erreur lors de la mise à jour du commentaire.";
-      }
-    });
-  }
+  });
+}
 
   deleteComment(publicationId: number, commentaireId: number): void {
     if (confirm("Voulez-vous supprimer ce commentaire ?")) {
