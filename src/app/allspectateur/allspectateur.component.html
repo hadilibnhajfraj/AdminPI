@@ -90,7 +90,8 @@
               <small class="text-muted"> · {{ commentaire.createdAt | date:'short' }}</small>
 
               <!-- Actions (si utilisateur connecté est l’auteur du commentaire) -->
-              <div *ngIf="commentaire.user?.id === userId" class="mt-2">
+
+
                 <button class="btn btn-sm btn-outline-primary me-2"
                         (click)="editComment(publication.id, commentaire)">
                   Modifier
@@ -99,7 +100,7 @@
                         (click)="deleteComment(publication.id, commentaire.id)">
                   Supprimer
                 </button>
-              </div>
+            
             </div>
 
           </div>
