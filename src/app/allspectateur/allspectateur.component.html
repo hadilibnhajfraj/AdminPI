@@ -82,7 +82,11 @@
 
             <!-- Sinon afficher commentaire -->
             <div *ngIf="editingCommentId !== commentaire.id">
-              <p>{{ commentaire.data }}</p>
+              <textarea [value]="commentaire.texte"
+                        readonly
+                        class="form-control mb-2"
+                        rows="2"></textarea>
+
               <small class="text-muted"> · {{ commentaire.createdAt | date:'short' }}</small>
 
               <!-- Actions (si utilisateur connecté est l’auteur du commentaire) -->
