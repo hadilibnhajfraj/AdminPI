@@ -102,11 +102,19 @@ ajouterCommentaire(payload: { userId: string, data: string, publicationId: numbe
   return this.http.post('http://localhost:8082/commentaires/add', payload);
 }
 updateCommentaire(commentId: number, payload: any) {
-  return this.http.put(`http://localhost:8082/commentaires/${commentId}`, payload);
+       const token = localStorage.getItem('token');  // Récupère le token JWT stocké dans le localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`  // Ajoute l'Authorization header avec le token
+    });
+  return this.http.put(`http://localhost:8082/commentaires/${commentId}`, payload, { headers });
 }
 
 supprimerCommentaire(commentId: number) {
-  return this.http.delete(`http://localhost:8082/commentaires/${commentId}`);
+      const token = localStorage.getItem('token');  // Récupère le token JWT stocké dans le localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`  // Ajoute l'Authorization header avec le token
+    });
+  return this.http.delete(`http://localhost:8082/commentaires/${commentId}`, { headers });
 }
   addCommentaire(publicationId: number, commentaire: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/${publicationId}/commentaire`, commentaire);
