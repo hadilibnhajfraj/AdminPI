@@ -155,15 +155,28 @@ editComment(publicationId: number, commentaire: any) {
   this.editingCommentText = '';
 }
 
-  updateComment(publicationId: number, commentId: number) {
+updateComment(publicationId: number, commentId: number) {
   const payload = { texte: this.editingCommentText };
-  this.publicationService.updateCommentaire(commentId, payload).subscribe(() => {
-    // Optionnel : rafraîchir les commentaires ou mettre à jour localement
-    this.editingCommentId = null;
-    this.editingCommentText = '';
 
+  this.publicationService.updateCommentaire(commentId, payload).subscribe({
+    next: () => {
+      const publication = this.publications.find(pub => pub.id === publicationId);
+      if (publication && publication.commentaires) {
+        const comment = publication.commentaires.find((c: any) => c.id === commentId);
+        if (comment) {
+          comment.texte = this.editingCommentText; // mise à jour locale du texte
+        }
+      }
+
+      this.editingCommentId = null;
+      this.editingCommentText = '';
+    },
+    error: () => {
+      this.errorMessage = "Erreur lors de la mise à jour du commentaire.";
+    }
   });
 }
+
 
   deleteComment(publicationId: number, commentaireId: number): void {
     if (confirm("Voulez-vous supprimer ce commentaire ?")) {
