@@ -99,10 +99,14 @@ deleteComment(commentId: number): Observable<any> {
   return this.http.delete(`${this.baseUrl}/${commentId}`, { headers });
 }
 ajouterCommentaire(payload: { userId: string, data: string, publicationId: number }) {
-  return this.http.post('http://localhost:8082/commentaires/add', payload);
+   const token = localStorage.getItem('token');  // Récupère le token JWT stocké dans le localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`  // Ajoute l'Authorization header avec le token
+    });
+  return this.http.post('http://localhost:8082/commentaires/add', payload, { headers });
 }
 updateCommentaire(commentId: number, payload: any) {
-       const token = localStorage.getItem('token');  // Récupère le token JWT stocké dans le localStorage
+      const token = localStorage.getItem('token');  // Récupère le token JWT stocké dans le localStorage
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`  // Ajoute l'Authorization header avec le token
     });
