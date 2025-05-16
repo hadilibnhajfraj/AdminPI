@@ -63,13 +63,6 @@
         <td>{{ tournoi.nbEquipe }}</td>
         <td>{{ tournoi.nbEquipeRestant }}</td>
         <td>
-          <!-- Bouton pour afficher les détails du tournoi -->
-          <button class="btn btn-info" (click)="afficherDetails(tournoi)">Afficher Détails</button>
-          <button class="btn btn-secondary" (click)="afficherBracket(tournoi)">
-            Voir l’arbre du tournoi
-          </button>
-          
-
           <button class="btn btn-primary" [routerLink]="['/tournoi', tournoi.idTournoi, 'equipes']">
             Voir les équipes
           </button>
