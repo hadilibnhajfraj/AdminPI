@@ -41,6 +41,36 @@
     </table>
     <p *ngIf="calendrier.length === 0">Aucun match disponible.</p>
   </div>
+  <!-- CONTENU CLASSEMENT -->
+<div *ngIf="ongletActif === 'classement'" class="mt-3">
+  <h4>Classement</h4>
+  <table class="table table-striped" *ngIf="classement.length > 0">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Équipe</th>
+        <th>Points</th>
+        <th>Matchs Joués</th>
+        <th>Buts Marqués</th>
+        <th>Buts Encaissés</th>
+        <th>Différence de Buts</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let equipe of classement; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ equipe.nomEquipe }}</td>
+        <td>{{ equipe.points }}</td>
+        <td>{{ equipe.matchsJoues }}</td>
+        <td>{{ equipe.butsMarques }}</td>
+        <td>{{ equipe.butsEncaisses }}</td>
+        <td>{{ equipe.differenceButs }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <p *ngIf="classement.length === 0">Aucun classement disponible.</p>
+</div>
+
   <!-- POPUP STATISTIQUES -->
 <div class="modal" tabindex="-1" [ngClass]="{ 'd-block': statsVisible }" style="background: rgba(0,0,0,0.5)">
   <div class="modal-dialog modal-lg">
@@ -163,33 +193,4 @@
       </div>
     </div>
   </div>
-</div>
-<!-- CONTENU CLASSEMENT -->
-<div *ngIf="ongletActif === 'classement'" class="mt-3">
-  <h4>Classement</h4>
-  <table class="table table-striped" *ngIf="classement.length > 0">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Équipe</th>
-        <th>Points</th>
-        <th>Matchs Joués</th>
-        <th>Buts Marqués</th>
-        <th>Buts Encaissés</th>
-        <th>Différence de Buts</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let equipe of classement; let i = index">
-        <td>{{ i + 1 }}</td>
-        <td>{{ equipe.nomEquipe }}</td>
-        <td>{{ equipe.points }}</td>
-        <td>{{ equipe.matchsJoues }}</td>
-        <td>{{ equipe.butsMarques }}</td>
-        <td>{{ equipe.butsEncaisses }}</td>
-        <td>{{ equipe.differenceButs }}</td>
-      </tr>
-    </tbody>
-  </table>
-  <p *ngIf="classement.length === 0">Aucun classement disponible.</p>
 </div>
