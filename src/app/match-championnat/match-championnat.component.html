@@ -72,6 +72,7 @@
 </div>
 
   <!-- POPUP STATISTIQUES -->
+<!-- POPUP STATISTIQUES -->
 <div class="modal" tabindex="-1" [ngClass]="{ 'd-block': statsVisible }" style="background: rgba(0,0,0,0.5)">
   <div class="modal-dialog modal-lg">
     <div class="modal-content bg-dark text-light">
@@ -80,60 +81,55 @@
         <button type="button" class="btn-close btn-close-white" (click)="fermerStats()"></button>
       </div>
       <div class="modal-body">
+        <!-- Titre : noms des équipes avec score -->
+        <div class="d-flex justify-content-between align-items-center mb-4 px-3">
+          <div class="fw-bold fs-5 text-light text-start" style="flex: 1;">
+            {{ matchSelectionne?.equipes1[0]?.nom }}
+          </div>
+          <div class="fw-bold fs-4 text-primary text-center" style="flex: 0.5;">
+            {{ matchSelectionne?.scoreEquipe1 }} - {{ matchSelectionne?.scoreEquipe2 }}
+          </div>
+          <div class="fw-bold fs-5 text-light text-end" style="flex: 1;">
+            {{ matchSelectionne?.equipes1[1]?.nom }}
+          </div>
+        </div>
 
-     
-    <!-- Titre : noms des équipes avec score -->
-<div class="d-flex justify-content-between align-items-center mb-4 px-3">
-  <div class="fw-bold fs-5 text-light text-start" style="flex: 1;">
-    {{ matchSelectionne?.equipes1[0]?.nom }}
-  </div>
+        <!-- Statistiques -->
+        <div *ngFor="let stat of statistiques" class="mb-4">
+          <div class="text-center mb-2 fw-bold text-light">{{ stat.nomStat }}</div>
+          <div class="d-flex align-items-center justify-content-between px-3">
+            <!-- Équipe 1 -->
+            <div class="d-flex align-items-center" style="width: 45%;">
+              <span class="me-2 text-light">{{ stat.valeurEquipe1 }}</span>
+              <div class="progress w-100" style="height: 14px; max-width: 150px;">
+                <div class="progress-bar bg-primary" role="progressbar"
+                  [style.width.%]="calculerLargeur(stat.valeurEquipe1, stat.valeurEquipe1, stat.valeurEquipe2)">
+                </div>
+              </div>
+            </div>
 
-  <div class="fw-bold fs-4 text-primary text-center" style="flex: 0.5;">
-    {{ matchSelectionne?.scoreEquipe1 }} - {{ matchSelectionne?.scoreEquipe2 }}
-  </div>
-
-  <div class="fw-bold fs-5 text-light text-end" style="flex: 1;">
-    {{ matchSelectionne?.equipes1[1]?.nom }}
-  </div>
-</div>
-
-<!-- Statistiques -->
-<div *ngFor="let stat of statistiques" class="mb-4">
-  <div class="text-center mb-2 fw-bold text-light">{{ stat.nomStat }}</div>
-
-  <div class="d-flex align-items-center justify-content-between px-3">
-    <!-- Équipe 1 -->
-    <div class="d-flex align-items-center" style="width: 45%;">
-      <span class="me-2 text-light">{{ stat.valeurEquipe1 }}</span>
-      <div class="progress w-100" style="height: 14px; max-width: 150px;">
-        <div class="progress-bar bg-primary" role="progressbar"
-             [style.width.%]="calculerLargeur(stat.valeurEquipe1, stat.valeurEquipe1, stat.valeurEquipe2)">
+            <!-- Équipe 2 -->
+            <div class="d-flex align-items-center justify-content-end" style="width: 45%;">
+              <div class="progress w-100 me-2" style="height: 14px; max-width: 150px;">
+                <div class="progress-bar bg-danger" role="progressbar"
+                  [style.width.%]="calculerLargeur(stat.valeurEquipe2, stat.valeurEquipe1, stat.valeurEquipe2)">
+                </div>
+              </div>
+              <span class="text-light">{{ stat.valeurEquipe2 }}</span>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Équipe 2 -->
-    <div class="d-flex align-items-center justify-content-end" style="width: 45%;">
-      <div class="progress w-100 me-2" style="height: 14px; max-width: 150px;">
-        <div class="progress-bar bg-danger" role="progressbar"
-             [style.width.%]="calculerLargeur(stat.valeurEquipe2, stat.valeurEquipe1, stat.valeurEquipe2)">
-        </div>
+      <!-- Footer -->
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="fermerStats()">Fermer</button>
       </div>
-      <span class="text-light">{{ stat.valeurEquipe2 }}</span>
     </div>
   </div>
-</div>
+</div> <!-- FIN POPUP STATISTIQUES -->
 
-<!-- Footer -->
-<div class="modal-footer">
-  <button class="btn btn-secondary" (click)="fermerStats()">Fermer</button>
-</div>
-
-
- 
-
-
-  <!-- POPUP SCORE -->
+<!-- POPUP SCORE -->
 <div class="modal" tabindex="-1" [ngClass]="{ 'd-block': popupVisible }" style="background: rgba(0,0,0,0.5)">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -193,4 +189,5 @@
       </div>
     </div>
   </div>
-</div>
+</div> <!-- FIN POPUP SCORE -->
+  
