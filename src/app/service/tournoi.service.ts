@@ -62,13 +62,25 @@ export class TournoiService {
     return this.http.get<Equipe[]>(`${this.apiUrl}/${tournoiId}/equipesNonInscrites`);
   }
   
-  mettreAJourScores(matchId: number, scoreEquipe1: number, scoreEquipe2: number): Observable<string> {
-    return this.http.put<string>(
-      `${this.apiUrl}/mettreAJourScores/${matchId}?scoreEquipe1=${scoreEquipe1}&scoreEquipe2=${scoreEquipe2}`,
-      {}
-    );
-  }
-  
+mettreAJourScores(
+  matchId: number,
+  scoreEquipe1: number,
+  scoreEquipe2: number,
+  cartonsJaunesEquipe1: number,
+  cartonsRougesEquipe1: number,
+  cornersEquipe1: number,
+  cartonsJaunesEquipe2: number,
+  cartonsRougesEquipe2: number,
+  cornersEquipe2: number
+): Observable<string> {
+  return this.http.put<string>(
+    `${this.apiUrl}/mettreAJourScores/${matchId}?scoreEquipe1=${scoreEquipe1}&scoreEquipe2=${scoreEquipe2}` +
+    `&cartonsJaunesEquipe1=${cartonsJaunesEquipe1}&cartonsRougesEquipe1=${cartonsRougesEquipe1}&cornersEquipe1=${cornersEquipe1}` +
+    `&cartonsJaunesEquipe2=${cartonsJaunesEquipe2}&cartonsRougesEquipe2=${cartonsRougesEquipe2}&cornersEquipe2=${cornersEquipe2}`,
+    {}
+  );
+}
+
 
   
   genererTourSuivant(tournoiId: number): Observable<string> {
@@ -88,6 +100,12 @@ genererChampionnat(tournoiId: number, allerRetour: boolean): Observable<any> {
 getClassement(tournoiId: number): Observable<any[]> {
   return this.http.get<any[]>(`${this.apiUrl}/${tournoiId}/classement`);
 }
+
+getStatistiquesParMatch(matchId: number): Observable<any[]> {
+  console.log(`Appel de getStatistiquesParMatch avec matchId = ${matchId}`);
+  return this.http.get<any[]>(`${this.apiUrl}/getStatistiquesParMatch/match/${matchId}`);
+}
+
 
   
 }

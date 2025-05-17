@@ -19,6 +19,15 @@ export class MatchChampionnatComponent implements OnInit {
   matchSelectionne: any = null;
   scoreEquipe1?: number;
   scoreEquipe2?: number;
+  cartonsJaunesEquipe1?: number;
+cartonsRougesEquipe1?: number;
+cornersEquipe1?: number;
+cartonsJaunesEquipe2?: number;
+cartonsRougesEquipe2?: number;
+cornersEquipe2?: number;
+
+statsVisible = false;
+  statistiques: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -77,11 +86,13 @@ export class MatchChampionnatComponent implements OnInit {
     this.scoreEquipe1 = match.scoreEquipe1 ?? 0;
     this.scoreEquipe2 = match.scoreEquipe2 ?? 0;
     this.popupVisible = true;
+     this.statsVisible = false;
   }
 
   fermerPopup(): void {
     this.popupVisible = false;
     this.matchSelectionne = null;
+       this.statsVisible = false;
   }
 
   validerMiseAJour(): void {
@@ -92,27 +103,87 @@ export class MatchChampionnatComponent implements OnInit {
       return;
     }
   
-    this.tournoiService.mettreAJourScores(
-      this.matchSelectionne.idMatch,
-      this.scoreEquipe1,
-      this.scoreEquipe2
-    ).subscribe({
-      next: () => {
-        alert("Score mis à jour !");
-        this.fermerPopup();
+     this.tournoiService.mettreAJourScores(
+    this.matchSelectionne.idMatch,
+    this.scoreEquipe1,
+    this.scoreEquipe2,
+    this.cartonsJaunesEquipe1,
+    this.cartonsRougesEquipe1,
+    this.cornersEquipe1,
+    this.cartonsJaunesEquipe2,
+    this.cartonsRougesEquipe2,
+    this.cornersEquipe2
+  ).subscribe({
+    next: () => {
+      alert("Score et statistiques mis à jour !");
+      this.fermerPopup();
+      setTimeout(() => {
+        this.getMatchsParTournoi();
+        this.chargerClassement();
+      }, 300);
+    },
+    error: (err) => {
+      console.error("Erreur MAJ score :", err);
+      alert("Erreur lors de la mise à jour.");
+      this.fermerPopup();
+    }});
   
-        // Actualisation des matchs pour refléter les nouveaux scores
-        setTimeout(() => {
-          this.getMatchsParTournoi();
-          this.chargerClassement();
-        }, 300);
-      },
-      error: (err) => {
-        console.error("Erreur MAJ score :", err);
-        alert("Erreur lors de la mise à jour.");
-        this.fermerPopup();
-      }
-    });
   }
+ afficherStatistiques(match: any): void {
+  this.tournoiService.getStatistiquesParMatch(match.idMatch).subscribe({
+    next: (data) => {
+      if (data.length === 2) {
+        const equipe1 = data[0];
+        const equipe2 = data[1];
+
+        this.statistiques = [
+          {
+            nomStat: 'Score',
+            valeurEquipe1: equipe1.score,
+            valeurEquipe2: equipe2.score
+          },
+          {
+            nomStat: 'Cartons Jaunes',
+            valeurEquipe1: equipe1.cartonsJaunes,
+            valeurEquipe2: equipe2.cartonsJaunes
+          },
+          {
+            nomStat: 'Cartons Rouges',
+            valeurEquipe1: equipe1.cartonsRouges,
+            valeurEquipe2: equipe2.cartonsRouges
+          },
+          {
+            nomStat: 'Corners',
+            valeurEquipe1: equipe1.corners,
+            valeurEquipe2: equipe2.corners
+          }
+        ];
+      }
+
+      this.matchSelectionne = match;
+      this.statsVisible = true;
+      this.popupVisible = false;
+    },
+    error: (err) => {
+      console.error("Erreur récupération stats:", err);
+      alert("Erreur lors de la récupération des statistiques.");
+    }
+  });
+}
+
   
+
+  fermerStats(): void {
+    this.statsVisible = false;
+    this.matchSelectionne = null;
+  }
+
+  calculerLargeur(valeur: number, valeur1: number, valeur2: number): number {
+  const max = Math.max(valeur1, valeur2);
+  if (max === 0) return 0;
+  return (valeur / max) * 100;
+}
+
+
+
 }

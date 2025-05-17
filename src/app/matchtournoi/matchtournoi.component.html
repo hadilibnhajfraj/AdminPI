@@ -43,28 +43,68 @@
     <button class="btn btn-primary" (click)="genererTourSuivant()">Générer le tour suivant</button>
   </div>
 
-  <!-- Pop-up mise à jour des scores -->
-  <div *ngIf="popupVisible" class="modal">
+<!-- POPUP SCORE -->
+<div class="modal" tabindex="-1" [ngClass]="{ 'd-block': popupVisible }" style="background: rgba(0,0,0,0.5)">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <h3>Mise à jour des scores</h3>
-      <p>{{ matchSelectionne?.nom }} - Tour {{ matchSelectionne?.tour }}</p>
-
-      <div class="form-group">
-        <label>Score Équipe 1 ({{ matchSelectionne?.equipes1[0]?.nom || 'Équipe 1' }}):</label>
-        <input type="number" [(ngModel)]="scoreEquipe1" class="form-control" />
+      <div class="modal-header">
+        <h5 class="modal-title">Mettre à jour le score et les statistiques</h5>
+        <button type="button" class="btn-close" (click)="fermerPopup()"></button>
       </div>
+      <div class="modal-body">
+        <p>Match : {{ matchSelectionne?.equipes1[0]?.nom }} - vs - {{ matchSelectionne?.equipes1[1]?.nom }}</p>
+        <div class="row">
+          <!-- ÉQUIPE 1 -->
+          <div class="col-md-6">
+            <h6>{{ matchSelectionne?.equipes1[0]?.nom }}</h6>
+            <div class="mb-2">
+              <label class="form-label">Score</label>
+              <input type="number" [(ngModel)]="scoreEquipe1" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Cartons jaunes</label>
+              <input type="number" [(ngModel)]="cartonsJaunesEquipe1" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Cartons rouges</label>
+              <input type="number" [(ngModel)]="cartonsRougesEquipe1" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Corners</label>
+              <input type="number" [(ngModel)]="cornersEquipe1" class="form-control" />
+            </div>
+          </div>
 
-      <div class="form-group">
-        <label>Score Équipe 2 ({{ matchSelectionne?.equipes1[1]?.nom || 'Équipe 2' }}):</label>
-        <input type="number" [(ngModel)]="scoreEquipe2" class="form-control" />
+          <!-- ÉQUIPE 2 -->
+          <div class="col-md-6">
+            <h6>{{ matchSelectionne?.equipes1[1]?.nom }}</h6>
+            <div class="mb-2">
+              <label class="form-label">Score</label>
+              <input type="number" [(ngModel)]="scoreEquipe2" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Cartons jaunes</label>
+              <input type="number" [(ngModel)]="cartonsJaunesEquipe2" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Cartons rouges</label>
+              <input type="number" [(ngModel)]="cartonsRougesEquipe2" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Corners</label>
+              <input type="number" [(ngModel)]="cornersEquipe2" class="form-control" />
+            </div>
+          </div>
+        </div>
       </div>
-
-      <div class="modal-buttons mt-3">
-        <button (click)="validerMiseAJour()" class="btn btn-success">Valider</button>
-        <button (click)="fermerPopup()" class="btn btn-secondary">Annuler</button>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="fermerPopup()">Annuler</button>
+        <button class="btn btn-success" (click)="validerMiseAJour()">Valider</button>
       </div>
     </div>
   </div>
+</div>
+
 
   <!-- Popup Affectation Terrain -->
   <div *ngIf="popupTerrainVisible" class="modal">

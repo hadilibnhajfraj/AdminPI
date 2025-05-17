@@ -30,14 +30,141 @@
           <td>{{ match.heureMatch || '-' }}</td>
           <td>
             <button class="btn btn-primary btn-sm" (click)="ouvrirPopup(match)">Mettre à jour le score</button>
+            <button *ngIf="match.scoreEquipe1 != null && match.scoreEquipe2 != null"
+          class="btn btn-info btn-sm"
+          (click)="afficherStatistiques(match)">
+    Afficher Stat
+  </button>
           </td>
         </tr>
       </tbody>
     </table>
     <p *ngIf="calendrier.length === 0">Aucun match disponible.</p>
   </div>
+  <!-- POPUP STATISTIQUES -->
+<div class="modal" tabindex="-1" [ngClass]="{ 'd-block': statsVisible }" style="background: rgba(0,0,0,0.5)">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content bg-dark text-light">
+      <div class="modal-header">
+        <h5 class="modal-title">Statistiques du match</h5>
+        <button type="button" class="btn-close btn-close-white" (click)="fermerStats()"></button>
+      </div>
+      <div class="modal-body">
 
- <!-- CONTENU CLASSEMENT -->
+     
+    <!-- Titre : noms des équipes avec score -->
+<div class="d-flex justify-content-between align-items-center mb-4 px-3">
+  <div class="fw-bold fs-5 text-light text-start" style="flex: 1;">
+    {{ matchSelectionne?.equipes1[0]?.nom }}
+  </div>
+
+  <div class="fw-bold fs-4 text-primary text-center" style="flex: 0.5;">
+    {{ matchSelectionne?.scoreEquipe1 }} - {{ matchSelectionne?.scoreEquipe2 }}
+  </div>
+
+  <div class="fw-bold fs-5 text-light text-end" style="flex: 1;">
+    {{ matchSelectionne?.equipes1[1]?.nom }}
+  </div>
+</div>
+
+<!-- Statistiques -->
+<div *ngFor="let stat of statistiques" class="mb-4">
+  <div class="text-center mb-2 fw-bold text-light">{{ stat.nomStat }}</div>
+
+  <div class="d-flex align-items-center justify-content-between px-3">
+    <!-- Équipe 1 -->
+    <div class="d-flex align-items-center" style="width: 45%;">
+      <span class="me-2 text-light">{{ stat.valeurEquipe1 }}</span>
+      <div class="progress w-100" style="height: 14px; max-width: 150px;">
+        <div class="progress-bar bg-primary" role="progressbar"
+             [style.width.%]="calculerLargeur(stat.valeurEquipe1, stat.valeurEquipe1, stat.valeurEquipe2)">
+        </div>
+      </div>
+    </div>
+
+    <!-- Équipe 2 -->
+    <div class="d-flex align-items-center justify-content-end" style="width: 45%;">
+      <div class="progress w-100 me-2" style="height: 14px; max-width: 150px;">
+        <div class="progress-bar bg-danger" role="progressbar"
+             [style.width.%]="calculerLargeur(stat.valeurEquipe2, stat.valeurEquipe1, stat.valeurEquipe2)">
+        </div>
+      </div>
+      <span class="text-light">{{ stat.valeurEquipe2 }}</span>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="modal-footer">
+  <button class="btn btn-secondary" (click)="fermerStats()">Fermer</button>
+</div>
+
+
+ 
+
+
+  <!-- POPUP SCORE -->
+<div class="modal" tabindex="-1" [ngClass]="{ 'd-block': popupVisible }" style="background: rgba(0,0,0,0.5)">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Mettre à jour le score et les statistiques</h5>
+        <button type="button" class="btn-close" (click)="fermerPopup()"></button>
+      </div>
+      <div class="modal-body">
+        <p>Match : {{ matchSelectionne?.equipes1[0]?.nom }} - vs - {{ matchSelectionne?.equipes1[1]?.nom }}</p>
+        <div class="row">
+          <!-- ÉQUIPE 1 -->
+          <div class="col-md-6">
+            <h6>{{ matchSelectionne?.equipes1[0]?.nom }}</h6>
+            <div class="mb-2">
+              <label class="form-label">Score</label>
+              <input type="number" [(ngModel)]="scoreEquipe1" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Cartons jaunes</label>
+              <input type="number" [(ngModel)]="cartonsJaunesEquipe1" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Cartons rouges</label>
+              <input type="number" [(ngModel)]="cartonsRougesEquipe1" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Corners</label>
+              <input type="number" [(ngModel)]="cornersEquipe1" class="form-control" />
+            </div>
+          </div>
+
+          <!-- ÉQUIPE 2 -->
+          <div class="col-md-6">
+            <h6>{{ matchSelectionne?.equipes1[1]?.nom }}</h6>
+            <div class="mb-2">
+              <label class="form-label">Score</label>
+              <input type="number" [(ngModel)]="scoreEquipe2" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Cartons jaunes</label>
+              <input type="number" [(ngModel)]="cartonsJaunesEquipe2" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Cartons rouges</label>
+              <input type="number" [(ngModel)]="cartonsRougesEquipe2" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Corners</label>
+              <input type="number" [(ngModel)]="cornersEquipe2" class="form-control" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="fermerPopup()">Annuler</button>
+        <button class="btn btn-success" (click)="validerMiseAJour()">Valider</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- CONTENU CLASSEMENT -->
 <div *ngIf="ongletActif === 'classement'" class="mt-3">
   <h4>Classement</h4>
   <table class="table table-striped" *ngIf="classement.length > 0">
@@ -65,33 +192,4 @@
     </tbody>
   </table>
   <p *ngIf="classement.length === 0">Aucun classement disponible.</p>
-</div>
-
-
-  <!-- POPUP SCORE -->
-  <div class="modal" tabindex="-1" [ngClass]="{ 'd-block': popupVisible }" style="background: rgba(0,0,0,0.5)">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Mettre à jour le score</h5>
-          <button type="button" class="btn-close" (click)="fermerPopup()"></button>
-        </div>
-        <div class="modal-body">
-          <p>Match : {{ matchSelectionne?.equipes1[0]?.nom }} - vs - {{ matchSelectionne?.equipes1[1]?.nom }}</p>
-          <div class="mb-3">
-            <label class="form-label">{{ matchSelectionne?.equipes1[0]?.nom }}</label>
-            <input type="number" [(ngModel)]="scoreEquipe1" class="form-control" />
-          </div>
-          <div class="mb-3">
-            <label class="form-label">{{ matchSelectionne?.equipes1[1]?.nom }}</label>
-            <input type="number" [(ngModel)]="scoreEquipe2" class="form-control" />
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" (click)="fermerPopup()">Annuler</button>
-          <button class="btn btn-success" (click)="validerMiseAJour()">Valider</button>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>

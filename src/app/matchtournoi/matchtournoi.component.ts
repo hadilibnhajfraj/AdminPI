@@ -20,6 +20,12 @@ export class MatchtournoiComponent implements OnInit {
 
   scoreEquipe1?: number;
   scoreEquipe2?: number;
+    cartonsJaunesEquipe1?: number;
+cartonsRougesEquipe1?: number;
+cornersEquipe1?: number;
+cartonsJaunesEquipe2?: number;
+cartonsRougesEquipe2?: number;
+cornersEquipe2?: number;
   
 
   terrains: any[] = [];
@@ -103,10 +109,16 @@ export class MatchtournoiComponent implements OnInit {
       return;
     }
   
-    this.tournoiService.mettreAJourScores(
-      this.matchSelectionne.idMatch,
-      this.scoreEquipe1,
-      this.scoreEquipe2
+      this.tournoiService.mettreAJourScores(
+    this.matchSelectionne.idMatch,
+    this.scoreEquipe1,
+    this.scoreEquipe2,
+    this.cartonsJaunesEquipe1,
+    this.cartonsRougesEquipe1,
+    this.cornersEquipe1,
+    this.cartonsJaunesEquipe2,
+    this.cartonsRougesEquipe2,
+    this.cornersEquipe2
     ).subscribe({
       next: () => {
         alert("Score mis à jour !");
