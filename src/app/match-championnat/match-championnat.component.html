@@ -24,7 +24,11 @@
       <tbody>
         <tr *ngFor="let match of calendrier">
           <td>
-            {{ match.equipes1[0]?.nom }} {{ match.scoreEquipe1 ?? '-' }} vs {{ match.scoreEquipe2 ?? '-' }} {{ match.equipes1[1]?.nom }}
+<img [src]="match.equipes1[0]?.logo" alt="logo" width="30" height="30">
+{{ match.equipes1[0]?.nom }}
+{{ match.scoreEquipe1 ?? '-' }} vs {{ match.scoreEquipe2 ?? '-' }}
+{{ match.equipes1[1]?.nom }}
+<img [src]="match.equipes1[1]?.logo" alt="logo" width="30" height="30">
           </td>
           <td>{{ match.dateMatch || '-' }}</td>
           <td>{{ match.heureMatch || '-' }}</td>
@@ -59,7 +63,11 @@
     <tbody>
       <tr *ngFor="let equipe of classement; let i = index">
         <td>{{ i + 1 }}</td>
-        <td>{{ equipe.nomEquipe }}</td>
+  <td>
+  <img [src]="equipe.logo" alt="logo" width="30" height="30" class="me-2" />
+  {{ equipe.nomEquipe }}
+</td>
+
         <td>{{ equipe.points }}</td>
         <td>{{ equipe.matchsJoues }}</td>
         <td>{{ equipe.butsMarques }}</td>

@@ -92,6 +92,12 @@ cornersEquipe2?: number;
     this.matchSelectionne = match;
     this.scoreEquipe1 = match.scoreEquipe1 ?? 0;
     this.scoreEquipe2 = match.scoreEquipe2 ?? 0;
+      this.cartonsJaunesEquipe1 = match.cartonsJaunesEquipe1 ?? 0;
+  this.cartonsRougesEquipe1 = match.cartonsRougesEquipe1 ?? 0;
+  this.cornersEquipe1 = match.cornersEquipe1 ?? 0;
+  this.cartonsJaunesEquipe2 = match.cartonsJaunesEquipe2 ?? 0;
+  this.cartonsRougesEquipe2 = match.cartonsRougesEquipe2 ?? 0;
+  this.cornersEquipe2 = match.cornersEquipe2 ?? 0;
     this.popupVisible = true;
   }
 

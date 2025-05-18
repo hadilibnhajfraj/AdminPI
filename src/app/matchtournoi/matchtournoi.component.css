@@ -123,5 +123,30 @@
     90% { opacity: 1; bottom: 20px; }
     100% { opacity: 0; bottom: 0; }
   }
+  .score-cell {
+  background-color: #fdfdfd;
+  font-weight: 500;
+}
+
+.team-name {
+  font-size: 15px;
+  font-weight: 500;
+  color: #333;
+}
+
+.score-display {
+  font-weight: bold;
+  color: #0325f6; /* orange vif, tu peux le changer */
+  font-size: 18px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.score-separator {
+  margin: 0 5px;
+}
+
   
   

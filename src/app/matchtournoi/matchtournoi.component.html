@@ -17,12 +17,27 @@
       <tbody>
         <tr *ngFor="let match of tour.value">
           <td>{{ match.nom }}</td>
-          <td>
-            {{ match.equipes1[0]?.nom || 'Équipe 1' }} /
-            {{ match.scoreEquipe1 != null ? match.scoreEquipe1 : '-' }} - {{ match.scoreEquipe2 != null ? match.scoreEquipe2 : '-' }} /
-            {{ match.equipes1[1]?.nom || 'Équipe 2' }}
-            
-          </td>
+       <td class="score-cell d-flex align-items-center justify-content-between px-2">
+  <div class="d-flex align-items-center gap-1">
+    <img *ngIf="match.equipes1[0]?.logo" [src]="match.equipes1[0]?.logo" alt="logo équipe 1"
+         width="30" height="30" class="rounded-circle border border-secondary" />
+    <span class="team-name">{{ match.equipes1[0]?.nom || 'Équipe 1' }}</span>
+  </div>
+
+  <div class="score-display">
+    <span>{{ match.scoreEquipe1 != null ? match.scoreEquipe1 : '-' }}</span>
+    <span class="score-separator">-</span>
+    <span>{{ match.scoreEquipe2 != null ? match.scoreEquipe2 : '-' }}</span>
+  </div>
+
+  <div class="d-flex align-items-center gap-1">
+    <span class="team-name">{{ match.equipes1[1]?.nom || 'Équipe 2' }}</span>
+    <img *ngIf="match.equipes1[1]?.logo" [src]="match.equipes1[1]?.logo" alt="logo équipe 2"
+         width="30" height="30" class="rounded-circle border border-secondary" />
+  </div>
+</td>
+
+
           <td>{{ match.dateMatch || '-' }}</td>
           <td>{{ match.heureMatch || '-' }}</td>
           <td>
@@ -44,7 +59,8 @@
   </div>
 
 <!-- POPUP SCORE -->
-<div class="modal" tabindex="-1" [ngClass]="{ 'd-block': popupVisible }" style="background: rgba(0,0,0,0.5)">
+<div *ngIf="popupVisible" class="modal d-block" tabindex="-1" style="background: rgba(0,0,0,0.5)">
+
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
