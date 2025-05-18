@@ -50,8 +50,7 @@ export const AdminLayoutRoutes: Routes = [
     data: { expectedRole: "Spectateur" },
   },
   { path: "login", component: LoginComponent },
-  {  },
   { path: "updatePub/:id", component: UpdatePubComponent },
-  { path: "publication", component: PublicationComponent },
+  { path: "addpublication", component: PublicationComponent },
   { path: "", redirectTo: "dashboard", pathMatch: "full" },
 ];

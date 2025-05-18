@@ -25,40 +25,50 @@ export class PublicationComponent implements OnInit {
   }
 
   onFileSelected(event: any) {
-    this.file = event.target.files[0];
+  const selectedFile = event.target.files[0];
+
+  if (selectedFile && selectedFile.size > 100 * 1024 * 1024) { // 100MB
+    this.errorMessage = "Le fichier dépasse la taille maximale autorisée (100 Mo).";
+    this.file = null;
+  } else {
+    this.errorMessage = '';
+    this.file = selectedFile;
+  }
+}
+
+
+addPublication() {
+  if (!this.file) {
+    this.errorMessage = "Veuillez sélectionner un fichier.";
+    return;
   }
 
-  addPublication() {
-    const publication = {
-      contenu: this.contenu,
-      datePublication: this.datePublication,
-      typeMedia: this.file ? 'image' : 'video', // ou ajuster selon ton type de média
-      isLive: this.isLive,
-    };
+  if (this.file.size > 100 * 1024 * 1024) {
+    this.errorMessage = "Le fichier dépasse la taille maximale autorisée (100 Mo).";
+    return;
+  }
 
-    if (!this.file) {
-      this.errorMessage = "Veuillez sélectionner un fichier.";
-      return;
+  const publication = {
+    contenu: this.contenu,
+    datePublication: this.datePublication,
+    typeMedia: this.file ? 'image' : 'video',
+    isLive: this.isLive,
+  };
+
+  this.publicationService.addPublication(publication, this.file).subscribe({
+    next: (createdPublication) => {
+      this.successMessage = "Publication ajoutée avec succès!";
+      this.createdPublication = createdPublication;
+      this.resetForm();
+      this.router.navigate(['/AllPub']);
+    },
+    error: (err) => {
+      console.error("Erreur lors de l’ajout de la publication:", err);
+      this.errorMessage = err?.error || "Erreur inconnue ou non autorisée.";
     }
+  });
+}
 
-    this.publicationService.addPublication(publication, this.file).subscribe({
-      next: (createdPublication) => {
-        // Afficher la publication créée dans la vue
-        this.createdPublication = createdPublication;
-        this.successMessage = "Publication ajoutée avec succès!";
-        this.contenu = '';
-        this.datePublication = '';
-        this.isLive = false;
-        this.file = null;
-        this.errorMessage = '';
-        this.router.navigate(['/AllPub']);
-      },
-      error: (err) => {
-        console.error("Erreur lors de l’ajout de la publication:", err);
-        this.errorMessage = "Erreur inconnue ou non autorisée.";
-      }
-    });
-  }
 
 
   delete(id: number) {

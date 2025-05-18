@@ -40,7 +40,7 @@ export class UserPubComponent implements OnInit {
     return /\.(mp4|webm|ogg)$/i.test(url);
   }
   onAdd() {
-    this.router.navigate(["/publication"]);
+    this.router.navigate(["/addpublication"]);
   }
 
   onEdit(publication: any) {

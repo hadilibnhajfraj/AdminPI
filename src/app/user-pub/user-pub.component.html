@@ -9,6 +9,9 @@
   <button class="btn btn-success btn-sm" (click)="onAddLive()">
     📡 Commencer le live
   </button>
+    <button class="btn btn-success btn-sm me-1" (click)="onAdd()">
+            <i class="bi bi-plus-circle">Ajouter Publication</i>
+          </button>
 </div>
 
   <table class="table table-bordered table-hover align-middle text-center mb-0">
@@ -52,9 +55,7 @@
 
         <td class="px-2 py-2">
           <!-- Actions -->
-          <button class="btn btn-success btn-sm me-1" (click)="onAdd()">
-            <i class="bi bi-plus-circle"></i>
-          </button>
+
 
           <button class="btn btn-warning btn-sm me-1" (click)="onEdit(publication)">
             <i class="bi bi-pencil-square"></i>
