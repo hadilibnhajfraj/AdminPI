@@ -205,4 +205,14 @@ export class PublicationService {
       { headers }
     );
   }
+  getUserReaction(commentaireId: number, email: string) {
+    const token = localStorage.getItem("token"); // Récupère le token JWT stocké dans le localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`, // Ajoute l'Authorization header avec le token
+    });
+  return this.http.get<any>(
+    `http://localhost:8082/commentaires/commentaires/${commentaireId}/reaction/user?email=${email}`,{ headers }
+  );
+}
+
 }

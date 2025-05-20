@@ -21,7 +21,7 @@ export class AllspectateurComponent implements OnInit {
   editingCommentText: string = "";
   commentReactionsVisibleId: number | null = null;
   reactionCounts: { [commentId: number]: { [emoji: string]: number } } = {};
-
+userReactions: { [commentId: number]: string } = {};
   constructor(
     private publicationService: PublicationService,
     private router: Router,
@@ -37,28 +37,42 @@ export class AllspectateurComponent implements OnInit {
     this.loadPublications();
   }
   loadPublications(): void {
-    this.publicationService.getMyPublicationsSpectatuer().subscribe({
-      next: (data) => {
-        this.publications = data.filter((pub) => pub.status !== "live");
-        this.publications.forEach((publication) => {
-          this.publicationService.getCommentaires(publication.id).subscribe({
-            next: (commentaires) => {
-              publication.commentaires = commentaires;
-              commentaires.forEach((commentaire) => {
-                this.loadReactions(commentaire.id);
-              });
-            },
-            error: () => {
-              this.errorMessage =
-                "Erreur lors de la récupération des commentaires.";
-            },
+   this.publicationService.getMyPublicationsSpectatuer().subscribe({
+  next: (data) => {
+    this.publications = data.filter((pub) => pub.status !== "live");
+
+    this.publications.forEach((publication) => {
+      this.publicationService.getCommentaires(publication.id).subscribe({
+        next: (commentaires) => {
+          publication.commentaires = commentaires;
+
+          commentaires.forEach((commentaire) => {
+            this.loadReactions(commentaire.id); // charger les totaux
+
+            // ✅ Charger la réaction de l'utilisateur (affichage immédiat)
+            this.publicationService.getUserReaction(commentaire.id, this.userId).subscribe({
+              next: (reaction) => {
+                if (reaction?.type) {
+                  this.userReactions[commentaire.id] = reaction.type;
+                }
+              },
+              error: () => {
+                console.error("Erreur en récupérant la réaction utilisateur", commentaire.id);
+              }
+            });
           });
-        });
-      },
-      error: () => {
-        this.errorMessage = "Erreur lors de la récupération des publications.";
-      },
+        },
+        error: () => {
+          this.errorMessage = "Erreur lors de la récupération des commentaires.";
+        },
+      });
     });
+  },
+  error: () => {
+    this.errorMessage = "Erreur lors de la récupération des publications.";
+  },
+});
+
   }
   loadReactions(commentId: number) {
     this.publicationService.getCommentReactionCount(commentId).subscribe({
@@ -208,35 +222,35 @@ export class AllspectateurComponent implements OnInit {
       : [];
   }
 
-  selectCommentReaction(
-    publicationId: number,
-    commentaireId: number,
-    emoji: string
-  ): void {
-    const token = this.authService.getToken();
-    const decoded: any = jwtDecode(token);
-    const email = decoded.sub;
+selectCommentReaction(
+  publicationId: number,
+  commentaireId: number,
+  emoji: string
+): void {
+  const token = this.authService.getToken();
+  const decoded: any = jwtDecode(token);
+  const email = decoded.sub;
 
-    this.publicationService
-      .updateReactionCommentaires(commentaireId, emoji, email)
-      .subscribe({
-        next: () => {
-          const pub = this.publications.find((p) => p.id === publicationId);
-          const comment = pub?.commentaires.find(
-            (c: any) => c.id === commentaireId
-          );
-          if (comment) comment.reaction = emoji;
+  this.publicationService
+    .updateReactionCommentaires(commentaireId, emoji, email)
+    .subscribe({
+      next: () => {
+        // ✅ MAJ immédiate de l'emoji affiché sans reload
+        this.userReactions[commentaireId] = emoji;
 
-          this.commentReactionsVisibleId = null;
+        // ✅ Fermer le menu
+        this.commentReactionsVisibleId = null;
 
-          // Recharge les stats après réaction
-          this.loadReactions(commentaireId);
-        },
-        error: () => {
-          this.errorMessage = "Erreur lors de l'ajout de la réaction.";
-        },
-      });
-  }
+        // ✅ MAJ des totaux
+        this.loadReactions(commentaireId);
+      },
+      error: () => {
+        this.errorMessage = "Erreur lors de l'ajout de la réaction.";
+      },
+    });
+}
+
+
   getTotalReactions(commentId: number): number {
     const counts = this.reactionCounts[commentId];
     if (!counts) return 0;
