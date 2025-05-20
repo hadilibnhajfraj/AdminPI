@@ -130,12 +130,18 @@ supprimerCommentaire(commentId: number) {
     });
   return this.http.get<Commentaire[]>(`http://localhost:8082/publications/${publicationId}/commentaires`, { headers });
 }
-updateReactionCommentaire(commentaireId: number, reaction: string) {
+updateReactionCommentaire(commentaireId: number, reaction: string, email: any) {
      const token = localStorage.getItem('token');  // Récupère le token JWT stocké dans le localStorage
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`  // Ajoute l'Authorization header avec le token
     });
   return this.http.put(`http://localhost:8082/commentaires/${commentaireId}/reaction/increment`, { reaction }, { headers });
 }
-
+getCommentReactionCount(commentId: number) {
+     const token = localStorage.getItem('token');  // Récupère le token JWT stocké dans le localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`  // Ajoute l'Authorization header avec le token
+    });
+  return this.http.get<{ [emoji: string]: number }>(`http://localhost:8082/commentaires/commentaires/${commentId}/reactions`, { headers });
+}
 }

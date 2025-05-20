@@ -20,6 +20,7 @@ export class AllspectateurComponent implements OnInit {
   editingCommentId: number | null = null;
   editingCommentText: string = '';
 commentReactionsVisibleId: number | null = null;
+reactionCounts: { [commentId: number]: { [emoji: string]: number } } = {};
 
   constructor(
     private publicationService: PublicationService,
@@ -35,7 +36,6 @@ commentReactionsVisibleId: number | null = null;
     }
     this.loadPublications();
   }
-
 loadPublications(): void {
   this.publicationService.getMyPublicationsSpectatuer().subscribe({
     next: (data) => {
@@ -44,8 +44,9 @@ loadPublications(): void {
         this.publicationService.getCommentaires(publication.id).subscribe({
           next: (commentaires) => {
             publication.commentaires = commentaires;
-            // ➤ Ajout du log des commentaires associés à la publication
-            console.log(`Commentaires pour la publication ID ${publication.id}:`, commentaires);
+            commentaires.forEach(commentaire => {
+              this.loadReactions(commentaire.id);
+            });
           },
           error: () => {
             this.errorMessage = "Erreur lors de la récupération des commentaires.";
@@ -58,6 +59,17 @@ loadPublications(): void {
     },
   });
 }
+loadReactions(commentId: number) {
+  this.publicationService.getCommentReactionCount(commentId).subscribe({
+    next: (counts) => {
+      this.reactionCounts[commentId] = counts;
+    },
+    error: () => {
+      console.error("Erreur lors de la récupération des réactions du commentaire", commentId);
+    }
+  });
+}
+
 
 
   isImage(url: string): boolean {
@@ -174,17 +186,31 @@ updateComment(publicationId: number, commentId: number) {
   toggleCommentReactions(commentId: number): void {
   this.commentReactionsVisibleId = this.commentReactionsVisibleId === commentId ? null : commentId;
 }
+getReactionKeys(commentId: number): string[] {
+  return this.reactionCounts[commentId] ? Object.keys(this.reactionCounts[commentId]) : [];
+}
 
-selectCommentReaction(publicationId: number, commentaireId: number, reaction: string): void {
-  this.publicationService.updateReactionCommentaire(commentaireId, reaction).subscribe({
+selectCommentReaction(publicationId: number, commentaireId: number, emoji: string): void {
+  const token = this.authService.getToken();
+  const decoded: any = jwtDecode(token);
+  const email = decoded.sub;
+
+  this.publicationService.updateReactionCommentaire(commentaireId, emoji, email).subscribe({
     next: () => {
       const pub = this.publications.find(p => p.id === publicationId);
       const comment = pub?.commentaires.find((c: any) => c.id === commentaireId);
-      if (comment) comment.reaction = reaction;
+      if (comment) comment.reaction = emoji;
+
       this.commentReactionsVisibleId = null;
+
+      // Recharge les stats après réaction
+      this.loadReactions(commentaireId);
     },
-    error: () => this.errorMessage = "Erreur lors de l'ajout de la réaction."
+    error: () => {
+      this.errorMessage = "Erreur lors de l'ajout de la réaction.";
+    }
   });
 }
+
 
 }
