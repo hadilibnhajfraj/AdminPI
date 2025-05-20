@@ -1,20 +1,28 @@
+<!-- Ajoutez ce lien dans index.html si ce n’est pas déjà fait -->
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet"> -->
+
 <div class="container mt-4">
-  <!-- NAVBAR -->
+  <!-- NAVIGATION -->
   <ul class="nav nav-tabs">
     <li class="nav-item">
-      <a class="nav-link" [ngClass]="{ active: ongletActif === 'calendrier' }" (click)="activerOnglet('calendrier')">Calendrier</a>
+      <a class="nav-link" [ngClass]="{ active: ongletActif === 'calendrier' }" (click)="activerOnglet('calendrier')">
+        <i class="bi bi-calendar-week"></i> Calendrier
+      </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" [ngClass]="{ active: ongletActif === 'classement' }" (click)="activerOnglet('classement')">Classement</a>
+      <a class="nav-link" [ngClass]="{ active: ongletActif === 'classement' }" (click)="activerOnglet('classement')">
+        <i class="bi bi-trophy"></i> Classement
+      </a>
     </li>
   </ul>
 
   <!-- CONTENU CALENDRIER -->
   <div *ngIf="ongletActif === 'calendrier'" class="mt-3">
-    <h4>Calendrier des matchs</h4>
-    <table class="table table-bordered mt-2" *ngIf="calendrier.length > 0">
+    <h4 class="text-light"><i class="bi bi-calendar-range-fill text-primary"></i> Calendrier des matchs</h4>
+    <table class="table table-dark table-striped mt-2" *ngIf="calendrier.length > 0">
       <thead>
         <tr>
+          <th>Nom du Match</th>
           <th>Match</th>
           <th>Date</th>
           <th>Heure</th>
@@ -23,179 +31,146 @@
       </thead>
       <tbody>
         <tr *ngFor="let match of calendrier">
+          <td>{{ match.nom }}</td>
           <td>
-<img [src]="match.equipes1[0]?.logo" alt="logo" width="30" height="30">
-{{ match.equipes1[0]?.nom }}
-{{ match.scoreEquipe1 ?? '-' }} vs {{ match.scoreEquipe2 ?? '-' }}
-{{ match.equipes1[1]?.nom }}
-<img [src]="match.equipes1[1]?.logo" alt="logo" width="30" height="30">
+            <img [src]="match.equipes1[0]?.logo" width="30" alt="Logo équipe 1"> {{ match.equipes1[0]?.nom }}
+            {{ match.scoreEquipe1 ?? '-' }} vs {{ match.scoreEquipe2 ?? '-' }}
+            {{ match.equipes1[1]?.nom }} <img [src]="match.equipes1[1]?.logo" width="30" alt="Logo équipe 1">
           </td>
           <td>{{ match.dateMatch || '-' }}</td>
           <td>{{ match.heureMatch || '-' }}</td>
           <td>
-            <button class="btn btn-primary btn-sm" (click)="ouvrirPopup(match)">Mettre à jour le score</button>
+            <button class="btn btn-outline-primary btn-sm me-1" (click)="ouvrirPopup(match)">
+              <i class="bi bi-pencil-square"></i>
+            </button>
             <button *ngIf="match.scoreEquipe1 != null && match.scoreEquipe2 != null"
-          class="btn btn-info btn-sm"
-          (click)="afficherStatistiques(match)">
-    Afficher Stat
-  </button>
+                    class="btn btn-outline-info btn-sm" (click)="afficherStatistiques(match)">
+              <i class="bi bi-bar-chart-line-fill"></i>
+            </button>
           </td>
         </tr>
       </tbody>
     </table>
-    <p *ngIf="calendrier.length === 0">Aucun match disponible.</p>
+    <p *ngIf="calendrier.length === 0" class="text-light">Aucun match disponible.</p>
   </div>
-  <!-- CONTENU CLASSEMENT -->
-<div *ngIf="ongletActif === 'classement'" class="mt-3">
-  <h4>Classement</h4>
-  <table class="table table-striped" *ngIf="classement.length > 0">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Équipe</th>
-        <th>Points</th>
-        <th>Matchs Joués</th>
-        <th>Buts Marqués</th>
-        <th>Buts Encaissés</th>
-        <th>Différence de Buts</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let equipe of classement; let i = index">
-        <td>{{ i + 1 }}</td>
-  <td>
-  <img [src]="equipe.logo" alt="logo" width="30" height="30" class="me-2" />
-  {{ equipe.nomEquipe }}
-</td>
 
-        <td>{{ equipe.points }}</td>
-        <td>{{ equipe.matchsJoues }}</td>
-        <td>{{ equipe.butsMarques }}</td>
-        <td>{{ equipe.butsEncaisses }}</td>
-        <td>{{ equipe.differenceButs }}</td>
-      </tr>
-    </tbody>
-  </table>
-  <p *ngIf="classement.length === 0">Aucun classement disponible.</p>
+  <!-- CONTENU CLASSEMENT -->
+  <div *ngIf="ongletActif === 'classement'" class="mt-3">
+    <h4 class="text-light"><i class="bi bi-list-ol text-warning"></i> Classement</h4>
+    <table class="table table-dark table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Équipe</th>
+          <th>Pts</th>
+          <th>J</th>
+          <th>BM</th>
+          <th>BE</th>
+          <th>Diff</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let equipe of classement; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td><img [src]="equipe.logo" width="30" class="me-2" alt="Logo équipe 1">{{ equipe.nomEquipe }}</td>
+          <td>{{ equipe.points }}</td>
+          <td>{{ equipe.matchsJoues }}</td>
+          <td class="text-success">{{ equipe.butsMarques }}</td>
+          <td class="text-danger">{{ equipe.butsEncaisses }}</td>
+          <td [ngClass]="{
+            'text-success': equipe.differenceButs > 0,
+            'text-danger': equipe.differenceButs < 0,
+            'text-light': equipe.differenceButs == 0
+          }">{{ equipe.differenceButs }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
-  <!-- POPUP STATISTIQUES -->
-<!-- POPUP STATISTIQUES -->
-<div class="modal" tabindex="-1" [ngClass]="{ 'd-block': statsVisible }" style="background: rgba(0,0,0,0.5)">
+<!-- POPUP SCORE -->
+<div class="modal" tabindex="-1" [ngClass]="{ 'd-block': popupVisible }" style="background: rgba(0, 0, 0, 0.5)">
   <div class="modal-dialog modal-lg">
     <div class="modal-content bg-dark text-light">
-      <div class="modal-header">
-        <h5 class="modal-title">Statistiques du match</h5>
-        <button type="button" class="btn-close btn-close-white" (click)="fermerStats()"></button>
+      <div class="modal-header border-secondary">
+        <h5 class="modal-title"><i class="bi bi-pencil-square text-primary"></i> Mise à jour du score</h5>
+        <button type="button" class="btn-close btn-close-white" (click)="fermerPopup()"></button>
       </div>
       <div class="modal-body">
-        <!-- Titre : noms des équipes avec score -->
-        <div class="d-flex justify-content-between align-items-center mb-4 px-3">
-          <div class="fw-bold fs-5 text-light text-start" style="flex: 1;">
-            {{ matchSelectionne?.equipes1[0]?.nom }}
-          </div>
-          <div class="fw-bold fs-4 text-primary text-center" style="flex: 0.5;">
-            {{ matchSelectionne?.scoreEquipe1 }} - {{ matchSelectionne?.scoreEquipe2 }}
-          </div>
-          <div class="fw-bold fs-5 text-light text-end" style="flex: 1;">
-            {{ matchSelectionne?.equipes1[1]?.nom }}
-          </div>
-        </div>
-
-        <!-- Statistiques -->
-        <div *ngFor="let stat of statistiques" class="mb-4">
-          <div class="text-center mb-2 fw-bold text-light">{{ stat.nomStat }}</div>
-          <div class="d-flex align-items-center justify-content-between px-3">
-            <!-- Équipe 1 -->
-            <div class="d-flex align-items-center" style="width: 45%;">
-              <span class="me-2 text-light">{{ stat.valeurEquipe1 }}</span>
-              <div class="progress w-100" style="height: 14px; max-width: 150px;">
-                <div class="progress-bar bg-primary" role="progressbar"
-                  [style.width.%]="calculerLargeur(stat.valeurEquipe1, stat.valeurEquipe1, stat.valeurEquipe2)">
-                </div>
-              </div>
-            </div>
-
-            <!-- Équipe 2 -->
-            <div class="d-flex align-items-center justify-content-end" style="width: 45%;">
-              <div class="progress w-100 me-2" style="height: 14px; max-width: 150px;">
-                <div class="progress-bar bg-danger" role="progressbar"
-                  [style.width.%]="calculerLargeur(stat.valeurEquipe2, stat.valeurEquipe1, stat.valeurEquipe2)">
-                </div>
-              </div>
-              <span class="text-light">{{ stat.valeurEquipe2 }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Footer -->
-      <div class="modal-footer">
-        <button class="btn btn-secondary" (click)="fermerStats()">Fermer</button>
-      </div>
-    </div>
-  </div>
-</div> <!-- FIN POPUP STATISTIQUES -->
-
-<!-- POPUP SCORE -->
-<div class="modal" tabindex="-1" [ngClass]="{ 'd-block': popupVisible }" style="background: rgba(0,0,0,0.5)">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Mettre à jour le score et les statistiques</h5>
-        <button type="button" class="btn-close" (click)="fermerPopup()"></button>
-      </div>
-      <div class="modal-body">
-        <p>Match : {{ matchSelectionne?.equipes1[0]?.nom }} - vs - {{ matchSelectionne?.equipes1[1]?.nom }}</p>
+        <p class="text-info fw-bold text-center">{{ matchSelectionne?.equipes1[0]?.nom }} vs {{ matchSelectionne?.equipes1[1]?.nom }}</p>
         <div class="row">
           <!-- ÉQUIPE 1 -->
           <div class="col-md-6">
             <h6>{{ matchSelectionne?.equipes1[0]?.nom }}</h6>
-            <div class="mb-2">
-              <label class="form-label">Score</label>
-              <input type="number" [(ngModel)]="scoreEquipe1" class="form-control" />
-            </div>
-            <div class="mb-2">
-              <label class="form-label">Cartons jaunes</label>
-              <input type="number" [(ngModel)]="cartonsJaunesEquipe1" class="form-control" />
-            </div>
-            <div class="mb-2">
-              <label class="form-label">Cartons rouges</label>
-              <input type="number" [(ngModel)]="cartonsRougesEquipe1" class="form-control" />
-            </div>
-            <div class="mb-2">
-              <label class="form-label">Corners</label>
-              <input type="number" [(ngModel)]="cornersEquipe1" class="form-control" />
-            </div>
+            <label>Score</label>
+            <input type="number" class="form-control mb-2" [(ngModel)]="scoreEquipe1">
+            <label>Cartons jaunes</label>
+            <input type="number" class="form-control mb-2" [(ngModel)]="cartonsJaunesEquipe1">
+            <label>Cartons rouges</label>
+            <input type="number" class="form-control mb-2" [(ngModel)]="cartonsRougesEquipe1">
+            <label>Corners</label>
+            <input type="number" class="form-control mb-2" [(ngModel)]="cornersEquipe1">
           </div>
 
           <!-- ÉQUIPE 2 -->
           <div class="col-md-6">
             <h6>{{ matchSelectionne?.equipes1[1]?.nom }}</h6>
-            <div class="mb-2">
-              <label class="form-label">Score</label>
-              <input type="number" [(ngModel)]="scoreEquipe2" class="form-control" />
-            </div>
-            <div class="mb-2">
-              <label class="form-label">Cartons jaunes</label>
-              <input type="number" [(ngModel)]="cartonsJaunesEquipe2" class="form-control" />
-            </div>
-            <div class="mb-2">
-              <label class="form-label">Cartons rouges</label>
-              <input type="number" [(ngModel)]="cartonsRougesEquipe2" class="form-control" />
-            </div>
-            <div class="mb-2">
-              <label class="form-label">Corners</label>
-              <input type="number" [(ngModel)]="cornersEquipe2" class="form-control" />
-            </div>
+            <label>Score</label>
+            <input type="number" class="form-control mb-2" [(ngModel)]="scoreEquipe2">
+            <label>Cartons jaunes</label>
+            <input type="number" class="form-control mb-2" [(ngModel)]="cartonsJaunesEquipe2">
+            <label>Cartons rouges</label>
+            <input type="number" class="form-control mb-2" [(ngModel)]="cartonsRougesEquipe2">
+            <label>Corners</label>
+            <input type="number" class="form-control mb-2" [(ngModel)]="cornersEquipe2">
           </div>
         </div>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer border-secondary">
         <button class="btn btn-secondary" (click)="fermerPopup()">Annuler</button>
-        <button class="btn btn-success" (click)="validerMiseAJour()">Valider</button>
+        <button class="btn btn-success" (click)="validerMiseAJour()">
+          <i class="bi bi-check-circle"></i> Valider
+        </button>
       </div>
     </div>
   </div>
-</div> <!-- FIN POPUP SCORE -->
-  
+</div>
+
+<!-- POPUP STATISTIQUES -->
+<div class="modal" tabindex="-1" [ngClass]="{ 'd-block': statsVisible }" style="background: rgba(0, 0, 0, 0.5)">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content bg-dark text-light">
+      <div class="modal-header border-secondary">
+        <h5 class="modal-title"><i class="bi bi-graph-up text-info"></i> Statistiques du match</h5>
+        <button type="button" class="btn-close btn-close-white" (click)="fermerStats()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center text-light fw-bold mb-3">
+          {{ matchSelectionne?.equipes1[0]?.nom }} <span class="text-primary">{{ matchSelectionne?.scoreEquipe1 }}</span>
+          vs
+          <span class="text-danger">{{ matchSelectionne?.scoreEquipe2 }}</span> {{ matchSelectionne?.equipes1[1]?.nom }}
+        </div>
+        <div *ngFor="let stat of statistiques" class="mb-3">
+          <div class="fw-bold text-center text-light">{{ stat.nomStat }}</div>
+          <div class="d-flex justify-content-between">
+            <span>{{ stat.valeurEquipe1 }}</span>
+            <div class="progress flex-grow-1 mx-2" style="height: 16px;">
+              <div class="progress-bar bg-primary" role="progressbar"
+                   [style.width.%]="calculerLargeur(stat.valeurEquipe1, stat.valeurEquipe1, stat.valeurEquipe2)">
+              </div>
+            </div>
+            <span>{{ stat.valeurEquipe2 }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer border-secondary">
+        <button class="btn btn-secondary" (click)="fermerStats()">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="popup-succes"
+  *ngIf="messageSuccesVisible">
+  <span>✅ Score et statistiques mis à jour !</span>
+</div>

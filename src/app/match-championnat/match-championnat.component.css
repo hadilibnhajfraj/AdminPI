@@ -1,35 +1,137 @@
-.calendrier-container {
-    background-color: #f9f9f9;
-    padding: 1.5rem;
-    border-radius: 10px;
-  }
-  
-  .jour-section {
-    border-left: 4px solid #007bff;
-    padding-left: 1rem;
-    background-color: #fff;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
-  }
-  
-  .jour-titre {
-    font-weight: bold;
-    margin-bottom: 1rem;
-    color: #007bff;
-  }
-  
-  .calendrier-table {
-    margin-top: 0.5rem;
-  }
-
-  .progress-bar {
-  transition: width 0.4s ease-in-out;
-  border-radius: 8px;
+body {
+  background-color: #c9c9c9;
+  color: #000;
 }
 
-.progress {
-  background-color: #333;
-  border-radius: 8px;
+h4, .modal-title {
+  color: #004f99 !important;
 }
 
+/* TABLE STYLES */
+.table-dark {
+  background-color: #f1f1f1;
+  color: #000;
+}
 
-  
+.table-dark thead {
+  background-color: #ddd;
+  color: #000;
+}
+
+/* BUTTONS */
+.btn-outline-primary,
+.btn-outline-info {
+  border-color: #004f99;
+  color: #004f99;
+  background-color: #fff; /* bouton fond blanc */
+}
+
+.btn-outline-primary:hover,
+.btn-outline-info:hover {
+  background-color: #004f99;
+  color: #fff;
+}
+
+/* ICONES */
+.bi-bar-chart-line-fill {
+  color: #198754 !important;
+}
+
+.bi-calendar-range-fill,
+.bi-list-ol {
+  color: #004f99;
+}
+
+/* MODALS */
+.modal-content {
+  background-color: #c9c9c9;
+  color: #000;
+}
+
+.modal-header, .modal-footer {
+  border-color: #999 !important;
+}
+
+/* INPUTS SCORE */
+.modal-body input[type="number"] {
+  background-color: #1a1a1a;
+  color: #fff;
+  border: 1px solid #555;
+}
+
+/* BARRES STATISTIQUES VERTICALES */
+.stats-bars {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  height: 150px;
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+.bar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40px;
+}
+
+.bar {
+  width: 100%;
+  transition: height 0.5s ease;
+  border-radius: 4px;
+}
+
+/* Couleurs distinctes */
+.bar.blue {
+  background-color: #004f99;
+}
+
+.bar.red {
+  background-color: #dc3545;
+}
+
+.bar-label {
+  margin-top: 5px;
+  font-weight: bold;
+}
+.table-dark tbody tr:hover {
+  background-color: #bbb !important;
+  color: #000;
+}
+.popup-succes {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #222;
+  color: #00ffcc;
+  padding: 20px 40px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 255, 204, 0.3);
+  z-index: 9999;
+  font-size: 18px;
+  text-align: center;
+  animation: fadeInOut 3s ease-in-out;
+  border: 1px solid #00ffcc;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  10% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  90% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+}
+

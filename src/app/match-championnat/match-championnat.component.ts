@@ -28,6 +28,8 @@ cornersEquipe2?: number;
 
 statsVisible = false;
   statistiques: any[] = [];
+  messageSuccesVisible = false;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -93,17 +95,18 @@ statsVisible = false;
     this.popupVisible = false;
     this.matchSelectionne = null;
        this.statsVisible = false;
+       
   }
 
   validerMiseAJour(): void {
-    if (!this.matchSelectionne?.idMatch) return;
-  
-    if (this.scoreEquipe1 < 0 || this.scoreEquipe2 < 0) {
-      alert("Les scores ne peuvent pas être négatifs !");
-      return;
-    }
-  
-     this.tournoiService.mettreAJourScores(
+  if (!this.matchSelectionne?.idMatch) return;
+
+  if (this.scoreEquipe1 < 0 || this.scoreEquipe2 < 0) {
+    alert("Les scores ne peuvent pas être négatifs !");
+    return;
+  }
+
+  this.tournoiService.mettreAJourScores(
     this.matchSelectionne.idMatch,
     this.scoreEquipe1,
     this.scoreEquipe2,
@@ -115,20 +118,23 @@ statsVisible = false;
     this.cornersEquipe2
   ).subscribe({
     next: () => {
-      alert("Score et statistiques mis à jour !");
       this.fermerPopup();
+      this.messageSuccesVisible = true;
+
       setTimeout(() => {
+        this.messageSuccesVisible = false;
         this.getMatchsParTournoi();
         this.chargerClassement();
-      }, 300);
+      }, 3000);
     },
     error: (err) => {
       console.error("Erreur MAJ score :", err);
       alert("Erreur lors de la mise à jour.");
       this.fermerPopup();
-    }});
-  
-  }
+    }
+  });
+}
+
  afficherStatistiques(match: any): void {
   this.tournoiService.getStatistiquesParMatch(match.idMatch).subscribe({
     next: (data) => {
@@ -170,6 +176,8 @@ statsVisible = false;
     }
   });
 }
+
+
 
   
 
