@@ -40,7 +40,13 @@ export class AfficherJoueurComponent implements OnInit {
   }
 
   modifierJoueur(id: number): void {
+    console.log("button clicked with user id: "+id)
     // ← méthode qui redirige vers /modifier-joueur/:id
     this.router.navigate(['/modifier-joueur', id]);
   }
 }
+
+
+
+
+

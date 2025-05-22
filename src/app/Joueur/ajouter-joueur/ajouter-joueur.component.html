@@ -1,8 +1,10 @@
 <div class="container mt-5 d-flex justify-content-center">
   <div class="card col-md-8 p-4 shadow-lg rounded">
-    <div class="card-header text-center bg-primary text-white">
+    
+    <div class="card-header text-center text-white" style="background-color: #d32f2f;">
       <h4 class="title">Ajouter un Joueur</h4>
     </div>
+    
 
     <div class="form-container mt-3">
       <form [formGroup]="joueurForm" (ngSubmit)="onSubmit()">
@@ -25,10 +27,15 @@
         
         <div class="row">
           <div class="col-md-6 mb-3">
-            <label for="email">Email</label>
-            <input id="email" type="email" formControlName="email" class="form-control" placeholder="ex: joueur@email.com" />
+            <label for="mail">Email</label>
+            <input id="mail" type="mail" formControlName="mail" class="form-control" placeholder="ex: joueur@email.com" />
           </div>
 
+          <div class="col-md-6 mb-3">
+            <label for="tel">Telephone</label>
+            <input id="tel" type="number" formControlName="tel" class="form-control" placeholder="ex: 75" />
+          </div>
+        
           <div class="col-md-6 mb-3">
             <label for="date_naissance">Date de Naissance</label>
             <input id="date_naissance" type="date" formControlName="date_naissance" class="form-control" />

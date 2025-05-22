@@ -11,10 +11,11 @@ export const ROUTES: RouteInfo[] = [
   { path: '/dashboard', title: 'Dashboard',  icon: 'design_app', class: '' },
 
   { path: '/login', title: 'Se Connecter',  icon:'users_single-02', class: '' },
-  { path: '/inscription', title: 'Inscription à un Equipe',  icon:'education_atom', class: '' },
+  { path: '/inscription', title: 'Inscription',  icon:'education_atom', class: '' },
   { path: '/user-profile', title: 'User Profile',  icon:'users_single-02', class: '' },
   { path: '/afficher-equipe', title: 'Les equipes',  icon:'design_bullet-list-67', class: '' },
   { path: '/afficher-joueur', title: 'Les joueurs',  icon:'users_single-02', class: '' },
+  { path: '/Drag-joueur', title: 'Drag Drop Joueur',  icon:'education_atom', class: '' },
   // { path: '/evenementMeriem', title: 'Les Evennements',  icon:'objects_spaceship', class: 'active active-pro' },
   // { path: '/matches', title: 'Les Matches',  icon:'design_bullet-list-67', class: '' }
 

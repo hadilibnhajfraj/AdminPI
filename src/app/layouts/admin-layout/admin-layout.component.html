@@ -1,10 +1,76 @@
-<div class="wrapper">
-    <div class="sidebar" data-color="red">
-        <app-sidebar></app-sidebar>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sport_League</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <style>
+    body, html {
+      margin: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+    }
+
+    .wrapper {
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background-color: white; /* ✅ Fond blanc */
+      border-right: 2px solid #d32f2f; /* ✅ Contour rouge */
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    .main-panel {
+      margin-left: 250px;
+      flex-grow: 1;
+      background-color: #f9f9f9;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    /* Style des liens du menu si définis dans app-sidebar */
+    app-sidebar ul.nav {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    app-sidebar .nav-item a {
+      display: block;
+      padding: 12px 20px;
+      color: #d32f2f; /* ✅ Texte rouge */
+      text-decoration: none;
+    }
+
+    app-sidebar .nav-item.routerLinkActive a,
+    app-sidebar .nav-item.active a {
+      background-color: #ffe5e5; /* ✅ Sélection claire */
+      border-left: 4px solid #d32f2f;
+      font-weight: bold;
+      border-radius: 0 20px 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="sidebar">
+      <app-sidebar></app-sidebar>
     </div>
     <div class="main-panel">
-        <app-navbar></app-navbar>
-        <router-outlet></router-outlet>
-        <app-footer></app-footer>
+      <app-navbar></app-navbar>
+      <router-outlet></router-outlet>
+      <app-footer></app-footer>
     </div>
-</div>
+  </div>
+</body>
+</html>

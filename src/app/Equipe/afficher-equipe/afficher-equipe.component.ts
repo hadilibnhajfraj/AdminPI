@@ -16,6 +16,7 @@ export class AfficherEquipeComponent implements OnInit {
   constructor(private equipeService: JoueurEquipeService, private router: Router) {}
  
 
+  
  
   ngOnInit(): void {
     this.getEquipes();

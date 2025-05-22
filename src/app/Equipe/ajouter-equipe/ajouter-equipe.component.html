@@ -1,9 +1,11 @@
 <!-- FIN FRM -->
 <div class="container mt-5 d-flex justify-content-center">
   <div class="card col-md-6 p-4">
-    <div class="card-header text-center">
+   
+    <div class="card-header text-center text-white" style="background-color: #d32f2f;">
       <h4 class="title">Ajouter une Équipe</h4>
     </div>
+    
 
     <div class="form-container mt-3">
       <form [formGroup]="equipeForm" (ngSubmit)="onSubmit()">
@@ -39,7 +41,7 @@
 
         <!-- ✅ Boutons -->
         <div class="d-flex justify-content-between">
-          <button class="btn btn-primary" type="submit" [disabled]="equipeForm.invalid">
+          <button class="btn btn-success" type="submit" [disabled]="equipeForm.invalid">
             ✅ Ajouter l’équipe
           </button>
 

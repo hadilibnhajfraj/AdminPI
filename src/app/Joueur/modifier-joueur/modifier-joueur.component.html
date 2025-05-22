@@ -25,6 +25,21 @@
             </div>
           </div>
 
+          <div class="col-md-6 mb-3">
+            <label for="mail">Mail *</label>
+            <input id="mail" type="text" formControlName="mail" class="form-control" placeholder="mm@gmail.com" />
+            <div *ngIf="joueurForm.get('mail')?.touched && joueurForm.get('mail')?.invalid" class="text-danger">
+              Mail
+            </div>
+          </div>
+
+          <div  class="col-md-6 mb-3">
+            <label for="tel">Telephone *</label>
+            <input id="tel" type="number" formControlName="tel" class="form-control" placeholder="ex: 180" />
+            <div *ngIf="joueurForm.get('tel')?.touched && joueurForm.get('tel')?.invalid" class="text-danger">
+              Telephone
+            </div>
+          </div>
 
         <div class=" mb-3">
           <label for="taille">Taille (cm) *</label>

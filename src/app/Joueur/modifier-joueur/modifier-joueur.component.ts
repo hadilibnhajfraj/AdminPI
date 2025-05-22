@@ -22,6 +22,9 @@ export class ModifierJoueurComponent implements OnInit {
     this.joueurForm = this.fb.group({
       nom: ['', Validators.required],
       prenom: ['', Validators.required],
+      mail: ['', [Validators.required, Validators.email]],
+      tel: [null, [Validators.required, Validators.minLength(8)]],
+      
       taille: [null, [Validators.required, Validators.min(0)]],
       poids: [null, [Validators.required, Validators.min(0)]],
       piedFort: ['', Validators.required],
@@ -40,6 +43,8 @@ export class ModifierJoueurComponent implements OnInit {
           
           nom: joueur.nom,
           prenom: joueur.prenom,
+          mail: joueur.mail,
+          tel: joueur.tel,
           taille: joueur.taille,
           poids: joueur.poids,
           piedFort: joueur.piedFort,

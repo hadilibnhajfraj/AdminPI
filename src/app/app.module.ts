@@ -13,6 +13,8 @@ import { AppComponent } from './app.component';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 
+import { DragDropJoueurComponent } from './Joueur/drag-drop-joueur/drag-drop-joueur.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 
@@ -25,6 +27,7 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
     RouterModule,
     AppRoutingModule,
     NgbModule,
+    DragDropModule,
    
 
     ToastrModule.forRoot(),
@@ -35,6 +38,9 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
   declarations: [
     AppComponent,
     AdminLayoutComponent,
+    
+    
+    
    
    
 

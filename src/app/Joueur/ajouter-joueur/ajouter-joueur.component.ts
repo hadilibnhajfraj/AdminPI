@@ -22,7 +22,10 @@ export class AjouterJoueurComponent implements OnInit {
       prenom: ['', Validators.required],
       nom: ['', Validators.required],
       poste: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      
+      mail: ['', [Validators.required, Validators.email]],
+      tel: [null, [Validators.required, Validators.minLength(8)]],
+
       date_naissance: ['', Validators.required],
       taille: [null, [Validators.required, Validators.min(100)]],
       poids: [null, [Validators.required, Validators.min(30)]],

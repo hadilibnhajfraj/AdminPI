@@ -6,13 +6,15 @@ import { TableListComponent } from '../../table-list/table-list.component';
 import { TypographyComponent } from '../../typography/typography.component';
 import { IconsComponent } from '../../icons/icons.component';
 import { MapsComponent } from '../../maps/maps.component';
-import { NotificationsComponent } from '../../notifications/notifications.component';
+import { NotificationsComponent } from '../../Joueur/notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 //Joueur
 import { AjouterJoueurComponent } from '../../Joueur/ajouter-joueur/ajouter-joueur.component';
 import { AfficherJoueurComponent } from '../../Joueur/afficher-joueur/afficher-joueur.component';
 import { ModifierJoueurComponent } from '../../Joueur/modifier-joueur/modifier-joueur.component';
 import { SupprimerJoueurComponent } from '../../Joueur/supprimer-joueur/supprimer-joueur.component';
+import { AffecterJoueurComponent } from '../../Joueur/affecter-joueur/affecter-joueur.component';
+import { RetirerJoueurComponent } from '../../Joueur/retirer-joueur/retirer-joueur.component';
 //Equipe
 import { AjouterEquipeComponent } from '../../Equipe/ajouter-equipe/ajouter-equipe.component';
 import { AfficherEquipeComponent } from '../../Equipe/afficher-equipe/afficher-equipe.component';
@@ -22,6 +24,8 @@ import { SupprimerEquipeComponent } from '../../Equipe/supprimer-equipe/supprime
 import { LoginComponent } from '../../login/login.component';
 import { InscriptionComponent } from '../../inscription/inscription.component';
 import { CreeCompteComponent } from '../../cree-compte/cree-compte.component';
+import { DragDropJoueurComponent } from '../../Joueur/drag-drop-joueur/drag-drop-joueur.component';
+
 
 
 
@@ -40,6 +44,12 @@ export const AdminLayoutRoutes: Routes = [
   { path: 'afficher-joueur', component: AfficherJoueurComponent },
   { path: 'modifier-joueur/:id', component: ModifierJoueurComponent },
   { path: 'supprimer-joueur/:id', component: SupprimerJoueurComponent },
+  { path: 'affecter-joueur', component: AffecterJoueurComponent },
+  { path: 'retirer-joueur', component: RetirerJoueurComponent },
+
+//API Drag-drop joueur
+{ path: 'Drag-joueur', component: DragDropJoueurComponent },
+
   //Equipe
   { path: 'ajouter-equipe', component: AjouterEquipeComponent },
   { path: 'afficher-equipe', component: AfficherEquipeComponent },

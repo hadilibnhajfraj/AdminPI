@@ -3,12 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Equipe } from '../../src/app/model/equipe';
 import { Joueur } from '../../src/app/model/joueur';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class JoueurEquipeService {
   private apiUrl = 'http://localhost:8082/joueurs';
+
   private Urlequipe = 'http://localhost:8082/equipes';
 
 
@@ -21,7 +23,7 @@ export class JoueurEquipeService {
     return this.http.get<Equipe[]>(`${this.Urlequipe}/all`);
   }
 
-  
+
 
   // Ajouter un joueur à une équipe
   ajouterJoueur(idEquipe: number, idJoueur: number): Observable<Equipe> {
@@ -83,6 +85,8 @@ getAllJoueurs(): Observable<Joueur[]> {
   return this.http.get<Joueur[]>(`${this.apiUrl}/all`);
 }
 
+
+
 // Supprimer un joueur
 supprimerJoueur(id: number): Observable<void> {
   return this.http.delete<void>(`${this.apiUrl}/deleteJoueur/${id}`);
@@ -99,4 +103,72 @@ modifierJoueur(id: number, joueur: Joueur) {
 }
 
 
+//Pour faire une recherche avancée de joueurs selon l’adresse de leur équipe
+searchJoueursByEquipeAdresse(adresse: string): Observable<Joueur[]> {
+  return this.http.get<Joueur[]>(`${this.apiUrl}/searchByEquipeAdresse?adresse=${adresse}`);
 }
+
+
+// Affecter un joueur à une équipe
+affecterJoueurAEquipe(idJoueur: number, idEquipe: number): Observable<any> {
+  return this.http.put(`${this.apiUrl}/joueurs/${idJoueur}/affecter/${idEquipe}`, {});
+}
+
+//API
+
+
+getUnassignedJoueurs() {
+  return this.http.get<Joueur[]>(`${this.apiUrl}/all`);
+}
+
+
+// joueur.service.ts
+getJoueursByEquipe(equipeId: number): Observable<Joueur[]> {
+  return this.http.get<Joueur[]>(`${this.apiUrl}/team/${equipeId}`).pipe(
+    map((response: any) => {
+      // Map the API response to your Joueur model
+      return response.map((player: any) => {
+        return {
+          idJoueur: player.idJoueur,
+          nom: player.nom,
+          prenom: player.prenom,
+          taille: player.taille,
+          poids: player.poids,
+          piedFort: player.piedFort,
+          poste: player.poste,
+          mail: player.mail,
+          description: player.description,
+          tel: player.tel,
+          equipe: player.equipe,
+          user: player.user
+        };
+      });
+    }),
+    catchError(error => {
+      console.error('Error fetching players:', error);
+      return ([]); // Return empty array on error
+    })
+  );
+}
+assignJoueurToEquipe(joueurId: number, equipeId: number) {
+ // show the values of joueurId and equipeId
+ console.log("this fuction called assignJoueurToEquipe"+ "j"+ joueurId +"e" +equipeId)
+  return this.http.post(`${this.Urlequipe}/${equipeId}/addPlayer/${joueurId}`, {});
+}
+
+removeJoueurFromEquipe(joueurId: number, equipeId: number) {
+ return this.http.post(`${this.Urlequipe}/${equipeId}/addPlayer/${joueurId}`, {});
+}
+
+
+///Fonction API MSG + SMS
+
+/*
+notifyJoueursAffectes(teamId: number): Observable<any> {
+  return this.http.post(`/api/equipe/${teamId}/notifier-joueurs`, {});
+}
+*/
+
+}
+
+

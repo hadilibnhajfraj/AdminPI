@@ -5,15 +5,23 @@ export class Joueur {
   idJoueur!: number; 
   nom!: string;
   prenom!: string;
-        
+  mail!: string;
+  tel!: number;      
   taille!: number;
   poids!: number;
   piedFort!: string;
   poste!: string;
   description!: string;
 
-  equipe?: AfficherEquipeComponent; 
-  user?: UserProfileComponent;     
+  // equipe?: AfficherEquipeComponent; 
+  // user?: UserProfileComponent;   
+  // joueurs: Joueur[];  
+
+  equipe?: any; // ou AfficherEquipeComponent
+  user?: any;
+
+  // Ajout temporaire pour l'affectation
+  selectedEquipeId?: number;
 }
 
 

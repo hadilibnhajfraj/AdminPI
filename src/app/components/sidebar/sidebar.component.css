@@ -1,0 +1,41 @@
+.sidebar {
+    background-color: rgb(228, 92, 92) !important; /* Fond blanc du menu */
+    color: #d32f2f !important;          /* Texte en rouge */
+  }
+  
+  .sidebar-wrapper {
+    background-color: rgb(226, 62, 62) !important;
+    padding-top: 20px;
+  }
+  
+  .sidebar .nav li {
+    border: 1px solid #d32f2f;           /* Contour rouge */
+    border-radius: 6px;
+    margin: 8px 10px;
+  }
+  
+  .sidebar .nav li a {
+    color: #d32f2f !important;           /* Texte rouge */
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    text-decoration: none;
+  }
+  
+  .sidebar .nav li a i {
+    color: #d32f2f !important;           /* Icône rouge */
+    margin-right: 10px;
+  }
+  
+  .sidebar .nav li a p {
+    margin: 0;
+    color: #d32f2f !important;           /* Texte rouge */
+    font-weight: bold;
+  }
+  
+  .sidebar .nav li a:hover,
+  .sidebar .nav li a.active {
+    background-color: #fbe9e7 !important; /* Légère teinte rouge au survol */
+    border-color: #d32f2f;
+  }
+  

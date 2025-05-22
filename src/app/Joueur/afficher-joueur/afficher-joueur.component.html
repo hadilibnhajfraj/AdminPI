@@ -101,6 +101,8 @@
           
           <th>Nom</th>
           <th>Prenom</th>
+          <th>Mail</th>
+          <th>Telephone</th>
           <th>Rôle</th>
           <th>Pied_Fort</th>
           <th>Taille</th>
@@ -117,15 +119,17 @@
        
           <td>{{ joueur.nom }}</td>
           <td>{{ joueur.prenom }}</td>
+          <td>{{ joueur.mail}}</td>
+          <td>{{ joueur.tel }}</td>
           <!-- <td>{{ joueur.user?.nom }}</td> -->
           <td>{{ joueur.poste }}</td>
           <td>{{ joueur.piedFort }}</td>
           <td>{{ joueur.taille }}</td>
           <td>{{ joueur.poids }}</td>
-
+          
           <td>
-            <button (click)="modifierJoueur(joueur.idJoueur)">✏️</button>
-            <button (click)="supprimerJoueur(joueur.idJoueur)">🗑️</button>
+            <button (click)="modifierJoueur(joueur.id)">✏️</button>
+            <button (click)="supprimerJoueur(joueur.id)">🗑️</button>
 
           </td>
         </tr>
