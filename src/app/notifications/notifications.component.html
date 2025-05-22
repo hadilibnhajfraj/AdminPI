@@ -65,19 +65,24 @@
         <td>{{ tournoi.nbEquipeRestant }}</td>
         <td>
   <!-- Bouton Voir les équipes -->
-  <button class="btn btn-outline-light btn-sm me-1"
-          [routerLink]="['/tournoi', tournoi.idTournoi, 'equipes']"
-          title="Voir les équipes">
-    <i class="bi bi-people-fill"></i>
-  </button>
+ <!-- Bouton Voir les équipes, invisible si des matchs existent -->
+<button *ngIf="!tournoi.hasMatchs"
+        class="btn btn-outline-light btn-sm me-1"
+        [routerLink]="['/tournoi', tournoi.idTournoi, 'equipes']"
+        title="Voir les équipes">
+  <i class="bi bi-people-fill"></i>
+</button>
 
-  <!-- Générer planning (si toutes les équipes sont là) -->
-  <button *ngIf="tournoi.nbEquipeRestant === 0"
-          class="btn btn-outline-success btn-sm me-1"
-          (click)="genererPlanning(tournoi)"
-          title="Générer Planning">
-    <i class="bi bi-diagram-3-fill"></i>
-  </button>
+
+<!-- Générer planning (si toutes les équipes sont là et pas encore de matchs) -->
+<button *ngIf="tournoi.nbEquipeRestant === 0 && !tournoi.hasMatchs"
+        class="btn btn-outline-success btn-sm me-1"
+        (click)="genererPlanning(tournoi)"
+        title="Générer Planning">
+  <i class="bi bi-diagram-3-fill"></i>
+</button>
+
+
 
   <!-- Générer championnat -->
   <button *ngIf="tournoi.nbEquipeRestant === 0 && !tournoi.hasMatchs"

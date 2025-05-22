@@ -24,25 +24,51 @@
         <tr>
           <th>Nom du Match</th>
           <th>Match</th>
-          <th>Date</th>
-          <th>Heure</th>
+         
           <th>Action</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let match of calendrier">
           <td>{{ match.nom }}</td>
+  <td>
+  <!-- Équipe 1 -->
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <div class="d-flex align-items-center w-50">
+      <img [src]="match.equipes1[0]?.logo" width="30" height="30" class="me-2" alt="Logo équipe 1"
+      width="30" height="30" class="rounded-circle border border-secondary">
+      <span>{{ match.equipes1[0]?.nom }}</span>
+    </div>
+     <div class="score-display">
+    <div class="text-center w-50 fw-bold">
+      {{ match.scoreEquipe1 ?? '-' }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Équipe 2 -->
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center w-50">
+      <img [src]="match.equipes1[1]?.logo" width="30" height="30" class="me-2" alt="Logo équipe 2"
+      width="30" height="30" class="rounded-circle border border-secondary">
+      <span>{{ match.equipes1[1]?.nom }}</span>
+    </div>
+    <div class="score-display">
+    <div class="text-center w-50 fw-bold">
+      {{ match.scoreEquipe2 ?? '-' }}
+      </div>
+    </div>
+  </div>
+</td>
+
+
+         
           <td>
-            <img [src]="match.equipes1[0]?.logo" width="30" alt="Logo équipe 1"> {{ match.equipes1[0]?.nom }}
-            {{ match.scoreEquipe1 ?? '-' }} vs {{ match.scoreEquipe2 ?? '-' }}
-            {{ match.equipes1[1]?.nom }} <img [src]="match.equipes1[1]?.logo" width="30" alt="Logo équipe 1">
-          </td>
-          <td>{{ match.dateMatch || '-' }}</td>
-          <td>{{ match.heureMatch || '-' }}</td>
-          <td>
-            <button class="btn btn-outline-primary btn-sm me-1" (click)="ouvrirPopup(match)">
-              <i class="bi bi-pencil-square"></i>
-            </button>
+          <button *ngIf="match.scoreEquipe1 == null || match.scoreEquipe2 == null"
+        class="btn btn-outline-primary btn-sm me-1"
+        (click)="ouvrirPopup(match)">
+  <i class="bi bi-pencil-square"></i>
+</button>
             <button *ngIf="match.scoreEquipe1 != null && match.scoreEquipe2 != null"
                     class="btn btn-outline-info btn-sm" (click)="afficherStatistiques(match)">
               <i class="bi bi-bar-chart-line-fill"></i>

@@ -1,10 +1,8 @@
-  import { Component, OnInit } from '@angular/core';
-  import { TournoiService } from '../service/tournoi.service';
-  import { ToastrService } from 'ngx-toastr';
-  import { Tournoi } from '../model/Tournoi';
-  import { Router } from '@angular/router';
-
- // ... imports inchangés ...
+import { Component, OnInit } from '@angular/core';
+import { TournoiService } from '../service/tournoi.service';
+import { ToastrService } from 'ngx-toastr';
+import { Tournoi } from '../model/Tournoi';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-notifications',
@@ -23,9 +21,12 @@ export class NotificationsComponent implements OnInit {
   popupBracketVisible: boolean = false;
   tournoiSelectionne!: Tournoi;
 
-  // Ajouté pour popup confirmation championnat
+  // Pour popup confirmation championnat
   showChampionnatConfirm = false;
   tournoiEnCours!: Tournoi;
+
+  // Variable pour mémoriser le type de planning généré
+  planningTypeGenere: 'championnat' | 'planning' | null = null;
 
   constructor(
     private tournoiService: TournoiService, 
@@ -60,6 +61,8 @@ export class NotificationsComponent implements OnInit {
 
   genererPlanning(tournoi: Tournoi): void {
     if (tournoi.nbEquipeRestant === 0 && !tournoi.hasMatchs) {
+      this.planningTypeGenere = 'planning'; // mémoriser que planning normal est généré
+
       this.popupVisible = true;
       this.popupMessage = "Tirage au sort en cours...";
       this.enChargement = true;
@@ -113,7 +116,6 @@ export class NotificationsComponent implements OnInit {
     });
   }
 
-  // ✅ MODIFIÉ
   genererChampionnat(tournoi: Tournoi): void {
     this.tournoiEnCours = tournoi;
     this.showChampionnatConfirm = true;
@@ -121,6 +123,8 @@ export class NotificationsComponent implements OnInit {
 
   confirmerGenerationChampionnat(): void {
     this.showChampionnatConfirm = false;
+    this.planningTypeGenere = 'championnat'; // mémoriser championnat généré
+
     this.popupVisible = true;
     this.popupMessage = "Génération du championnat en cours...";
     this.enChargement = true;
