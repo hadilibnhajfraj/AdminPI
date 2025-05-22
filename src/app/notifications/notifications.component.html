@@ -48,7 +48,8 @@
     {{ message }}
   </div>
 
-  <table class="table">
+ <table class="table table-dark table-striped table-bordered">
+
     <thead>
       <tr>
         <th>Nom</th>
@@ -63,33 +64,59 @@
         <td>{{ tournoi.nbEquipe }}</td>
         <td>{{ tournoi.nbEquipeRestant }}</td>
         <td>
-          <button class="btn btn-primary" [routerLink]="['/tournoi', tournoi.idTournoi, 'equipes']">
-            Voir les équipes
-          </button>
+  <!-- Bouton Voir les équipes -->
+  <button class="btn btn-outline-light btn-sm me-1"
+          [routerLink]="['/tournoi', tournoi.idTournoi, 'equipes']"
+          title="Voir les équipes">
+    <i class="bi bi-people-fill"></i>
+  </button>
 
-          <!-- Bouton pour générer le planning, activé uniquement si nbEquipeRestant == 0 -->
-          <button *ngIf="tournoi.nbEquipeRestant === 0" class="btn btn-generate"
-            (click)="genererPlanning(tournoi)">
-            Générer Planning
-          </button>
-<!-- Bouton pour générer le planning de championnat (affiché uniquement si aucune équipe restante) -->
-<button *ngIf="tournoi.nbEquipeRestant === 0 && !tournoi.hasMatchs" class="btn btn-success"
-  (click)="genererChampionnat(tournoi)">
-  Générer Planning Championnat
-</button>
+  <!-- Générer planning (si toutes les équipes sont là) -->
+  <button *ngIf="tournoi.nbEquipeRestant === 0"
+          class="btn btn-outline-success btn-sm me-1"
+          (click)="genererPlanning(tournoi)"
+          title="Générer Planning">
+    <i class="bi bi-diagram-3-fill"></i>
+  </button>
 
+  <!-- Générer championnat -->
+  <button *ngIf="tournoi.nbEquipeRestant === 0 && !tournoi.hasMatchs"
+          class="btn btn-outline-warning btn-sm me-1"
+          (click)="genererChampionnat(tournoi)"
+          title="Générer Planning Championnat">
+    <i class="bi bi-award-fill"></i>
+  </button>
 
-          <button *ngIf="tournoi.hasMatchs" class="btn btn-warning"
-            [routerLink]="['/tournoi', tournoi.idTournoi, 'matchs']">
-            Voir les matchs
-          </button>
-          <!-- Bouton pour voir les matchs de championnat -->
-<button *ngIf="tournoi.hasMatchs" class="btn btn-dark"
-[routerLink]="['/tournoi', tournoi.idTournoi, 'championnat']">
-Voir match championnat
-</button>
-        </td>
+  <!-- Voir les matchs -->
+  <button *ngIf="tournoi.hasMatchs"
+          class="btn btn-outline-primary btn-sm me-1"
+          [routerLink]="['/tournoi', tournoi.idTournoi, 'matchs']"
+          title="Voir les matchs">
+    <i class="bi bi-eye-fill"></i>
+  </button>
+
+  <!-- Voir matchs championnat -->
+  <button *ngIf="tournoi.hasMatchs"
+          class="btn btn-outline-info btn-sm"
+          [routerLink]="['/tournoi', tournoi.idTournoi, 'championnat']"
+          title="Voir matchs championnat">
+    <i class="bi bi-list-stars"></i>
+  </button>
+</td>
+
       </tr>
     </tbody>
   </table>
+</div>
+
+<!-- ✅ POPUP DE CONFIRMATION CHAMPIONNAT -->
+<div class="popup-overlay" *ngIf="showChampionnatConfirm">
+  <div class="popup-box">
+    <h3>Confirmation</h3>
+    <p>Souhaitez-vous générer un planning de championnat <strong>(format toutes rencontres)</strong> ?</p>
+    <div style="margin-top: 20px;">
+      <button class="btn btn-success" (click)="confirmerGenerationChampionnat()">Oui</button>
+      <button class="btn btn-danger" (click)="annulerGenerationChampionnat()">Non</button>
+    </div>
+  </div>
 </div>
