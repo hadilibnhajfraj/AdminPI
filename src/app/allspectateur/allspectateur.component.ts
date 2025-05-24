@@ -231,23 +231,62 @@ selectCommentReaction(
   const decoded: any = jwtDecode(token);
   const email = decoded.sub;
 
-  this.publicationService
-    .updateReactionCommentaires(commentaireId, emoji, email)
-    .subscribe({
-      next: () => {
-        // ✅ MAJ immédiate de l'emoji affiché sans reload
-        this.userReactions[commentaireId] = emoji;
+  const currentReaction = this.userReactions[commentaireId];
 
-        // ✅ Fermer le menu
-        this.commentReactionsVisibleId = null;
+  if (currentReaction === emoji) {
+    // 😮 L'utilisateur clique à nouveau sur le même emoji => retirer la réaction
+    this.publicationService
+      .updateReactionCommentaires(commentaireId, "", email)
+      .subscribe({
+        next: () => {
+          delete this.userReactions[commentaireId]; // Supprime la réaction utilisateur
+          if (this.reactionCounts[commentaireId]?.[emoji]) {
+            this.reactionCounts[commentaireId][emoji]--;
+            if (this.reactionCounts[commentaireId][emoji] === 0) {
+              delete this.reactionCounts[commentaireId][emoji];
+            }
+          }
+          this.commentReactionsVisibleId = null;
+        },
+        error: () => {
+          this.errorMessage = "Erreur lors du retrait de la réaction.";
+        },
+      });
+  } else {
+    // 😍 Nouvelle réaction ou changement de réaction
+    this.publicationService
+      .updateReactionCommentaires(commentaireId, emoji, email)
+      .subscribe({
+        next: () => {
+          // ✅ MAJ immédiate de l'interface
+          if (!this.reactionCounts[commentaireId]) {
+            this.reactionCounts[commentaireId] = {};
+          }
 
-        // ✅ MAJ des totaux
-        this.loadReactions(commentaireId);
-      },
-      error: () => {
-        this.errorMessage = "Erreur lors de l'ajout de la réaction.";
-      },
-    });
+          // 👎 Décrémenter l'ancienne
+          if (currentReaction && this.reactionCounts[commentaireId][currentReaction]) {
+            this.reactionCounts[commentaireId][currentReaction]--;
+            if (this.reactionCounts[commentaireId][currentReaction] === 0) {
+              delete this.reactionCounts[commentaireId][currentReaction];
+            }
+          }
+
+          // 👍 Incrémenter la nouvelle
+          if (!this.reactionCounts[commentaireId][emoji]) {
+            this.reactionCounts[commentaireId][emoji] = 1;
+          } else {
+            this.reactionCounts[commentaireId][emoji]++;
+          }
+
+          // ✅ Mettre à jour l'état local
+          this.userReactions[commentaireId] = emoji;
+          this.commentReactionsVisibleId = null;
+        },
+        error: () => {
+          this.errorMessage = "Erreur lors de l'ajout de la réaction.";
+        },
+      });
+  }
 }
 
 
