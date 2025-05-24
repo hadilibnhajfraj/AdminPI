@@ -29,3 +29,9 @@
   font-size: 1.5rem;
   padding: 4px;
 }
+.badge {
+  transition: transform 0.2s ease;
+}
+.badge:hover {
+  transform: scale(1.05);
+}

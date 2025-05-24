@@ -4,11 +4,23 @@ import { Router } from "@angular/router";
 import { AuthService } from "../services/auth.service";
 import { jwtDecode } from "jwt-decode";
 import { Commentaire } from "../Interface/Commentaire";
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: "allspectateur",
   templateUrl: "./allspectateur.component.html",
   styleUrls: ["./allspectateur.component.css"],
+    animations: [
+    trigger('reactionChange', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'scale(0.8)' }),
+        animate('150ms ease-out', style({ opacity: 1, transform: 'scale(1)' })),
+      ]),
+      transition(':leave', [
+        animate('100ms ease-in', style({ opacity: 0, transform: 'scale(0.8)' })),
+      ]),
+    ]),
+  ],
 })
 export class AllspectateurComponent implements OnInit {
   publications: any[] = [];
@@ -234,60 +246,46 @@ selectCommentReaction(
   const currentReaction = this.userReactions[commentaireId];
 
   if (currentReaction === emoji) {
-    // 😮 L'utilisateur clique à nouveau sur le même emoji => retirer la réaction
-    this.publicationService
-      .updateReactionCommentaires(commentaireId, "", email)
-      .subscribe({
-        next: () => {
-          delete this.userReactions[commentaireId]; // Supprime la réaction utilisateur
-          if (this.reactionCounts[commentaireId]?.[emoji]) {
-            this.reactionCounts[commentaireId][emoji]--;
-            if (this.reactionCounts[commentaireId][emoji] === 0) {
-              delete this.reactionCounts[commentaireId][emoji];
-            }
+    // L'utilisateur veut supprimer sa réaction
+    this.publicationService.updateReactionCommentaires(commentaireId, "", email)
+      .subscribe(() => {
+        delete this.userReactions[commentaireId];
+
+        // MAJ locale des totaux
+        if (this.reactionCounts[commentaireId]?.[emoji]) {
+          this.reactionCounts[commentaireId][emoji]--;
+          if (this.reactionCounts[commentaireId][emoji] === 0) {
+            delete this.reactionCounts[commentaireId][emoji];
           }
-          this.commentReactionsVisibleId = null;
-        },
-        error: () => {
-          this.errorMessage = "Erreur lors du retrait de la réaction.";
-        },
+        }
+
+        this.commentReactionsVisibleId = null;
       });
   } else {
-    // 😍 Nouvelle réaction ou changement de réaction
-    this.publicationService
-      .updateReactionCommentaires(commentaireId, emoji, email)
-      .subscribe({
-        next: () => {
-          // ✅ MAJ immédiate de l'interface
-          if (!this.reactionCounts[commentaireId]) {
-            this.reactionCounts[commentaireId] = {};
-          }
+    // Ajout ou changement
+    this.publicationService.updateReactionCommentaires(commentaireId, emoji, email)
+      .subscribe(() => {
+        // Mise à jour locale des totaux
+        this.reactionCounts[commentaireId] ||= {};
 
-          // 👎 Décrémenter l'ancienne
-          if (currentReaction && this.reactionCounts[commentaireId][currentReaction]) {
-            this.reactionCounts[commentaireId][currentReaction]--;
-            if (this.reactionCounts[commentaireId][currentReaction] === 0) {
-              delete this.reactionCounts[commentaireId][currentReaction];
-            }
+        if (currentReaction && this.reactionCounts[commentaireId][currentReaction]) {
+          this.reactionCounts[commentaireId][currentReaction]--;
+          if (this.reactionCounts[commentaireId][currentReaction] === 0) {
+            delete this.reactionCounts[commentaireId][currentReaction];
           }
+        }
 
-          // 👍 Incrémenter la nouvelle
-          if (!this.reactionCounts[commentaireId][emoji]) {
-            this.reactionCounts[commentaireId][emoji] = 1;
-          } else {
-            this.reactionCounts[commentaireId][emoji]++;
-          }
+        this.reactionCounts[commentaireId][emoji] =
+          (this.reactionCounts[commentaireId][emoji] || 0) + 1;
 
-          // ✅ Mettre à jour l'état local
-          this.userReactions[commentaireId] = emoji;
-          this.commentReactionsVisibleId = null;
-        },
-        error: () => {
-          this.errorMessage = "Erreur lors de l'ajout de la réaction.";
-        },
+        // Met à jour la réaction affichée
+        this.userReactions[commentaireId] = emoji;
+        this.commentReactionsVisibleId = null;
       });
   }
 }
+
+
 
 
   getTotalReactions(commentId: number): number {
