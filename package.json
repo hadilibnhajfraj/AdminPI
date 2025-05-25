@@ -40,6 +40,7 @@
     "classlist.js": "1.1.20150312",
     "copy-webpack-plugin": "7.0.0",
     "core-js": "3.8.1",
+    "date-fns": "^2.29.3",
     "font-awesome": "4.7.0",
     "hammerjs": "2.0.8",
     "hls.js": "^1.5.20",
@@ -88,6 +89,6 @@
     "karma-jasmine-html-reporter": "^1.7.0",
     "protractor": "7.0.0",
     "ts-node": "~10.7.0",
-    "typescript": "~4.4.2"
+    "typescript": "^4.6.4"
   }
 }

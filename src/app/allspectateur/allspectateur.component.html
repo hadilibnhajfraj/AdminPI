@@ -93,8 +93,22 @@
       <div *ngIf="publication.commentaires?.length" class="mt-3">
         <div *ngFor="let commentaire of publication.commentaires" class="border-bottom py-2">
           <div class="fw-bold">Utilisateur</div>
-          <p class="mb-1">{{ commentaire.texte }}</p>
-          <small class="text-muted">{{ commentaire.dateCommentaire | date: 'short' }}</small>
+          <p class="mb-1" *ngIf="editingCommentId !== commentaire.id">{{ commentaire.texte }}</p>
+<textarea *ngIf="editingCommentId === commentaire.id" [(ngModel)]="editingCommentText" class="form-control mb-2"></textarea>
+
+<div class="d-flex gap-2 mt-1">
+  <span class="text-warning" style="cursor:pointer" *ngIf="editingCommentId !== commentaire.id"
+        (click)="editComment(publication.id, commentaire)">Modifier</span>
+  <span class="text-danger" style="cursor:pointer" (click)="deleteComment(publication.id, commentaire.id)">Supprimer</span>
+  <button *ngIf="editingCommentId === commentaire.id"
+          class="btn btn-sm btn-success"
+          (click)="updateComment(publication.id, commentaire.id)">Valider</button>
+  <button *ngIf="editingCommentId === commentaire.id"
+          class="btn btn-sm btn-secondary"
+          (click)="cancelEdit()">Annuler</button>
+</div>
+
+        <small class="text-muted">{{ getRelativeTime(commentaire.dateCommentaire) }}</small>
 
           <!-- Réactions -->
           <div *ngIf="reactionCounts[commentaire.id]" class="mt-1">

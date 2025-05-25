@@ -5,7 +5,8 @@ import { AuthService } from "../services/auth.service";
 import { jwtDecode } from "jwt-decode";
 import { Commentaire } from "../Interface/Commentaire";
 import { trigger, state, style, animate, transition } from '@angular/animations';
-
+import { formatDistanceToNow } from 'date-fns';
+import { fr } from 'date-fns/locale';
 @Component({
   selector: "allspectateur",
   templateUrl: "./allspectateur.component.html",
@@ -417,6 +418,13 @@ handleFacebookShare(publicationId: number) {
       publication.nombrePartages++; // ✅ MAJ immédiate côté UI
     }
   });
+}
+
+
+// ...
+
+getRelativeTime(dateString: string): string {
+  return formatDistanceToNow(new Date(dateString), { addSuffix: true, locale: fr });
 }
 
 
