@@ -246,4 +246,20 @@ getUserPublicationReaction(publicationId: number, userId: number) {
   return this.http.get<{ type: string }>(`/publications/publications/${publicationId}/reactions/user/${userId}`,{ headers });
 }
 
+incrementShareCount(publicationId: number) {
+  const token = localStorage.getItem("token");
+  const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+
+  return this.http.put(`http://localhost:8082/publications/publications/${publicationId}/increment-share`, {}, { headers });
+}
+incrementPartage(publicationId: number) {
+  const token = localStorage.getItem("token");
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${token}`
+  });
+
+  return this.http.post(`http://localhost:8082/publications/publications/${publicationId}/increment-partage`, null, { headers });
+}
+
+
 }

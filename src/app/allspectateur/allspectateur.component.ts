@@ -370,6 +370,16 @@ getTotalPublicationReactions(publicationId: number): number {
 
 }
 
+incrementShare(publicationId: number): void {
+  this.publicationService.incrementShareCount(publicationId).subscribe({
+    next: () => {
+      const pub = this.publications.find(p => p.id === publicationId);
+      if (pub) {
+        pub.nombrePartages = (pub.nombrePartages || 0) + 1; // 👈 ceci est crucial
+      }
+    }
+  });
+}
 
 
   getTotalReactions(commentId: number): number {
@@ -395,4 +405,19 @@ copyToClipboard(text: string): void {
     alert("Erreur lors de la copie.");
   });
 }
+handleFacebookShare(publicationId: number) {
+  window.open(
+    'https://www.facebook.com/sharer/sharer.php?u=' + this.getPublicationUrl(publicationId),
+    '_blank'
+  );
+
+  this.publicationService.incrementPartage(publicationId).subscribe(() => {
+    const publication = this.publications.find(p => p.id === publicationId);
+    if (publication) {
+      publication.nombrePartages++; // ✅ MAJ immédiate côté UI
+    }
+  });
+}
+
+
 }

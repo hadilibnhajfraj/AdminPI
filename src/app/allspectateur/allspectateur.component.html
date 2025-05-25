@@ -35,9 +35,11 @@
     </span>
     <span>{{ getTotalPublicationReactions(publication.id) }}</span>
   </div>
-  <div>
-    {{ publication.commentaires?.length || 0 }} commentaire{{ publication.commentaires?.length > 1 ? 's' : '' }} · 0 partages
-  </div>
+<div>
+  {{ publication.commentaires?.length || 0 }} commentaire{{ publication.commentaires?.length > 1 ? 's' : '' }}
+  · {{ publication.nombrePartages || 0 }} partage{{ publication.nombrePartages > 1 ? 's' : '' }}
+</div>
+
 </div>
 
 
@@ -51,9 +53,11 @@
   <i class="bi bi-share"></i> Partager
 </div>
 <div *ngIf="shareVisibleId === publication.id" class="share-menu mt-2 d-flex align-items-center gap-3">
-  <a [href]="'https://www.facebook.com/sharer/sharer.php?u=' + getPublicationUrl(publication.id)" target="_blank" class="share-icon facebook" title="Partager sur Facebook">
-    <i class="bi bi-facebook"></i>
-  </a>
+<a (click)="handleFacebookShare(publication.id)" class="share-icon facebook" style="cursor:pointer;">
+  <i class="bi bi-facebook"></i>
+</a>
+
+
   <a [href]="'https://api.whatsapp.com/send?text=' + getPublicationUrl(publication.id)" target="_blank" class="share-icon whatsapp" title="Partager sur WhatsApp">
     <i class="bi bi-whatsapp"></i>
   </a>
