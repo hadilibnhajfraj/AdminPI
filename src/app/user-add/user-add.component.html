@@ -1,3 +1,5 @@
+<h2>Ajouter un utilisateur</h2>
+
 <form (ngSubmit)="onSubmit()">
   <div class="row">
     <div class="col-md-6">
@@ -20,22 +22,26 @@
   </div>
 
   <div class="form-group">
+    <label>Mot de passe</label>
+    <input type="password" [(ngModel)]="user.password" name="password" class="form-control" required>
+  </div>
+
+  <div class="form-group">
     <label>Date de naissance</label>
     <input type="date" [(ngModel)]="user.dateNaissance" name="dateNaissance" class="form-control">
   </div>
 
- <div class="form-group">
-  <label>Rôle</label>
-  <select [(ngModel)]="user.role" name="role" class="form-control" required>
-    <option value="Admin">Admin</option>
-    <option value="Joueur">Joueur</option>
-    <option value="Proprietaire">Proprietaire</option>
-    <option value="Organisateur">Organisateur</option>
-    <option value="Presse">Presse</option>
-    <option value="Spectateur">Spectateur</option>
-  </select>
-</div>
+  <div class="form-group">
+    <label>Rôle</label>
+    <select [(ngModel)]="user.role" name="role" class="form-control" required>
+      <option value="Admin">Admin</option>
+      <option value="Joueur">Joueur</option>
+      <option value="Proprietaire">Proprietaire</option>
+      <option value="Organisateur">Organisateur</option>
+      <option value="Presse">Presse</option>
+      <option value="Spectateur">Spectateur</option>
+    </select>
+  </div>
 
-
-  <button type="submit" class="btn btn-primary">Mettre à jour</button>
+  <button type="submit" class="btn btn-success">Ajouter</button>
 </form>

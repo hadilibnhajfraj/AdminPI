@@ -1,0 +1,11 @@
+<h2>Connexion / Inscription</h2>
+<form [formGroup]="authForm">
+  <input type="email" formControlName="email" placeholder="Email">
+  <input type="password" formControlName="password" placeholder="Mot de passe">
+</form>
+
+<button (click)="login()">Se connecter</button>
+<button (click)="register()">S'inscrire</button>
+<button (click)="logout()">Déconnexion</button>
+
+<p style="color: green">{{ message }}</p>

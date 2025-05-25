@@ -1,0 +1,28 @@
+<h2>Liste des utilisateurs</h2>
+
+<!-- Bouton Déconnexion -->
+<button (click)="logout()" style="float: right;">Se déconnecter</button>
+
+<!-- Bouton Ajouter -->
+<button (click)="ajouterUtilisateur()">Ajouter un utilisateur</button>
+
+<!-- Tableau des utilisateurs -->
+<table>
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Email</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{ user.nom }}</td>
+      <td>{{ user.email }}</td>
+      <td>
+        <button (click)="modifierUtilisateur(user)">Modifier</button>
+        <button (click)="supprimerUtilisateur(user.id)">Supprimer</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

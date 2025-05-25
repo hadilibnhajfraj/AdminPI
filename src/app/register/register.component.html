@@ -1,0 +1,68 @@
+<div class="register-container">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <h2>Inscription</h2>
+
+    <div>
+      <label>Nom :</label>
+      <input type="text" formControlName="nom" required />
+      <div *ngIf="submitted && registerForm.controls.nom.invalid" class="error">
+        Nom requis
+      </div>
+    </div>
+
+    <div>
+      <label>Prénom :</label>
+      <input type="text" formControlName="prenom" required />
+      <div *ngIf="submitted && registerForm.controls.prenom.invalid" class="error">
+        Prénom requis
+      </div>
+    </div>
+
+   <div>
+  <label>Date de naissance :</label>
+  <input type="date" formControlName="dateNaissance" required />
+  <div *ngIf="submitted && registerForm.controls.dateNaissance.invalid" class="error">
+    Date de naissance requise
+  </div>
+</div>
+
+<div>
+  <label>Rôle :</label>
+  <select formControlName="role" required>
+    <option value="">-- Sélectionnez un rôle --</option>
+    <option value="Admin">Admin</option>
+    <option value="Joueur">Joueur</option>
+    <option value="Proprietaire">Propriétaire</option>
+    <option value="Organisateur">Organisateur</option>
+    <option value="Presse">Presse</option>
+    <option value="Spectateur">Spectateur</option>
+  </select>
+  <div *ngIf="submitted && registerForm.controls.role.invalid" class="error">
+    Rôle requis
+  </div>
+</div>
+
+
+    <div>
+      <label>Email :</label>
+      <input type="email" formControlName="email" required />
+      <div *ngIf="submitted && registerForm.controls.email.invalid" class="error">
+        Email valide requis
+      </div>
+    </div>
+
+    <div>
+      <label>Mot de passe :</label>
+      <input type="password" formControlName="password" required />
+      <div *ngIf="submitted && registerForm.controls.password.invalid" class="error">
+        Mot de passe requis
+      </div>
+    </div>
+
+    <button type="submit">S’inscrire</button>
+
+    <div *ngIf="error" class="error-message">
+      {{ error }}
+    </div>
+  </form>
+</div>

@@ -1,0 +1,44 @@
+<div class="login-container">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <h2>Connexion</h2>
+
+    <div>
+      <label>Email :</label>
+      <input type="email" formControlName="email" />
+      <div *ngIf="submitted && loginForm.controls.email.invalid" class="error">
+        Email valide requis
+      </div>
+    </div>
+
+    <div>
+      <label>Mot de passe :</label>
+      <input type="password" formControlName="password" />
+      <div *ngIf="submitted && loginForm.controls.password.invalid" class="error">
+        Mot de passe requis
+      </div>
+    </div>
+<div class="mesboutons">
+    <button type="submit">Se connecter</button>
+  <button class="create-account-btn" (click)="goToRegister()">
+    Créer un compte
+  </button>
+  </div>
+    <div class="forgot-password">
+      <a (click)="goToForgotPassword()" style="cursor: pointer; color: blue; text-decoration: underline;">
+        Mot de passe oublié ?
+      </a>
+    </div>
+    <div *ngIf="error" class="error-message">
+      {{ error }}
+    </div>
+    <div class="social-login">
+  <button class="google-btn" (click)="signInWithGoogle()">
+    Se connecter avec Google
+  </button>
+  <button class="facebook-btn" (click)="signInWithFacebook()">
+    Se connecter avec Facebook
+  </button>
+</div>
+
+  </form>
+</div>
