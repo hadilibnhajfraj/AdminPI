@@ -57,9 +57,10 @@
   <a [href]="'https://api.whatsapp.com/send?text=' + getPublicationUrl(publication.id)" target="_blank" class="share-icon whatsapp" title="Partager sur WhatsApp">
     <i class="bi bi-whatsapp"></i>
   </a>
-  <a [href]="'https://www.linkedin.com/sharing/share-offsite/?url=' + getPublicationUrl(publication.id)" target="_blank" class="share-icon linkedin" title="Partager sur LinkedIn">
-    <i class="bi bi-linkedin"></i>
-  </a>
+<a [href]="'https://www.instagram.com/?url=' + getPublicationUrl(publication.id)" target="_blank" class="share-icon instagram" title="Partager sur Instagram">
+  <i class="bi bi-instagram"></i>
+</a>
+
   <button class="btn btn-outline-secondary btn-sm ms-2" (click)="copyToClipboard(getPublicationUrl(publication.id))">
     Copier le lien
   </button>
