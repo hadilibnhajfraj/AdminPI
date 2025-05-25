@@ -226,11 +226,24 @@ updateReactionPublication(publicationId: number, emoji: string, email: string) {
 }
 
 getPublicationReactionCount(publicationId: number) {
-  return this.http.get<{ [emoji: string]: number }>(`/api/publications/${publicationId}/reactions`);
+  const token = localStorage.getItem("token");
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${token}`,
+  });
+
+  return this.http.get<{ [emoji: string]: number }>(
+    `/publications/publications/${publicationId}/reactions`,
+    { headers }
+  );
 }
 
+
 getUserPublicationReaction(publicationId: number, userId: number) {
-  return this.http.get<{ type: string }>(`/api/publications/${publicationId}/reactions/user/${userId}`);
+   const token = localStorage.getItem("token"); // Récupère le token JWT stocké dans le localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`, // Ajoute l'Authorization header avec le token
+    });
+  return this.http.get<{ type: string }>(`/publications/publications/${publicationId}/reactions/user/${userId}`,{ headers });
 }
 
 }

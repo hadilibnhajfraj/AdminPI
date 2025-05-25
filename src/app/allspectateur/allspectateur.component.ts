@@ -85,6 +85,7 @@ loadPublications(): void {
         // ✅ Charger les réactions de la publication
         this.publicationService.getPublicationReactionCount(publication.id).subscribe({
           next: (counts) => {
+                console.log('🔄 Réactions publication', publication.id, counts);
             this.publicationReactions[publication.id] = counts;
           },
           error: () => {
