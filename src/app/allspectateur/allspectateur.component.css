@@ -35,3 +35,44 @@
 .badge:hover {
   transform: scale(1.05);
 }
+a img {
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+a img:hover {
+  transform: scale(1.2);
+}
+.share-menu {
+  padding: 5px 0;
+}
+
+.share-icon {
+  font-size: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s;
+}
+
+.share-icon:hover {
+  transform: scale(1.15);
+}
+
+.share-icon.facebook {
+  color: #fff;
+  background-color: #3b5998;
+}
+
+.share-icon.whatsapp {
+  color: #fff;
+  background-color: #25D366;
+}
+
+.share-icon.linkedin {
+  color: #fff;
+  background-color: #0077b5;
+}

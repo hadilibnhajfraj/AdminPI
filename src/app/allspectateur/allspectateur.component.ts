@@ -36,7 +36,7 @@ export class AllspectateurComponent implements OnInit {
 userReactions: { [commentId: number]: string } = {};
 publicationReactions: { [publicationId: number]: { [emoji: string]: number } } = {};
 userPublicationReactions: { [publicationId: number]: string } = {};
-
+shareVisibleId: number | null = null;
   constructor(
     private publicationService: PublicationService,
     private router: Router,
@@ -380,4 +380,19 @@ getTotalPublicationReactions(publicationId: number): number {
       .map((key) => Number(counts[key]))
       .reduce((acc, val) => acc + val, 0);
   }
+  toggleShare(publicationId: number): void {
+  this.shareVisibleId = this.shareVisibleId === publicationId ? null : publicationId;
+}
+
+getPublicationUrl(publicationId: number): string {
+  return `http://localhost:4200/publication/${publicationId}`; // remplace avec ton vrai lien
+}
+
+copyToClipboard(text: string): void {
+  navigator.clipboard.writeText(text).then(() => {
+    alert("Lien copié !");
+  }).catch(() => {
+    alert("Erreur lors de la copie.");
+  });
+}
 }

@@ -47,7 +47,25 @@
           <i class="bi bi-hand-thumbs-up"></i> J’aime
         </div>
         <div><i class="bi bi-chat-dots"></i> Commenter</div>
-        <div><i class="bi bi-share"></i> Partager</div>
+      <div (click)="toggleShare(publication.id)" style="cursor:pointer">
+  <i class="bi bi-share"></i> Partager
+</div>
+<div *ngIf="shareVisibleId === publication.id" class="share-menu mt-2 d-flex align-items-center gap-3">
+  <a [href]="'https://www.facebook.com/sharer/sharer.php?u=' + getPublicationUrl(publication.id)" target="_blank" class="share-icon facebook" title="Partager sur Facebook">
+    <i class="bi bi-facebook"></i>
+  </a>
+  <a [href]="'https://api.whatsapp.com/send?text=' + getPublicationUrl(publication.id)" target="_blank" class="share-icon whatsapp" title="Partager sur WhatsApp">
+    <i class="bi bi-whatsapp"></i>
+  </a>
+  <a [href]="'https://www.linkedin.com/sharing/share-offsite/?url=' + getPublicationUrl(publication.id)" target="_blank" class="share-icon linkedin" title="Partager sur LinkedIn">
+    <i class="bi bi-linkedin"></i>
+  </a>
+  <button class="btn btn-outline-secondary btn-sm ms-2" (click)="copyToClipboard(getPublicationUrl(publication.id))">
+    Copier le lien
+  </button>
+</div>
+
+
       </div>
 
     <!-- Emoji menu -->
