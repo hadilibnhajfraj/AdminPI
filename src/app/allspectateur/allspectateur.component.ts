@@ -424,8 +424,16 @@ handleFacebookShare(publicationId: number) {
 // ...
 
 getRelativeTime(dateString: string): string {
-  return formatDistanceToNow(new Date(dateString), { addSuffix: true, locale: fr });
+  const localDate = new Date(dateString);
+  // Correction : on ajoute l'heure actuelle à la date reçue
+  localDate.setHours(new Date().getHours());
+  localDate.setMinutes(new Date().getMinutes());
+  localDate.setSeconds(new Date().getSeconds());
+
+  return formatDistanceToNow(localDate, { addSuffix: true, locale: fr });
 }
+
+
 
 
 }
