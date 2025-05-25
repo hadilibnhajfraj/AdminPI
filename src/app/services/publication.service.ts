@@ -214,5 +214,23 @@ export class PublicationService {
     `http://localhost:8082/commentaires/commentaires/${commentaireId}/reaction/user?email=${email}`,{ headers }
   );
 }
+updateReactionPublication(publicationId: number, emoji: string, email: string) {
+      const token = localStorage.getItem("token"); // Récupère le token JWT stocké dans le localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`, // Ajoute l'Authorization header avec le token
+    });
+  return this.http.post(`/publications/publications/${publicationId}/react`, {
+    reaction: emoji,
+    email: email,
+  },{ headers });
+}
+
+getPublicationReactionCount(publicationId: number) {
+  return this.http.get<{ [emoji: string]: number }>(`/api/publications/${publicationId}/reactions`);
+}
+
+getUserPublicationReaction(publicationId: number, userId: number) {
+  return this.http.get<{ type: string }>(`/api/publications/${publicationId}/reactions/user/${userId}`);
+}
 
 }

@@ -34,6 +34,9 @@ export class AllspectateurComponent implements OnInit {
   commentReactionsVisibleId: number | null = null;
   reactionCounts: { [commentId: number]: { [emoji: string]: number } } = {};
 userReactions: { [commentId: number]: string } = {};
+publicationReactions: { [publicationId: number]: { [emoji: string]: number } } = {};
+userPublicationReactions: { [publicationId: number]: string } = {};
+
   constructor(
     private publicationService: PublicationService,
     private router: Router,
@@ -48,44 +51,67 @@ userReactions: { [commentId: number]: string } = {};
     }
     this.loadPublications();
   }
-  loadPublications(): void {
-   this.publicationService.getMyPublicationsSpectatuer().subscribe({
-  next: (data) => {
-    this.publications = data.filter((pub) => pub.status !== "live");
+loadPublications(): void {
+  this.publicationService.getMyPublicationsSpectatuer().subscribe({
+    next: (data) => {
+      this.publications = data.filter((pub) => pub.status !== "live");
 
-    this.publications.forEach((publication) => {
-      this.publicationService.getCommentaires(publication.id).subscribe({
-        next: (commentaires) => {
-          publication.commentaires = commentaires;
+      this.publications.forEach((publication) => {
+        // ✅ Charger les commentaires
+        this.publicationService.getCommentaires(publication.id).subscribe({
+          next: (commentaires) => {
+            publication.commentaires = commentaires;
 
-          commentaires.forEach((commentaire) => {
-            this.loadReactions(commentaire.id); // charger les totaux
+            commentaires.forEach((commentaire) => {
+              this.loadReactions(commentaire.id);
 
-            // ✅ Charger la réaction de l'utilisateur (affichage immédiat)
-            this.publicationService.getUserReaction(commentaire.id, this.userId).subscribe({
-              next: (reaction) => {
-                if (reaction?.type) {
-                  this.userReactions[commentaire.id] = reaction.type;
+              this.publicationService.getUserReaction(commentaire.id, this.userId).subscribe({
+                next: (reaction) => {
+                  if (reaction?.type) {
+                    this.userReactions[commentaire.id] = reaction.type;
+                  }
+                },
+                error: () => {
+                  console.error("Erreur en récupérant la réaction utilisateur", commentaire.id);
                 }
-              },
-              error: () => {
-                console.error("Erreur en récupérant la réaction utilisateur", commentaire.id);
-              }
+              });
             });
-          });
-        },
-        error: () => {
-          this.errorMessage = "Erreur lors de la récupération des commentaires.";
-        },
-      });
-    });
-  },
-  error: () => {
-    this.errorMessage = "Erreur lors de la récupération des publications.";
-  },
-});
+          },
+          error: () => {
+            this.errorMessage = "Erreur lors de la récupération des commentaires.";
+          },
+        });
 
-  }
+        // ✅ Charger les réactions de la publication
+        this.publicationService.getPublicationReactionCount(publication.id).subscribe({
+          next: (counts) => {
+            this.publicationReactions[publication.id] = counts;
+          },
+          error: () => {
+            console.error("Erreur en récupérant les réactions de la publication", publication.id);
+          }
+        });
+
+        // ✅ Charger la réaction de l’utilisateur sur la publication
+        this.publicationService.getUserPublicationReaction(publication.id, this.userId).subscribe({
+          next: (reaction) => {
+            if (reaction?.type) {
+              this.userPublicationReactions[publication.id] = reaction.type;
+            }
+          },
+          error: () => {
+            console.error("Erreur en récupérant la réaction utilisateur pour publication", publication.id);
+          }
+        });
+
+      });
+    },
+    error: () => {
+      this.errorMessage = "Erreur lors de la récupération des publications.";
+    },
+  });
+}
+
   loadReactions(commentId: number) {
     this.publicationService.getCommentReactionCount(commentId).subscribe({
       next: (counts) => {
@@ -245,13 +271,13 @@ selectCommentReaction(
 
   const currentReaction = this.userReactions[commentaireId];
 
+  // Si l’utilisateur reclique sur la même réaction => suppression
   if (currentReaction === emoji) {
-    // L'utilisateur veut supprimer sa réaction
-    this.publicationService.updateReactionCommentaires(commentaireId, "", email)
+    this.publicationService
+      .updateReactionCommentaires(commentaireId, "", email)
       .subscribe(() => {
         delete this.userReactions[commentaireId];
 
-        // MAJ locale des totaux
         if (this.reactionCounts[commentaireId]?.[emoji]) {
           this.reactionCounts[commentaireId][emoji]--;
           if (this.reactionCounts[commentaireId][emoji] === 0) {
@@ -262,12 +288,13 @@ selectCommentReaction(
         this.commentReactionsVisibleId = null;
       });
   } else {
-    // Ajout ou changement
-    this.publicationService.updateReactionCommentaires(commentaireId, emoji, email)
+    // Nouvelle réaction OU changement de réaction
+    this.publicationService
+      .updateReactionCommentaires(commentaireId, emoji, email)
       .subscribe(() => {
-        // Mise à jour locale des totaux
         this.reactionCounts[commentaireId] ||= {};
 
+        // Décrémenter l’ancienne réaction si elle existe
         if (currentReaction && this.reactionCounts[commentaireId][currentReaction]) {
           this.reactionCounts[commentaireId][currentReaction]--;
           if (this.reactionCounts[commentaireId][currentReaction] === 0) {
@@ -275,16 +302,72 @@ selectCommentReaction(
           }
         }
 
-        this.reactionCounts[commentaireId][emoji] =
-          (this.reactionCounts[commentaireId][emoji] || 0) + 1;
+        // Incrémenter la nouvelle
+        if (!this.reactionCounts[commentaireId][emoji]) {
+          this.reactionCounts[commentaireId][emoji] = 1;
+        } else {
+          this.reactionCounts[commentaireId][emoji]++;
+        }
 
-        // Met à jour la réaction affichée
+        // Mettre à jour l'affichage local de la réaction de l'utilisateur
         this.userReactions[commentaireId] = emoji;
         this.commentReactionsVisibleId = null;
       });
   }
 }
+selectPublicationReaction(publicationId: number, emoji: string): void {
+  const token = this.authService.getToken();
+  const decoded: any = jwtDecode(token);
+  const email = decoded.sub;
 
+  const currentReaction = this.userPublicationReactions[publicationId];
+
+  if (currentReaction === emoji) {
+    this.publicationService.updateReactionPublication(publicationId, "", email).subscribe(() => {
+      delete this.userPublicationReactions[publicationId];
+      if (this.publicationReactions[publicationId]?.[emoji]) {
+        this.publicationReactions[publicationId][emoji]--;
+        if (this.publicationReactions[publicationId][emoji] === 0) {
+          delete this.publicationReactions[publicationId][emoji];
+        }
+      }
+      this.reactionVisibleId = null;
+    });
+  } else {
+    this.publicationService.updateReactionPublication(publicationId, emoji, email).subscribe(() => {
+      this.publicationReactions[publicationId] ||= {};
+
+      if (currentReaction && this.publicationReactions[publicationId][currentReaction]) {
+        this.publicationReactions[publicationId][currentReaction]--;
+        if (this.publicationReactions[publicationId][currentReaction] === 0) {
+          delete this.publicationReactions[publicationId][currentReaction];
+        }
+      }
+
+      if (!this.publicationReactions[publicationId][emoji]) {
+        this.publicationReactions[publicationId][emoji] = 1;
+      } else {
+        this.publicationReactions[publicationId][emoji]++;
+      }
+
+      this.userPublicationReactions[publicationId] = emoji;
+      this.reactionVisibleId = null;
+    });
+  }
+}
+getPublicationReactionKeys(publicationId: number): string[] {
+  return this.publicationReactions[publicationId]
+    ? Object.keys(this.publicationReactions[publicationId])
+    : [];
+}
+
+getTotalPublicationReactions(publicationId: number): number {
+  const counts = this.publicationReactions[publicationId];
+  if (!counts) return 0;
+
+  return Object.keys(counts).map(key => counts[key]).reduce((acc, val) => acc + val, 0);
+
+}
 
 
 
