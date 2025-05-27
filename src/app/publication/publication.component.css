@@ -1,0 +1,104 @@
+.publication-container {
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 25px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  font-family: "Segoe UI", sans-serif;
+}
+
+h2 {
+  color: #333;
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 120px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 15px;
+  margin-bottom: 15px;
+}
+
+.media-buttons label {
+  cursor: pointer;
+  background-color: #f0f2f5;
+  border-radius: 10px;
+  padding: 8px 14px;
+  display: inline-block;
+  color: #1877f2;
+  font-weight: bold;
+}
+
+.media-buttons input[type="file"] {
+  display: none;
+}
+
+.date-field {
+  margin-top: 15px;
+}
+
+.date-field input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  margin-top: 5px;
+}
+
+.checkbox-field {
+  margin: 15px 0;
+}
+
+.btn-publish {
+  background-color: #1877f2;
+  color: white;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-publish:hover {
+  background-color: #0d6efd;
+}
+
+.alert {
+  margin-bottom: 10px;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.card {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-top: 15px;
+  border-radius: 10px;
+}
+
+.card img.media {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.publication-preview {
+  margin-top: 20px;
+  border-top: 1px solid #ddd;
+  padding-top: 15px;
+}

@@ -1,0 +1,43 @@
+.table th {
+  background: linear-gradient(to right, #808586, #584e4e);
+  font-weight: 600;
+  font-size: 1rem;
+  border-bottom: 2px solid #0c0c0c;
+}
+
+.table td {
+  vertical-align: middle;
+  font-size: 0.95rem;
+}
+th {
+  color: #fff;
+}
+.table-light td, .table-light thead th, .table-light tbody+tbody {
+  border-color: #d1eaea;
+}
+.table-responsive {
+  overflow: hidden;
+  padding-bottom: 0px;
+}
+table.table.table-bordered.table-hover.align-middle.text-center.mb-0 {
+  width: 75%;
+  margin: auto;
+
+}
+button.btn.btn-success.btn-sm.me-1 {
+  color: #fff !important;
+  background: cadetblue;
+  margin-right: 5px;
+}
+button.btn.btn-warning.btn-sm.me-1 {
+  background: dimgray;
+  margin-right: 5px;
+}
+
+button.btn.btn-danger.btn-sm {
+  background: brown;
+}
+button.btn.btn-secondary.btn-sm {
+  background: cornflowerblue;
+}
+button.btn.btn-success.btn-sm {margin-right: 15px;}

@@ -1,0 +1,84 @@
+<div class="publication-container">
+  <h2>Créer une publication</h2>
+
+  <form (ngSubmit)="addPublication()" enctype="multipart/form-data">
+    <div *ngIf="successMessage" class="alert alert-success">
+      {{ successMessage }}
+    </div>
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+
+    <textarea
+      placeholder="Exprimez-vous..."
+      [(ngModel)]="contenu"
+      name="contenu"
+      class="textarea"
+      required
+    ></textarea>
+
+    <div class="media-buttons">
+      <label for="file">📎 Ajouter une image / vidéo</label>
+      <input type="file" id="file" (change)="onFileSelected($event)" />
+    </div>
+
+    <div class="date-field">
+      <label for="datePublication">📅 Date de publication</label>
+      <input
+        type="date"
+        [(ngModel)]="datePublication"
+        name="datePublication"
+        class="form-control"
+        required
+      />
+    </div>
+
+    <div class="checkbox-field">
+      <label
+        ><input type="checkbox" [(ngModel)]="isLive" name="isLive" />
+        Publication en direct</label
+      >
+    </div>
+
+    <button
+      type="submit"
+      [disabled]="!contenu || !datePublication"
+      class="btn-publish"
+    >
+      Publier
+    </button>
+  </form>
+
+  <!-- Aperçu publication
+  <div *ngIf="createdPublication" class="publication-preview">
+    <h3>Dernière publication</h3>
+    <p>{{ createdPublication.contenu }}</p>
+    <img
+      *ngIf="createdPublication.urlMedia"
+      [src]="'http://localhost:8082/' + createdPublication.urlMedia"
+      class="media-preview"
+    />
+
+    <p class="date">
+      🕒 {{ createdPublication.datePublication | date : "dd/MM/yyyy" }}
+    </p>
+  </div>
+-->
+  <!-- Liste des publications
+  <div class="card" *ngFor="let pub of publications">
+    <div class="card-body">
+      <p>{{ pub.contenu }}</p>
+      <img
+        *ngIf="pub.urlMedia"
+        [src]="'http://localhost:8082/' + pub.urlMedia"
+        class="media"
+      />
+      <p class="date">🕒 {{ pub.datePublication }}</p>
+
+      <div *ngIf="isPresse">
+        <button (click)="delete(pub.id)">🗑️ Supprimer</button>
+      </div>
+    </div>
+  </div>
+</div>
+-->
