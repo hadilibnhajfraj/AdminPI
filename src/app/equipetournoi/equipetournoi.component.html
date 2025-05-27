@@ -1,0 +1,71 @@
+<div class="container">
+    <h2>Équipes inscrites dans le tournoi</h2>
+  
+    <div *ngIf="equipes.length === 0">
+      <p>Aucune équipe inscrite pour ce tournoi.</p>
+    </div>
+  
+    <table *ngIf="equipes.length > 0" class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Adresse</th>
+          <th>Nombre de joueurs</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let equipe of equipes">
+          <td>{{ equipe.nom }}</td>
+          <td>{{ equipe.adresse }}</td>
+          <td>{{ equipe.nb_joueur }}</td>
+          <td>
+            <button (click)="openConfirmationDialog(equipe)" class="btn btn-danger">Annuler la participation</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Bouton pour ajouter une équipe, désactivé si nbEquipeRestant === 0 -->
+    <button 
+      *ngIf="equipesNonInscrites.length > 0" 
+      [disabled]="tournoi?.nbEquipeRestant === 0" 
+      (click)="openAddEquipeDialog()" 
+      class="btn btn-success">
+      Ajouter une équipe
+    </button>
+  
+    <!-- Message si aucun ajout d'équipe n'est possible -->
+    <p *ngIf="tournoi?.nbEquipeRestant === 0" class="text-danger">
+      Aucune équipe ne peut être ajoutée, le nombre d'équipes restant est 0.
+    </p>
+  
+    <!-- Pop-up pour ajouter une équipe -->
+    <div *ngIf="showAddEquipeDialog" class="modal">
+      <div class="modal-content">
+        <h3>Ajouter une équipe</h3>
+        <ul *ngIf="tournoi?.nbEquipeRestant > 0">
+          <li *ngFor="let equipe of equipesNonInscrites">
+            <button (click)="addEquipeToTournoi(equipe)" class="btn btn-primary">{{ equipe.nom }}</button>
+          </li>
+        </ul>
+        <p *ngIf="equipesNonInscrites.length === 0">Aucune équipe non inscrite disponible.</p>
+        <button (click)="closeAddEquipeDialog()" class="btn btn-secondary">Fermer</button>
+      </div>
+    </div>
+  
+    <!-- Pop-up de confirmation -->
+    <div *ngIf="showConfirmation" class="modal">
+      <div class="modal-content">
+        <p>Êtes-vous sûr de vouloir désaffecter l'équipe {{ selectedEquipe?.nom }} du tournoi ?</p>
+        <div class="modal-buttons">
+          <button (click)="desaffecterEquipe()" class="btn btn-primary">Confirmer</button>
+          <button (click)="closeConfirmationDialog()" class="btn btn-secondary">Annuler</button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Bouton retour -->
+    <button (click)="goBack()" class="btn btn-secondary">Retour</button>
+  </div>
+  

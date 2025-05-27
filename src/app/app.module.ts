@@ -18,6 +18,11 @@ import { RegisterComponent } from './register/register.component';
 import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
 import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
 import { UserAddComponent } from './user-add/user-add.component';
+import { TournoiComponent } from './tournoi/tournoi.component';
+import { MatchtournoiComponent } from './matchtournoi/matchtournoi.component';
+import { EquipetournoiComponent } from './equipetournoi/equipetournoi.component';
+import { DispoTerrainComponent } from './dispo-terrain/dispo-terrain.component';
+import { MatchChampionnatComponent } from './match-championnat/match-championnat.component';
 import { Oauth2RedirectComponent } from './oauth2-redirect/oauth2-redirect.component';
 
 @NgModule({
@@ -41,7 +46,12 @@ import { Oauth2RedirectComponent } from './oauth2-redirect/oauth2-redirect.compo
     ForgetpasswordComponent,
     ResetpasswordComponent,
     UserAddComponent,
-    Oauth2RedirectComponent
+    Oauth2RedirectComponent,
+	TournoiComponent,
+	MatchtournoiComponent,
+    EquipetournoiComponent,
+    DispoTerrainComponent,
+    MatchChampionnatComponent,
 
   ],
   providers: [],

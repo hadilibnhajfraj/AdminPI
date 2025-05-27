@@ -24,7 +24,7 @@ import { ComponentsModule } from "../../components/components.module";
     ChartsModule,
     NgbModule,
     ToastrModule.forRoot(),
-    ComponentsModule
+    ComponentsModule,
 ],
   declarations: [
     DashboardComponent,

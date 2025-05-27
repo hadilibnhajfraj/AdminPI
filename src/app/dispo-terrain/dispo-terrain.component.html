@@ -1,0 +1,33 @@
+<div class="container mt-4">
+    <h3>Disponibilité du terrain</h3>
+  
+    <div class="form-group mb-3">
+      <label for="date">Choisissez une date :</label>
+      <input type="date" id="date" class="form-control" [value]="dateSelectionnee" (change)="onDateChange($event)">
+    </div>
+  
+    <div class="table-responsive">
+      <table class="table table-bordered text-center">
+        <thead class="table-light">
+          <tr>
+            <th>Créneau horaire</th>
+            <th>Disponibilité</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let tranche of tranchesHoraires">
+            <td>{{ tranche }}</td>
+            <td>
+              <ng-container *ngIf="!estReservee(tranche.split('-')[0]); else dejaPris">
+                <button class="btn btn-success" (click)="reserver(tranche.split('-')[0])">Réserver</button>
+              </ng-container>
+              <ng-template #dejaPris>
+                <span class="badge bg-secondary">Réservé</span>
+              </ng-template>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

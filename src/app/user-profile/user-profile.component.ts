@@ -34,7 +34,7 @@ export class UserProfileComponent implements OnInit {
 
   onSubmit(): void {
     this.userService.updateUser(this.user.id, this.user).subscribe(() => {
-      alert('Utilisateur mis Ã  jour avec succÃ¨s');
+      alert('Utilisateur mis à jour avec succès');
       this.router.navigate(['/user']);
     });
   }

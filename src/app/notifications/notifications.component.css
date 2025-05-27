@@ -1,0 +1,308 @@
+/* ===== Thème Sport Sombre Harmonisé ===== */
+
+/* CONTAINER PRINCIPAL */
+.form-container {
+  background: #a8a8a8;
+  color: #000000;
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #192574;
+}
+
+/* TABLEAU */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #f6f4f4;
+  color: #010027;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.table th, .table td {
+  border: 1px solid #333;
+  padding: 12px;
+  text-align: center;
+}
+
+.table th {
+  background-color: #2a2a2a;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.table-dark tbody tr:hover {
+  background-color: #bbb !important;
+  color: #000;
+}
+
+/* BOUTONS */
+.btn {
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-info {
+  background-color: #1e90ff;
+  color: #ffffff;
+}
+
+.btn-info:hover {
+  background-color: #0c74d4;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: #ffffff;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+}
+
+.btn-danger {
+  background-color: #ff4d4d;
+  color: #ffffff;
+}
+
+.btn-danger:hover {
+  background-color: #cc0000;
+}
+
+/* ICONES */
+i {
+  color: #ffffff;
+  transition: color 0.3s;
+}
+
+i:hover {
+  color: #00c853;
+}
+
+.bi-bar-chart-line-fill {
+  color: #198754 !important;
+}
+
+.bi-calendar-range-fill,
+.bi-list-ol {
+  color: #004f99;
+}
+
+/* POPUP */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-box {
+  background-color: #1c1c1c;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  color: #f0f0f0;
+  max-width: 1000px;
+}
+
+.popup-succes {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #222;
+  color: #00ffcc;
+  padding: 20px 40px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 255, 204, 0.3);
+  z-index: 9999;
+  font-size: 18px;
+  text-align: center;
+  animation: fadeInOut 3s ease-in-out;
+  border: 1px solid #00ffcc;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  10% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  90% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+}
+
+/* ONGLET NAVIGATION */
+.nav-tabs {
+  background-color: #111;
+  border-bottom: 1px solid #333;
+}
+
+.nav-tabs .nav-link {
+  color: #b0b0b0;
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+
+.nav-tabs .nav-link:hover {
+  color: #ffffff;
+  background-color: #1e1e1e;
+  border-color: #444 #444 #000;
+}
+
+.nav-tabs .nav-link.active {
+  color: #ffffff;
+  background-color: #222;
+  border-color: #444 #444 #000;
+}
+
+/* BARRE DE CHARGEMENT / LOADER */
+.clock-loader {
+  border: 8px solid #2a2a2a;
+  border-top: 8px solid #2979ff;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 10px auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* BARRES STATISTIQUES */
+.stats-bars {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  height: 150px;
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+.bar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40px;
+}
+
+.bar {
+  width: 100%;
+  transition: height 0.5s ease;
+  border-radius: 4px;
+}
+
+.bar.blue {
+  background-color: #004f99;
+}
+
+.bar.red {
+  background-color: #dc3545;
+}
+
+.bar-label {
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+/* MODALS & INPUT */
+.modal-content {
+  background-color: #c9c9c9;
+  color: #000;
+}
+
+.modal-header, .modal-footer {
+  border-color: #999 !important;
+}
+
+.modal-title {
+  color: #004f99 !important;
+}
+
+.modal-body input[type="number"] {
+  background-color: #1a1a1a;
+  color: #fff;
+  border: 1px solid #555;
+}
+
+/* BACKGROUND GENERAL */
+body {
+  background-color: #c9c9c9;
+  color: #000;
+}
+
+h4 {
+  color: #004f99 !important;
+}
+.popup-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-box {
+  background-color: #1c1c1c;
+  color: #f0f0f0;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  max-width: 500px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+button.btn {
+  padding: 10px 20px;
+  margin: 0 10px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn-success {
+  background-color: #4caf50;
+  color: white;
+}
+
+.btn-danger {
+  background-color: #f44336;
+  color: white;
+}
