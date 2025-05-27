@@ -33,7 +33,8 @@ import { UserPubComponent } from './user-pub/user-pub.component';
 import { UpdatePubComponent } from './update-pub/update-pub.component';
 import { SpectateurComponent } from './spectateur/spectateur.component';
 import { AllspectateurComponent } from './allspectateur/allspectateur.component';
-
+import { DragDropJoueurComponent } from './Joueur/drag-drop-joueur/drag-drop-joueur.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   imports: [
@@ -45,7 +46,9 @@ import { AllspectateurComponent } from './allspectateur/allspectateur.component'
     AppRoutingModule,
     NgbModule,
     ReactiveFormsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+	DragDropJoueurComponent,
+	DragDropModule
   ],
   declarations: [
     AppComponent,

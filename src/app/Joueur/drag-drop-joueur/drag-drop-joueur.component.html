@@ -1,0 +1,42 @@
+<div class="form-group mb-3">
+  <label for="teamSelect"><strong>Choisir une équipe :</strong></label>
+  <select class="form-control" id="teamSelect" [(ngModel)]="teamId" (change)="onTeamChange()">
+    <option *ngFor="let team of teamsList" [value]="team.idEquipe">
+      {{ team.nom }}
+    </option>
+  </select>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <h4>🔓 Unassigned Players</h4>
+    <div cdkDropList 
+     id="unassignedPlayersList" 
+     [cdkDropListConnectedTo]="['teamPlayersList']"
+     [cdkDropListData]="unassignedPlayers" 
+     class="player-list"
+     (cdkDropListDropped)="drop($event)">
+      <div *ngFor="let player of unassignedPlayers" cdkDrag class="player-item">
+       {{ player.idJoueur }}  {{ player.nom }} {{ player.prenom }}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <h4>✅ Equipes</h4>
+    <div cdkDropList 
+     id="teamPlayersList" 
+     [cdkDropListConnectedTo]="['unassignedPlayersList']"
+     [cdkDropListData]="teamPlayers" 
+     class="player-list"
+     (cdkDropListDropped)="drop($event)">
+      <div *ngFor="let player of teamPlayers" cdkDrag class="player-item">
+        {{ player.nom }} {{ player.prenom }}
+      </div>
+    </div>
+    <!-- <button class="action-button edit-button" (click)="saveAndNotify()">✏️ Save</button> -->
+
+  </div>
+
+
+</div>

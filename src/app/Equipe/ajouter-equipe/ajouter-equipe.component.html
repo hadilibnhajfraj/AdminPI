@@ -1,0 +1,56 @@
+<!-- FIN FRM -->
+<div class="container mt-5 d-flex justify-content-center">
+  <div class="card col-md-6 p-4">
+   
+    <div class="card-header text-center text-white" style="background-color: #d32f2f;">
+      <h4 class="title">Ajouter une Équipe</h4>
+    </div>
+    
+
+    <div class="form-container mt-3">
+      <form [formGroup]="equipeForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="nom">Nom de l'équipe</label>
+          <input id="nom" formControlName="nom" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+          <label for="adresse">Adresse</label>
+          <input id="adresse" formControlName="adresse" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+          <label for="nb_joueur">Nombre de joueurs</label>
+          <input type="number" id="nb_joueur" formControlName="nb_joueur" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+          <label for="max_teams">Nombre max d’équipes</label>
+          <input type="number" id="max_teams" formControlName="max_teams" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+          <label for="price">Prix</label>
+          <input type="number" id="price" formControlName="price" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+          <label for="logo">Logo</label>
+          <input type="file" (change)="onFileSelected($event)" />
+        </div>
+
+        <!-- ✅ Boutons -->
+        <div class="d-flex justify-content-between">
+          <button class="btn btn-success" type="submit" [disabled]="equipeForm.invalid">
+            ✅ Ajouter l’équipe
+          </button>
+
+          <!-- 🔙 Bouton Annuler -->
+          <button type="button" class="btn btn-secondary" (click)="annuler()">
+            ❌ Annuler
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

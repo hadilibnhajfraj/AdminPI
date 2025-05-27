@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Liste des Équipes</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #d32f2f;
+    }
+
+    .table-container {
+      max-width: 900px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #d32f2f;
+      color: white;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .available {
+      color: green;
+    }
+
+    .unavailable {
+      color: red;
+    }
+
+    .action-button {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 5px;
+    }
+
+    .edit-button {
+      background-color: #1976d2;
+      color: white;
+    }
+
+    .delete-button {
+      background-color: #d32f2f;
+      color: white;
+    }
+
+    @media (max-width: 600px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+
+      th {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+      }
+
+      td {
+        position: relative;
+        padding-left: 50%;
+        border: none;
+        border-bottom: 1px solid #ddd;
+      }
+
+      td:before {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: bold;
+      }
+
+      td:nth-of-type(1):before { content: "Nom de l'équipe"; }
+      td:nth-of-type(2):before { content: "Gouvernorat"; }
+      td:nth-of-type(3):before { content: "Disponibilité"; }
+      td:nth-of-type(4):before { content: "Actions"; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="table-container">
+    <h2>Liste des Équipes</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Nom de l'équipe</th>
+          <th>Gouvernorat</th>
+          <!-- <th>Disponibilité</th> -->
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let equipe of equipes">
+          <td>{{ equipe.nom }}</td>
+          <td>{{ equipe.adresse}}</td>
+          <!-- <td [class]="getDisponibiliteClasse(equipe.disponible)">
+            {{ getDisponibiliteLabel(equipe.disponible) }}
+          </td> -->
+          <td>
+            <button class="action-button edit-button" (click)="modifyEquipe(equipe.idEquipe)">✏️ Modifier</button>
+          <button class="action-button delete-button" (click)="supprimerEquipe(equipe.idEquipe)">🗑️ Supprimer</button>
+          <button class="action-button delete-button" (click)="supprimerEquipe(equipe.idEquipe)">🗑️ Retirer joueur</button>
+        </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</body>
+</html>

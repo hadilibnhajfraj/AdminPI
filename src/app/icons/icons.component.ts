@@ -22,20 +22,20 @@ export class IconsComponent implements OnInit {
 
   dateDebutInvalide: boolean = false;
   dateFinInvalide: boolean = false;
-  isValid: boolean = false; // Active/DÃ©sactive le bouton
+  isValid: boolean = false; // Active/Désactive le bouton
 
   constructor(private tournoiService: TournoiService) {}
 
   ngOnInit(): void {}
 
-  // VÃ©rification des dates
+  // Vérification des dates
   validateDates(): void {
     const dateDebut = new Date(this.tournoi.dateDebut);
     const dateFin = new Date(this.tournoi.dateFin);
     const today = new Date();
 
-    this.dateDebutInvalide = dateDebut < today; // VÃ©rifie si la date dÃ©but est infÃ©rieure Ã  aujourdâ€™hui
-    this.dateFinInvalide = dateFin < dateDebut; // VÃ©rifie si la date fin est infÃ©rieure Ã  la date dÃ©but
+    this.dateDebutInvalide = dateDebut < today; // Vérifie si la date début est inférieure à aujourd’hui
+    this.dateFinInvalide = dateFin < dateDebut; // Vérifie si la date fin est inférieure à la date début
 
     // Active le bouton seulement si toutes les dates sont valides
     this.isValid = !this.dateDebutInvalide && !this.dateFinInvalide;
@@ -48,20 +48,20 @@ export class IconsComponent implements OnInit {
       this.tournoi.frais < 0 ||
       !this.tournoi.dateDebut ||
       !this.tournoi.dateFin ||
-      !this.isValid // VÃ©rification des dates
+      !this.isValid // Vérification des dates
     ) {
       this.message = 'Veuillez remplir tous les champs correctement.';
       this.isError = true;
     } else {
       this.tournoiService.createTournoi(this.tournoi).subscribe(
         () => {
-          this.message = 'Tournoi ajoutÃ© avec succÃ¨s !';
+          this.message = 'Tournoi ajouté avec succès !';
           this.isError = false;
           this.resetForm();
         },
         (error) => {
-          console.error('Erreur lors de la crÃ©ation du tournoi', error);
-          this.message = 'Une erreur est survenue. Veuillez rÃ©essayer.';
+          console.error('Erreur lors de la création du tournoi', error);
+          this.message = 'Une erreur est survenue. Veuillez réessayer.';
           this.isError = true;
         }
       );

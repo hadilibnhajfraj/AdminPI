@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
 })
 export class MapsComponent implements OnInit {
   tournois: Tournoi[] = [];
-  message: string = '';    // PropriÃ©tÃ© pour le message
-  isError: boolean = false; // PropriÃ©tÃ© pour savoir si c'est une erreur ou un succÃ¨s
+  message: string = '';    // Propriété pour le message
+  isError: boolean = false; // Propriété pour savoir si c'est une erreur ou un succès
 
   constructor(private tournoiService: TournoiService, private router: Router) {}
 
@@ -19,24 +19,24 @@ export class MapsComponent implements OnInit {
     this.getTournois();
   }
 
-  // Charger les tournois au dÃ©marrage
+  // Charger les tournois au démarrage
   getTournois(): void {
     this.tournoiService.getAllTournois().subscribe(
       (data) => {
         this.tournois = data;
-        console.log('Tournois rÃ©cupÃ©rÃ©s:', data); // VÃ©rifiez si chaque tournoi a un id valide
-        //this.showMessage('Tournois chargÃ©s avec succÃ¨s!', false); // Message de succÃ¨s
+        console.log('Tournois récupérés:', data); // Vérifiez si chaque tournoi a un id valide
+        //this.showMessage('Tournois chargés avec succès!', false); // Message de succès
       },
       (error) => {
-        console.error('Erreur lors de la rÃ©cupÃ©ration des tournois', error);
+        console.error('Erreur lors de la récupération des tournois', error);
         this.showMessage('Une erreur est survenue lors du chargement des tournois.', true); // Message d'erreur
       }
     );
   }
 
-  // Afficher les dÃ©tails du tournoi dans une alerte
+  // Afficher les détails du tournoi dans une alerte
   showDetails(tournoi: Tournoi): void {
-    alert(`DÃ©tails du tournoi:\nNom: ${tournoi.nom}\nNombre d'Ã©quipes: ${tournoi.nbEquipe}\nFrais: ${tournoi.frais}â‚¬`);
+    alert(`Détails du tournoi:\nNom: ${tournoi.nom}\nNombre d'équipes: ${tournoi.nbEquipe}\nFrais: ${tournoi.frais}€`);
   }
 
   // Modifier un tournoi
@@ -46,7 +46,7 @@ export class MapsComponent implements OnInit {
 
   // Supprimer un tournoi
   deleteTournoi(id: number): void {
-    console.log('ID reÃ§u pour suppression:', id);  // VÃ©rifiez l'ID reÃ§u
+    console.log('ID reçu pour suppression:', id);  // Vérifiez l'ID reçu
     if (id === undefined || id === null) {
       console.error('ID du tournoi non valide:', id);
       this.showMessage('Erreur: ID du tournoi manquant.', true); // Message d'erreur
@@ -56,12 +56,12 @@ export class MapsComponent implements OnInit {
     // Afficher un message de confirmation dans le popup avant suppression
     //this.showMessage('Voulez-vous vraiment supprimer ce tournoi ?', false);
 
-    // AprÃ¨s que l'utilisateur ait confirmÃ©
+    // Après que l'utilisateur ait confirmé
     if (confirm('Voulez-vous vraiment supprimer ce tournoi ?')) {
       this.tournoiService.deleteTournoi(id).subscribe(
         () => {
-         // this.showMessage('Tournoi supprimÃ© avec succÃ¨s!', false); // Message de succÃ¨s
-          this.getTournois(); // Recharger la liste des tournois aprÃ¨s suppression
+         // this.showMessage('Tournoi supprimé avec succès!', false); // Message de succès
+          this.getTournois(); // Recharger la liste des tournois après suppression
         },
         (error) => {
           console.error('Erreur lors de la suppression du tournoi', error);
@@ -71,7 +71,7 @@ export class MapsComponent implements OnInit {
     }
   }
 
-  // MÃ©thode pour afficher les messages de succÃ¨s ou d'erreur
+  // Méthode pour afficher les messages de succès ou d'erreur
   showMessage(msg: string, isError: boolean): void {
     this.message = msg;
     this.isError = isError;

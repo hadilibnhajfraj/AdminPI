@@ -1,0 +1,6 @@
+<ul>
+    <li *ngFor="let joueur of joueursEquipe">
+      {{ joueur.nom }} {{ joueur.prenom }}
+      <button (click)="retirerJoueur(joueur.id)">Retirer</button>
+    </li>
+  </ul>

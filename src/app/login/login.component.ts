@@ -37,10 +37,10 @@ export class LoginComponent {
     this.authService.login(credentials).subscribe({
       next: (res: any) => {
         this.authService.saveToken(res.token); // Sauvegarde du token
-        this.router.navigate(['/user']);  // Redirection aprÃ¨s connexion
+        this.router.navigate(['/user']);  // Redirection après connexion
       },
       error: (err) => {
-        this.errorMessage = err.error?.message || "Ã‰chec de la connexion.";
+        this.errorMessage = err.error?.message || "Échec de la connexion.";
       }
     });
   }
