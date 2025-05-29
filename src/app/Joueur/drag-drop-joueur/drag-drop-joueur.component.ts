@@ -103,6 +103,7 @@ drop(event: CdkDragDrop<Joueur[]>) {
 }
 onTeamChange(): void {
   this.joueurService.getJoueursByEquipe(this.teamId).subscribe(players => {
+    console.log('Team changed, new players:', players);
     this.teamPlayers = players;
   });
 }

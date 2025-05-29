@@ -116,9 +116,9 @@ affecterJoueurAEquipe(idJoueur: number, idEquipe: number): Observable<any> {
 
 //API
 
-
+// Récupérer les joueurs non affectés à une équipe
 getUnassignedJoueurs() {
-  return this.http.get<Joueur[]>(`${this.apiUrl}/all`);
+  return this.http.get<Joueur[]>(`${this.apiUrl}/all-non-assigned`);
 }
 
 
