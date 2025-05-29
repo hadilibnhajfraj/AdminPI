@@ -89,7 +89,7 @@ getAllJoueurs(): Observable<Joueur[]> {
 
 // Supprimer un joueur
 supprimerJoueur(id: number): Observable<void> {
-  return this.http.delete<void>(`${this.apiUrl}/deleteJoueur/${id}`);
+  return this.http.delete<void>(`${this.apiUrl}/delete/${id}`);
 }
 
 // Obtenir un joueur par ID

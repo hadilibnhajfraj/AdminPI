@@ -116,8 +116,8 @@
       </thead>
       
         <tr *ngFor="let joueur of joueurs">
-       
-          <td>{{ joueur.nom }}</td>
+           
+          <td>{{ joueur.idJoueur }}{{ joueur.nom }}</td>
           <td>{{ joueur.prenom }}</td>
           <td>{{ joueur.mail}}</td>
           <td>{{ joueur.tel }}</td>
@@ -128,8 +128,8 @@
           <td>{{ joueur.poids }}</td>
           
           <td>
-            <button (click)="modifierJoueur(joueur.id)">✏️</button>
-            <button (click)="supprimerJoueur(joueur.id)">🗑️</button>
+            <button (click)="modifierJoueur(joueur.idJoueur)">✏️</button>
+            <button (click)="supprimerJoueur(joueur.idJoueur)">🗑️</button>
 
           </td>
         </tr>

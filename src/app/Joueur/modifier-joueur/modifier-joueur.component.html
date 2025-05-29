@@ -85,7 +85,7 @@
 
         <div class="d-flex justify-content-between">
           <button type="button" class="btn btn-secondary" (click)="annuler()">❌ Annuler</button>
-          <button type="submit" class="btn btn-primary" [disabled]="joueurForm.invalid">✔ Enregistrer</button>
+          <button type="submit" class="btn btn-primary" [disabled]="joueurForm.invalid" (click)="onSubmit()">✔ Enregistrer</button>
         </div>
       </form>
     </div>
