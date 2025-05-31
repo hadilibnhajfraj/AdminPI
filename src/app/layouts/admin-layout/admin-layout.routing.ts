@@ -33,9 +33,9 @@ import { LoginComponent } from '../../login/login.component';
 import { InscriptionComponent } from '../../inscription/inscription.component';
 import { CreeCompteComponent } from '../../cree-compte/cree-compte.component';
 import { DragDropJoueurComponent } from '../../Joueur/drag-drop-joueur/drag-drop-joueur.component';
-
-
-
+import { TerrainComponent } from '../../terrain/terrain.component';
+import { MatchComponent } from '../../match/match.component';
+import { DisponibiliteTerrainComponent } from '../../disponibilite-terrain/disponibilite-terrain.component';
 
 export const AdminLayoutRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
@@ -46,7 +46,9 @@ export const AdminLayoutRoutes: Routes = [
   { path: 'maps', component: MapsComponent },
   { path: 'notifications', component: NotificationsComponent },
   { path: 'upgrade', component: UpgradeComponent },
-
+    { path: 'terrain',   component: TerrainComponent },
+    { path: 'match',        component: MatchComponent },
+    { path: 'disponibilite',  component: DisponibiliteTerrainComponent },
   //Joueur
   { path: 'ajouter-joueur', component: AjouterJoueurComponent },
   { path: 'afficher-joueur', component: AfficherJoueurComponent },

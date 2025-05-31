@@ -14,6 +14,9 @@ import { ChartsModule } from 'ng2-charts';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
+import { TerrainComponent } from '../../terrain/terrain.component';
+import { MatchComponent } from '../../match/match.component';
+import { DisponibiliteTerrainComponent } from '../../disponibilite-terrain/disponibilite-terrain.component';
 
 //Equipe
 import { AjouterEquipeComponent } from '../../Equipe/ajouter-equipe/ajouter-equipe.component';
@@ -55,12 +58,17 @@ import { DragDropJoueurComponent } from '../../Joueur/drag-drop-joueur/drag-drop
   declarations: [
     DashboardComponent,
     UserProfileComponent,
+    TerrainComponent,
+    MatchComponent,
+    DisponibiliteTerrainComponent,
     TableListComponent,
     UpgradeComponent,
     TypographyComponent,
     IconsComponent,
     MapsComponent,
-    NotificationsComponent,
+    NotificationsComponent
+    
+
 //Equipe
     AjouterEquipeComponent,
     ModifierEquipeComponent,

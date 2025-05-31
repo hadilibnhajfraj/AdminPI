@@ -16,7 +16,12 @@ export const ROUTES: RouteInfo[] = [
     { path: '/maps', title: 'Tous les tournois',  icon:'location_map-big', class: '' },
   { path: '/afficher-equipe', title: 'Les equipes',  icon:'design_bullet-list-67', class: '' },
   { path: '/afficher-joueur', title: 'Les joueurs',  icon:'users_single-02', class: '' },
-  { path: '/Drag-joueur', title: 'Drag Drop Joueur',  icon:'education_atom', class: '' }    { path: '/user-profile', title: 'User Profile',  icon:'users_single-02', class: '' },
+  { path: '/Drag-joueur', title: 'Drag Drop Joueur',  icon:'education_atom', class: '' }    
+{ path: '/user-profile', title: 'User Profile',  icon:'users_single-02', class: '' },
+    { path: '/terrain', title: 'Terrain',  icon:'ui-1_bell-53', class: '' },
+    { path: '/match', title: 'Match',  icon:'ui-1_bell-53', class: '' },
+    { path: '/disponibilite', title: 'Disponibilite',  icon:'ui-1_bell-53', class: '' },
+    { path: '/user-profile', title: 'User Profile',  icon:'users_single-02', class: '' },
     { path: '/table-list', title: 'Table List',  icon:'design_bullet-list-67', class: '' },
     { path: '/upgrade', title: 'Upgrade to PRO',  icon:'objects_spaceship', class: 'active active-pro' }
     { path: '/video', title: 'Video',  icon:'text_caps-small', class: '' }

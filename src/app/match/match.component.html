@@ -1,0 +1,100 @@
+<div class="card">
+    <div class="card-header">
+      <h5 class="title">Fiche Match</h5>
+    </div>
+    <div class="card-body">
+      <form>
+        <div class="row">
+          <div class="col-md-6">
+            <label>Nom</label>
+            <input type="text" class="form-control" [(ngModel)]="match.nom" name="nom">
+          </div>
+          <div class="col-md-6">
+            <label>Logo (URL)</label>
+            <input type="text" class="form-control" [(ngModel)]="match.logo" name="logo">
+          </div>
+        </div>
+  
+        <div class="row mt-2">
+          <div class="col-md-12">
+            <label>Adresse</label>
+            <input type="text" class="form-control" [(ngModel)]="match.adresse" name="adresse">
+          </div>
+        </div>
+  
+        <div class="row mt-2">
+          <div class="col-md-6">
+            <label>Nombre de Joueurs</label>
+            <input type="number" class="form-control" [(ngModel)]="match.nb_joueur" name="nb_joueur">
+          </div>
+          <div class="col-md-6">
+            <label>Date du Match</label>
+            <input type="date" class="form-control" [(ngModel)]="match.dateMatch" name="dateMatch">
+          </div>
+        </div>
+  
+        <div class="row mt-2">
+          <div class="col-md-6">
+            <label>Heure du Match</label>
+            <input type="time" class="form-control" [(ngModel)]="match.heureMatch" name="heureMatch">
+          </div>
+          <div class="col-md-3">
+            <label>Score Équipe 1</label>
+            <input type="number" class="form-control" [(ngModel)]="match.scoreEquipe1" name="scoreEquipe1">
+          </div>
+          <div class="col-md-3">
+            <label>Score Équipe 2</label>
+            <input type="number" class="form-control" [(ngModel)]="match.scoreEquipe2" name="scoreEquipe2">
+          </div>
+        </div>
+  
+        <div class="row mt-4">
+          <div class="col-md-4">
+            <button type="button" class="btn btn-success btn-block" (click)="addMatch()">Ajouter</button>
+          </div>
+          <div class="col-md-4">
+            <button type="button" class="btn btn-danger btn-block" (click)="deleteMatch(selectedId!)" [disabled]="!selectedId">Supprimer</button>
+          </div>
+          <div class="col-md-4">
+            <button type="button" class="btn btn-warning btn-block" (click)="updateMatch()" [disabled]="!selectedId">Modifier</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Liste des Matchs -->
+  <div class="card mt-4">
+    <div class="card-header">
+      <h5 class="title">Liste des Matchs</h5>
+    </div>
+    <div class="card-body">
+      <button class="btn btn-primary mb-3" (click)="exportToPDF()">Exporter en PDF</button>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Adresse</th>
+            <th>Logo</th>
+            <th>Date</th>
+            <th>Heure</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let m of matchs">
+            <td>{{ m.nom }}</td>
+            <td>{{ m.adresse }}</td>
+            <td><img [src]="m.logo" alt="logo" width="50" /></td>
+            <td>{{ m.dateMatch }}</td>
+            <td>{{ m.heureMatch }}</td>
+            <td>
+              <button class="btn btn-sm btn-warning mr-2" (click)="selectMatch(m)">Modifier</button>
+              <button class="btn btn-sm btn-danger" (click)="deleteMatch(m.idMatch!)">Supprimer</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

@@ -1,0 +1,137 @@
+<div class="panel-header panel-header-sm"></div>
+<div class="main-content">
+
+  <!-- Première ligne : Météo + Formulaire -->
+  <div class="row">
+
+    <!-- Colonne météo -->
+    <div class="col-md-4">
+      <div class="card h-100">
+        <div class="card-header">
+          <h5 class="title">Météo du jour</h5>
+        </div>
+        <div class="card-body" *ngIf="weather">
+          <h6>Ville : {{ weather.name }}</h6>
+          <p><strong>Température :</strong> {{ weather.main.temp }} °C</p>
+          <p><strong>Conditions :</strong> {{ weather.weather[0].description }}</p>
+          <p><strong>Humidité :</strong> {{ weather.main.humidity }}%</p>
+          <p><strong>Vent :</strong> {{ weather.wind.speed }} m/s</p>
+        </div>
+        <div class="card-body" *ngIf="!weather">
+          <p>Chargement de la météo...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Colonne formulaire -->
+    <div class="col-md-8">
+      <div class="card h-100">
+        <div class="card-header">
+          <h5 class="title">Fiche Terrain</h5>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="row">
+              <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label>Nom du terrain</label>
+                  <input type="text" class="form-control" placeholder="Nom du terrain" [(ngModel)]="terrain.nom" name="nom">
+                </div>
+              </div>
+              <div class="col-md-6 pl-1">
+                <div class="form-group">
+                  <label>Logo (URL)</label>
+                  <input type="text" class="form-control" placeholder="Lien du logo" [(ngModel)]="terrain.logo" name="logo">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Adresse</label>
+                  <input type="text" class="form-control" placeholder="Adresse complète" [(ngModel)]="terrain.adresse" name="adresse">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label>Nombre de Spectateurs</label>
+                  <input type="number" class="form-control" placeholder="ex: 5000" [(ngModel)]="terrain.nbSpectateur" name="nbSpectateur">
+                </div>
+              </div>
+              <div class="col-md-6 pl-1">
+                <div class="form-group">
+                  <label>Prix (DT)</label>
+                  <input type="number" class="form-control" placeholder="ex: 120" [(ngModel)]="terrain.prix" name="prix">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Surface</label>
+                  <input type="text" class="form-control" placeholder="ex: Gazon naturel" [(ngModel)]="terrain.surface" name="surface">
+                </div>
+              </div>
+            </div>
+
+            <!-- Boutons -->
+            <div class="row mt-3">
+              <div class="col-md-4">
+                <button type="button" class="btn btn-success btn-block" (click)="addTerrain()">Ajouter</button>
+              </div>
+              <div class="col-md-4">
+                <button type="button" class="btn btn-danger btn-block" (click)="deleteTerrain(selectedId!)" [disabled]="!selectedId">Supprimer</button>
+              </div>
+              <div class="col-md-4">
+                <button type="button" class="btn btn-warning btn-block" (click)="updateTerrain()" [disabled]="!selectedId">Modifier</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Deuxième ligne : Liste des terrains en pleine largeur -->
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Liste des Terrains</h5>
+        </div>
+        <div class="card-body">
+          <button class="btn btn-primary mb-3" (click)="exportToPDF()">Exporter en PDF</button>
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>Nom</th>
+                <th>Adresse</th>
+                <th>Logo</th>
+                <th>Prix</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let t of terrains">
+                <td>{{ t.nom }}</td>
+                <td>{{ t.adresse }}</td>
+                <td><img [src]="t.logo" alt="logo" width="50" /></td>
+                <td>{{ t.prix }} DT</td>
+                <td>
+                  <button class="btn btn-sm btn-warning mr-2" (click)="selectTerrain(t)">Modifier</button>
+                  <button class="btn btn-sm btn-danger" (click)="deleteTerrain(t.id)">Supprimer</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

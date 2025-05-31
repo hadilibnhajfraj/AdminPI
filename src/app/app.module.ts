@@ -36,6 +36,8 @@ import { AllspectateurComponent } from './allspectateur/allspectateur.component'
 import { DragDropJoueurComponent } from './Joueur/drag-drop-joueur/drag-drop-joueur.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
+
+
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -68,6 +70,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     EquipetournoiComponent,
     DispoTerrainComponent,
     MatchChampionnatComponent,
+
 
   ],
   providers: [],
