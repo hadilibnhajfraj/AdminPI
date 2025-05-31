@@ -13,7 +13,6 @@ import { ComponentsModule } from './components/components.module';
 import { AppComponent } from './app.component';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-import { LoginComponent } from './login/login.component';
 import { AuthComponent } from './auth/auth.component';
 import { RegisterComponent } from './register/register.component';
 import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
@@ -49,7 +48,6 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     NgbModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),
-	DragDropJoueurComponent,
 	DragDropModule
   ],
   declarations: [
@@ -58,11 +56,16 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     VideoStreamComponent,
     LoginComponent,
     PublicationComponent,
+    DragDropJoueurComponent,
     UserPubComponent,
     UpdatePubComponent,
     SpectateurComponent,
     AllspectateurComponent,
-	VideoStreamComponent	AuthComponent,	RegisterComponent,	ForgetpasswordComponent,	ResetpasswordComponent,
+	VideoStreamComponent,
+  	AuthComponent,
+    	RegisterComponent,
+      	ForgetpasswordComponent,
+        	ResetpasswordComponent,
     UserAddComponent,
     Oauth2RedirectComponent,
 	TournoiComponent,

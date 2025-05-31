@@ -33,14 +33,11 @@ import { RetirerJoueurComponent } from '../../Joueur/retirer-joueur/retirer-joue
 import { AffecterJoueurComponent } from '../../Joueur/affecter-joueur/affecter-joueur.component';
 
 //Inscription
-import { LoginComponent } from '../../login/login.component';
 import { InscriptionComponent } from '../../inscription/inscription.component';
 import { CreeCompteComponent } from '../../cree-compte/cree-compte.component';
 
 //Affectation JE drag and drop
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { DragDropJoueurComponent } from '../../Joueur/drag-drop-joueur/drag-drop-joueur.component';
-
 
 
 @NgModule({
@@ -66,7 +63,7 @@ import { DragDropJoueurComponent } from '../../Joueur/drag-drop-joueur/drag-drop
     TypographyComponent,
     IconsComponent,
     MapsComponent,
-    NotificationsComponent
+    NotificationsComponent,
     
 
 //Equipe
@@ -80,10 +77,8 @@ import { DragDropJoueurComponent } from '../../Joueur/drag-drop-joueur/drag-drop
     ModifierJoueurComponent,
     AjouterJoueurComponent,
     RetirerJoueurComponent,  
-    AffecterJoueurComponent,  
-    DragDropJoueurComponent,
+    AffecterJoueurComponent, 
 //Inscription
-LoginComponent,
 InscriptionComponent,
 CreeCompteComponent
   ]

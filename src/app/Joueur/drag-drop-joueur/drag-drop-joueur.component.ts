@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Joueur } from '../../model/joueur';
 import { JoueurEquipeService } from '../../../services/joueur-equipe.service';
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Equipe } from '../../model/equipe';
+import { Equipe } from '../../model/Equipe';
 import { ChangeDetectorRef } from '@angular/core';
 
 @Component({

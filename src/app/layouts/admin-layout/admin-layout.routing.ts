@@ -29,13 +29,13 @@ import { AfficherEquipeComponent } from '../../Equipe/afficher-equipe/afficher-e
 import { ModifierEquipeComponent } from '../../Equipe/modifier-equipe/modifier-equipe.component';
 import { SupprimerEquipeComponent } from '../../Equipe/supprimer-equipe/supprimer-equipe.component';
 //inscription
-import { LoginComponent } from '../../login/login.component';
 import { InscriptionComponent } from '../../inscription/inscription.component';
 import { CreeCompteComponent } from '../../cree-compte/cree-compte.component';
 import { DragDropJoueurComponent } from '../../Joueur/drag-drop-joueur/drag-drop-joueur.component';
 import { TerrainComponent } from '../../terrain/terrain.component';
 import { MatchComponent } from '../../match/match.component';
 import { DisponibiliteTerrainComponent } from '../../disponibilite-terrain/disponibilite-terrain.component';
+import { VideoStreamComponent } from '../../video-stream/video-stream.component';
 
 export const AdminLayoutRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
@@ -68,8 +68,7 @@ export const AdminLayoutRoutes: Routes = [
   //inscription
   { path: 'login', component: LoginComponent },
   { path: 'cree-compte', component: CreeCompteComponent },
-  { path: 'inscription', component: InscriptionComponent }
-  { path: "login", component: LoginComponent },
+  { path: 'inscription', component: InscriptionComponent },
   { path: "updatePub/:id", component: UpdatePubComponent },
   { path: "addpublication", component: PublicationComponent },
 {

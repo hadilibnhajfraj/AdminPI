@@ -21,20 +21,20 @@ import { UserAddComponent } from './user-add/user-add.component';
 import { Oauth2RedirectComponent } from './oauth2-redirect/oauth2-redirect.component';
 
 const routes: Routes = [
- 
-  { path: 'tournoi/:id', component: TournoiComponent }, // Route pour afficher le tournoi 
-  //{ path: '**', redirectTo: 'maps', pathMatch: 'full' },
-  { path: 'tournoi/:id/matchs', component: MatchtournoiComponent },
-  { path: 'tournoi/:idTournoi/equipes', component: EquipetournoiComponent },
-  { path: 'dispo-terrain/:id', component: DispoTerrainComponent },
-  { path: 'tournoi/:id/championnat', component: MatchChampionnatComponent },
- path: '',
+ {path: '',
     component: AdminLayoutComponent,
     children: [
         {
       path: '',
       loadChildren: () => import('./layouts/admin-layout/admin-layout.module').then(x=>x.AdminLayoutModule)
   }]},
+  { path: 'tournoi/:id', component: TournoiComponent }, // Route pour afficher le tournoi 
+  //{ path: '**', redirectTo: 'maps', pathMatch: 'full' },
+  { path: 'tournoi/:id/matchs', component: MatchtournoiComponent },
+  { path: 'tournoi/:idTournoi/equipes', component: EquipetournoiComponent },
+  { path: 'dispo-terrain/:id', component: DispoTerrainComponent },
+  { path: 'tournoi/:id/championnat', component: MatchChampionnatComponent },
+ 
  /* {
     path: '',
     component: AdminLayoutComponent,
