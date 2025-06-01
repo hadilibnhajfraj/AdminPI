@@ -69,7 +69,7 @@ a img:hover {
 
 .share-icon.whatsapp {
   color: #fff;
-  background-color: #25D366;
+  background-color: #25d366;
 }
 
 .share-icon.linkedin {
@@ -78,5 +78,15 @@ a img:hover {
 }
 .share-icon.instagram {
   color: #fff;
-  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+  background: radial-gradient(
+    circle at 30% 107%,
+    #fdf497 0%,
+    #fd5949 45%,
+    #d6249f 60%,
+    #285aeb 90%
+  );
+}
+.fw-bold.ng-tns-c42-0 {
+  font-size: 17px;
+  font-weight: 600;
 }

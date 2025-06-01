@@ -53,66 +53,72 @@ shareVisibleId: number | null = null;
     this.loadPublications();
   }
 loadPublications(): void {
+
   this.publicationService.getMyPublicationsSpectatuer().subscribe({
-    next: (data) => {
-      this.publications = data.filter((pub) => pub.status !== "live");
+    next: data => {
+      /* filtre les directs */
+      this.publications = data.filter(p => p.status !== 'live');
 
-      this.publications.forEach((publication) => {
-        // ✅ Charger les commentaires
-        this.publicationService.getCommentaires(publication.id).subscribe({
-          next: (commentaires) => {
-            publication.commentaires = commentaires;
+      this.publications.forEach(pub => {
 
-            commentaires.forEach((commentaire) => {
-              this.loadReactions(commentaire.id);
+        /* ---------- Auteur de la publication ---------- */
+        const authorId = pub.user?.id ?? pub.userId;          // selon votre JSON
+        console.log('userId publication', authorId);
 
-              this.publicationService.getUserReaction(commentaire.id, this.userId).subscribe({
-                next: (reaction) => {
-                  if (reaction?.type) {
-                    this.userReactions[commentaire.id] = reaction.type;
-                  }
-                },
-                error: () => {
-                  console.error("Erreur en récupérant la réaction utilisateur", commentaire.id);
-                }
+        if (authorId) {
+          this.authService.getUserById(authorId)
+              .subscribe(u => pub.authorName = u.displayName);
+        }
+
+        /* ---------- Commentaires ---------- */
+        this.publicationService.getCommentaires(pub.id).subscribe({
+          next: commentaires => {
+            pub.commentaires = commentaires;
+
+            commentaires.forEach(c => {
+              const comAuthorId = c.user?.id ?? c.userId;
+              console.log('userId commentaire', comAuthorId);
+
+              if (comAuthorId) {
+                this.authService.getUserById(comAuthorId)
+                    .subscribe(u => c.authorName = u.displayName);
+              }
+
+              /* Compter les réactions du commentaire */
+              this.loadReactions(c.id);
+
+              /* Réaction de l’utilisateur courant sur le commentaire */
+              this.publicationService.getUserReaction(c.id, this.userId).subscribe({
+                next: r => { if (r?.type) this.userReactions[c.id] = r.type; },
+                error: () =>
+                  console.error('Erreur en récupérant la réaction utilisateur', c.id)
               });
             });
           },
-          error: () => {
-            this.errorMessage = "Erreur lors de la récupération des commentaires.";
-          },
+          error: () => this.errorMessage =
+            'Erreur lors de la récupération des commentaires.'
         });
 
-        // ✅ Charger les réactions de la publication
-        this.publicationService.getPublicationReactionCount(publication.id).subscribe({
-          next: (counts) => {
-                console.log('🔄 Réactions publication', publication.id, counts);
-            this.publicationReactions[publication.id] = counts;
-          },
-          error: () => {
-            console.error("Erreur en récupérant les réactions de la publication", publication.id);
-          }
+        /* ---------- Réactions sur la publication ---------- */
+        this.publicationService.getPublicationReactionCount(pub.id).subscribe({
+          next: counts => this.publicationReactions[pub.id] = counts,
+          error: () =>
+            console.error('Erreur en récupérant les réactions de la publication', pub.id)
         });
 
-        // ✅ Charger la réaction de l’utilisateur sur la publication
-        this.publicationService.getUserPublicationReaction(publication.id, this.userId).subscribe({
-          next: (reaction) => {
-            if (reaction?.type) {
-              this.userPublicationReactions[publication.id] = reaction.type;
-            }
-          },
-          error: () => {
-            console.error("Erreur en récupérant la réaction utilisateur pour publication", publication.id);
-          }
+        /* Réaction de l’utilisateur courant sur la publication */
+        this.publicationService.getUserPublicationReaction(pub.id, this.userId).subscribe({
+          next: r => { if (r?.type) this.userPublicationReactions[pub.id] = r.type; },
+          error: () =>
+            console.error('Erreur en récupérant la réaction utilisateur pour publication', pub.id)
         });
-
       });
     },
-    error: () => {
-      this.errorMessage = "Erreur lors de la récupération des publications.";
-    },
+    error: () => this.errorMessage =
+      'Erreur lors de la récupération des publications.'
   });
 }
+
 
   loadReactions(commentId: number) {
     this.publicationService.getCommentReactionCount(commentId).subscribe({

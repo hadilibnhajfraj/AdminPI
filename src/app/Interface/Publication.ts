@@ -4,4 +4,6 @@ export class Publication {
   datePublication: Date;
   urlMedia: string;
   commentaires?: Array<{ data: string, createdAt: Date, user: { id: string } }>;
+    authorName?: string;
+    user: { id: number };   
 }
