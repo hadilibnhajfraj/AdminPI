@@ -20,6 +20,7 @@ export const ROUTES: RouteInfo[] = [
 
   // { path: '/maps', title: 'Maps',  icon:'location_map-big', class: '' },
   // { path: '/notifications', title: 'Notifications',  icon:'ui-1_bell-53', class: '' },
+  { path: '/reverver', title: 'Faire une réservation',  icon:'users_single-02', class: '' },
 
 ];
 

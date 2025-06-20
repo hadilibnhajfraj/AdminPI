@@ -18,6 +18,7 @@ import { AfficherEquipeComponent } from '../../Equipe/afficher-equipe/afficher-e
 import { LoginComponent } from '../../login/login.component';
 import { InscriptionComponent } from '../../inscription/inscription.component';
 import { CreeCompteComponent } from '../../cree-compte/cree-compte.component';
+import { ReserverComponent } from '../../reserver/reserver.component';
 
 export const AdminLayoutRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
@@ -38,7 +39,9 @@ export const AdminLayoutRoutes: Routes = [
   //inscription
   { path: 'login', component: LoginComponent },
   { path: 'cree-compte', component: CreeCompteComponent },
-  { path: 'inscription', component: InscriptionComponent }
+  { path: 'inscription', component: InscriptionComponent },
+
+  { path: 'reverver', component: ReserverComponent },
 
 
 ];

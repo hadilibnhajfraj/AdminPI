@@ -31,12 +31,15 @@ import { LoginComponent } from '../../login/login.component';
 import { InscriptionComponent } from '../../inscription/inscription.component';
 import { CreeCompteComponent } from '../../cree-compte/cree-compte.component';
 
+import { ReserverComponent } from '../../reserver/reserver.component';
+
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,
+    ReactiveFormsModule, 
     ChartsModule,
     NgbModule,
     ToastrModule.forRoot()
@@ -63,7 +66,9 @@ import { CreeCompteComponent } from '../../cree-compte/cree-compte.component';
 //Inscription
 LoginComponent,
 InscriptionComponent,
-CreeCompteComponent
+CreeCompteComponent,
+
+ReserverComponent
   ]
 })
 
